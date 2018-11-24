@@ -1,5 +1,6 @@
 package com.luckysite.util;
 
+import com.luckysite.enmu.ResultCode;
 import com.luckysite.model.Result;
 
 import java.util.Map;
@@ -8,14 +9,29 @@ public class ResultUtil{
 
     /**
      * 失败
-     * @param code
-     * @param msg
+     * @param map
      * @return
      */
-    public static Result error(String msg, int code) {
+    public static Result error(Map<String, Object> map) {
         Result r = new Result();
-        r.put("code", code);
-        r.put("msg", msg);
+        r.setCode(ResultCode.ERROR.getCode());
+        r.setMsg(ResultCode.ERROR.getMsg());
+        r.setObject(map);
+        return r;
+    }
+
+    /**
+     * 失败
+     * @param code
+     * @param msg
+     * @param map
+     * @return
+     */
+    public static Result error(int code, String msg, Map<String, Object> map) {
+        Result r = new Result();
+        r.setCode(code);
+        r.setMsg(msg);
+        r.setObject(map);
         return r;
     }
 
@@ -26,7 +42,9 @@ public class ResultUtil{
      */
     public static Result success(Map<String, Object> map) {
         Result r = new Result();
-        r.putAll(map);
+        r.setCode(ResultCode.SUCCESS.getCode());
+        r.setMsg(ResultCode.SUCCESS.getMsg());
+        r.setObject(map);
         return r;
     }
 

@@ -6,6 +6,7 @@ import com.luckysite.enmu.ResultCode;
 import com.luckysite.entity.User;
 import com.luckysite.model.Result;
 import com.luckysite.service.FileService;
+import com.luckysite.util.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 
 /**
  * 上传图片到fastdfs
@@ -51,7 +53,11 @@ public class FileController {
             fileService.insertPic(fileUrl, user, des, uploadId);
 
             log.info("FileUploadController-fdfsUpload-上传文件返回地址：" + fileUrl);
-            return new Result(ResultCode.SUCCESS.getCode(), "success", fileUrl);
+
+            HashMap<String, Object> result = new HashMap<>();
+            result.put("data", fileUrl);
+
+            return ResultUtil.success(result);
         } catch (Exception ex) {
             log.error("FileController-fdfsUpload-上传文件失败：" + ex);
             return new Result(ResultCode.ERROR.getCode(), "文件上传失败", null);

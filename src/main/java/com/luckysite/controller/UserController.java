@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -66,7 +68,7 @@ public class UserController {
         log.info("user-login：用户 " + user.getUserName() + " 登陆成功");
         httpSession.setAttribute(user.getUserId()+"", user);
 
-        Result result = new Result(ResultCode.SUCCESS.getCode(), "登录成功");
+        Map<String, Object> result = new HashMap<>();
         result.put("user", user);
         result.put("url", "/page/index/index");
 
