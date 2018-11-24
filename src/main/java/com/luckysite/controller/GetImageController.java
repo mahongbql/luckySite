@@ -36,7 +36,7 @@ public class GetImageController {
     @Auth(role = AuthConfig.VISTOR)
     @RequestMapping("/getImageList")
     public Result getImageList(@RequestParam PicParamModel picParamModel){
-        List<Pic> picList = getImageService.getImage();
+        List<Pic> picList = getImageService.getImage(picParamModel);
         log.info("GetImageController-getImageList-获取到的图片数量为：" + picList.size());
 
         Result result = new Result(ResultCode.SUCCESS.getCode(), "图片获取成功");
