@@ -14,4 +14,9 @@ public class Result extends HashMap<String, Object> {
         this.msg = msg;
         this.object = object;
     }
+
+    public Result(int code, String msg){
+        this.code = code;
+        this.msg = msg;
+    }
 }

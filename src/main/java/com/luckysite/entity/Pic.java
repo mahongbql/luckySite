@@ -3,13 +3,13 @@ package com.luckysite.entity;
 import java.util.Date;
 
 public class Pic {
-    private Long id;
-    private Long userId;
-    private Date createTime;
-    private String path;
-    private String des;
-    private int status;
-    private Long uploadId;
+    private Long id;            //自增id
+    private Long userId;        //上传用户id
+    private Date createTime;    //创建时间
+    private String path;    //图片路径
+    private String des;     //图片描述
+    private int status;     //图片状态
+    private Long uploadId;  //上传编号
 
     public void setUploadId(Long uploadId) {
         this.uploadId = uploadId;

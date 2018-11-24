@@ -66,7 +66,7 @@ public class UserController {
         log.info("user-login：用户 " + user.getUserName() + " 登陆成功");
         httpSession.setAttribute(user.getUserId()+"", user);
 
-        Result result = new Result(ResultCode.SUCCESS.getCode(), "登录成功", user);
+        Result result = new Result(ResultCode.SUCCESS.getCode(), "登录成功");
         result.put("user", user);
         result.put("url", "/page/index/index");
 
