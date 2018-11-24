@@ -1,7 +1,11 @@
 package com.luckysite.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.luckysite.entity.Pic;
+import com.luckysite.mapper.GetImageMapper;
+import com.luckysite.model.PicParamModel;
 import com.luckysite.service.GetImageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,8 +15,15 @@ import java.util.List;
  */
 @Service
 public class GetImageServiceImpl implements GetImageService {
+
+    @Autowired
+    private GetImageMapper getImageMapper;
+
     @Override
-    public List<Pic> getImage() {
-        return null;
+    public List<Pic> getImage(PicParamModel picParamModel) {
+        //使用分页插件,核心代码就这一行
+        PageHelper.startPage(picParamModel.getPageNum(), picParamModel.getPageSize());
+
+        return getImageMapper.getImage();
     }
 }
