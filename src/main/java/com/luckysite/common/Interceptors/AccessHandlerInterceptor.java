@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.lang.reflect.Method;
 import java.util.Date;
 
@@ -46,8 +47,9 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object obj) throws Exception {
         log.info("AccessHandlerInterceptor-preHandle-开始执行");
 
-        int userId = Integer.parseInt(request.getParameter("userId").toString());
-        log.info("AccessHandlerInterceptor-preHandle-userId: " + userId);
+        HttpSession httpSession = request.getSession();
+
+        User usr = (User) httpSession.getAttribute("user");
 
         String ip = request.getRemoteHost();
         log.info("AccessHandlerInterceptor-preHandle-request ip: " + ip);
@@ -61,9 +63,9 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
             if (method.isAnnotationPresent(Auth.class)){
                 if(methodName.equals(method.getName())) {
                     Auth auth = method.getAnnotation(Auth.class);
-                    log.info("AccessHandlerInterceptor-preHandle-用户 " + userId + " ，auth: " + auth.role());
+                    log.info("AccessHandlerInterceptor-preHandle-用户 " + usr.getUserId() + " ，auth: " + auth.role());
 
-                    User user = userService.get(userId);
+                    User user = userService.get(usr.getUserId()+"");
                     int uAuth = user.getRole();
 
                     if(uAuth >= auth.role()){

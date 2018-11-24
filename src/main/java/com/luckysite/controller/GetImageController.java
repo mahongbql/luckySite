@@ -35,7 +35,7 @@ public class GetImageController {
      * @param picParamModel
      * @return
      */
-    @Auth(role = AuthConfig.VISTOR)
+//    @Auth(role = AuthConfig.VISTOR)
     @RequestMapping("/getImageList")
     public Result getImageList(@RequestParam PicParamModel picParamModel){
         List<Pic> picList = getImageService.getImage(picParamModel);
