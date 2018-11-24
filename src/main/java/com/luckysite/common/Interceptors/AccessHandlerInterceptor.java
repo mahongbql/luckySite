@@ -32,7 +32,9 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
         log.info("AccessHandlerInterceptor-afterCompletion-开始执行");
         long start=new Date().getTime();
         log.info("AccessHandlerInterceptor-afterCompletion-最后耗时为:"+(new Date().getTime() - start));
-        log.error("ex is " + ex);
+        if(null != ex){
+            log.error("ex is " + ex);
+        }
     }
 
     //如果controller中抛出异常，则该方法不会被调用
