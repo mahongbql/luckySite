@@ -68,6 +68,13 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
                     log.info("AccessHandlerInterceptor-preHandle-用户 " + usr.getUserId() + " ，auth: " + auth.role());
 
                     User user = userService.get(usr.getUserId()+"");
+
+                    if(null == user){
+                        response.sendRedirect("/pages/login/login");
+                        log.info("AccessHandlerInterceptor-preHandle-用户未登录");
+                        return false;
+                    }
+
                     int uAuth = user.getRole();
 
                     if(uAuth >= auth.role()){
