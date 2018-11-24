@@ -18,26 +18,26 @@ import com.github.tobato.fastdfs.service.FastFileStorageClient;
 @Component
 public class FastDFSClientWrapper {
 
-//    @Autowired
-//    private FastFileStorageClient storageClient;
+    @Autowired
+    private FastFileStorageClient storageClient;
 
     @Autowired
     private FdfsConfig fdfsConfig;
 
-//    public String uploadFile(MultipartFile file) throws IOException {
-//        StorePath storePath = storageClient.uploadFile((InputStream)file.getInputStream(),file.getSize(), FilenameUtils.getExtension(file.getOriginalFilename()),null);
-//        return getResAccessUrl(storePath);
-//    }
+    public String uploadFile(MultipartFile file) throws IOException {
+        StorePath storePath = storageClient.uploadFile((InputStream)file.getInputStream(),file.getSize(), FilenameUtils.getExtension(file.getOriginalFilename()),null);
+        return getResAccessUrl(storePath);
+    }
 
     /**
      * 封装文件完整URL地址
      * @param storePath
      * @return
      */
-//    private String getResAccessUrl(StorePath storePath) {
-//        String fileUrl = fdfsConfig.getResHost() + "/" + storePath.getFullPath();
-//        return fileUrl;
-//    }
+    private String getResAccessUrl(StorePath storePath) {
+        String fileUrl = fdfsConfig.getResHost() + "/" + storePath.getFullPath();
+        return fileUrl;
+    }
 }
 
 

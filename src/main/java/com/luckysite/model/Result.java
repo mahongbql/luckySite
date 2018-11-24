@@ -1,34 +1,35 @@
 package com.luckysite.model;
 
-import java.util.HashMap;
-
-public class Result extends HashMap<String, Object> {
-    private int code;
+public class Result<T> {
+    /*错误码*/
+    private Integer code;
+    /*提示信息*/
     private String msg;
-    private Object object;
 
-    public Result(){}
+    /*返回的具体内容*/
+    private T data;
 
-    public Result(int code, String msg, Object object){
-        this.code = code;
-        this.msg = msg;
-        this.object = object;
+    public Integer getCode() {
+        return code;
     }
 
-    public Result(int code, String msg){
+    public void setCode(Integer code) {
         this.code = code;
-        this.msg = msg;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public String getMsg() {
+        return msg;
     }
 
     public void setMsg(String msg) {
         this.msg = msg;
     }
 
-    public void setObject(Object object) {
-        this.object = object;
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
     }
 }

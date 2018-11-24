@@ -3,9 +3,10 @@ package com.luckysite.util;
 import com.luckysite.enmu.ResultCode;
 import com.luckysite.model.Result;
 
+import java.util.HashMap;
 import java.util.Map;
 
-public class ResultUtil{
+public class ResultUtil {
 
     /**
      * 失败
@@ -16,7 +17,7 @@ public class ResultUtil{
         Result r = new Result();
         r.setCode(ResultCode.ERROR.getCode());
         r.setMsg(ResultCode.ERROR.getMsg());
-        r.setObject(map);
+        r.setData(map);
         return r;
     }
 
@@ -31,7 +32,7 @@ public class ResultUtil{
         Result r = new Result();
         r.setCode(code);
         r.setMsg(msg);
-        r.setObject(map);
+        r.setData(map);
         return r;
     }
 
@@ -44,7 +45,7 @@ public class ResultUtil{
         Result r = new Result();
         r.setCode(ResultCode.SUCCESS.getCode());
         r.setMsg(ResultCode.SUCCESS.getMsg());
-        r.setObject(map);
+        r.setData(map);
         return r;
     }
 

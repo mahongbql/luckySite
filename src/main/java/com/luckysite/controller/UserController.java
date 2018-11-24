@@ -75,7 +75,7 @@ public class UserController {
         log.info("user-login：用户 " + user.getUserName() + " 登陆成功");
         httpSession.setAttribute(user.getUserId()+"", user);
 
-        Map<String, Object> result = new HashMap<>();
+        HashMap<String, Object> result = new HashMap<>();
         result.put("user", user);
         result.put("url", "/page/index/index");
 

@@ -38,8 +38,8 @@ public class GetImageController {
      */
 //    @Auth(role = AuthConfig.VISTOR)
     @RequestMapping("/getImageList")
-    public @ResponseBody
-    Result getImageList(PicParamModel picParamModel){
+    @ResponseBody
+    public Result getImageList(PicParamModel picParamModel){
         List<Pic> picList = getImageService.getImage(picParamModel);
         log.info("GetImageController-getImageList-获取到的图片数量为：" + picList.size());
 
