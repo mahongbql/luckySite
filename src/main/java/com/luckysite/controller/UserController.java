@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -52,8 +53,9 @@ public class UserController {
      * 用户登录
      * @param loginUser
      */
-    @RequestMapping("login")
-    public Result login(@RequestParam User loginUser, HttpSession httpSession){
+    @RequestMapping("/login")
+    public @ResponseBody
+    Result login(User loginUser, HttpSession httpSession){
         String userName = loginUser.getUserName();
         log.info("user-login：用户 " + userName + "进行登录验证");
 

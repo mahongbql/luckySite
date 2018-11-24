@@ -74,10 +74,11 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
                     }
 
                     log.info("AccessHandlerInterceptor-preHandle-用户 " + user.getUserName() + "无权限访问");
+                    return false;
                 }
             }
         }
 
-        return false;
+        return true;
     }
 }

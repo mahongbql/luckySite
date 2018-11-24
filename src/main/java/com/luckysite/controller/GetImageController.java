@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -37,7 +38,8 @@ public class GetImageController {
      */
 //    @Auth(role = AuthConfig.VISTOR)
     @RequestMapping("/getImageList")
-    public Result getImageList(@RequestParam PicParamModel picParamModel){
+    public @ResponseBody
+    Result getImageList(PicParamModel picParamModel){
         List<Pic> picList = getImageService.getImage(picParamModel);
         log.info("GetImageController-getImageList-获取到的图片数量为：" + picList.size());
 

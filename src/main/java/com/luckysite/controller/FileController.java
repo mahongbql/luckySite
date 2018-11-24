@@ -29,8 +29,8 @@ public class FileController {
 
     private Logger log = LoggerFactory.getLogger(FileController.class);
 
-    @Autowired
-    private FileService fileService;
+//    @Autowired
+//    private FileService fileService;
 
     @PostMapping("/upload")
     @Auth(role = AuthConfig.USER)
@@ -43,21 +43,22 @@ public class FileController {
         }
 
         try {
-            String fileUrl = fileService.uploadFile(file);
-
-            if(null == fileUrl){
-                throw new Exception("path is null Exception");
-            }
-
-            User user = (User) httpSession.getAttribute(userId+"");
-            fileService.insertPic(fileUrl, user, des, uploadId);
-
-            log.info("FileUploadController-fdfsUpload-上传文件返回地址：" + fileUrl);
-
-            HashMap<String, Object> result = new HashMap<>();
-            result.put("data", fileUrl);
-
-            return ResultUtil.success(result);
+//            String fileUrl = fileService.uploadFile(file);
+//
+//            if(null == fileUrl){
+//                throw new Exception("path is null Exception");
+//            }
+//
+//            User user = (User) httpSession.getAttribute(userId+"");
+//            fileService.insertPic(fileUrl, user, des, uploadId);
+//
+//            log.info("FileUploadController-fdfsUpload-上传文件返回地址：" + fileUrl);
+//
+//            HashMap<String, Object> result = new HashMap<>();
+//            result.put("data", fileUrl);
+//
+//            return ResultUtil.success(result);
+            return ResultUtil.success();
         } catch (Exception ex) {
             log.error("FileController-fdfsUpload-上传文件失败：" + ex);
             return new Result(ResultCode.ERROR.getCode(), "文件上传失败", null);
