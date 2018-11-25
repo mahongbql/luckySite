@@ -18,12 +18,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User get(String userName) {
-        return userMapper.get(userName);
+    public User getByUserName(String userName) {
+        return userMapper.getByUserName(userName);
     }
 
     @Override
-    public User get(int userId) {
-        return userMapper.get(userId);
+    public User getByUserId(int userId) {
+        return userMapper.getByUserId(userId);
     }
 }

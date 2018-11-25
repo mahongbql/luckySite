@@ -6,4 +6,12 @@
         insert into user_msg (username, freez, registerTime, loginTime, refreshTime, sex, role) values
         (#{username}, #{freez}, #{registerTime}, #{loginTime}, #{refreshTime}, #{sex}, #{role})
     </insert>
+
+    <select id="getByUserName" parameterType="java.lang.String">
+        select * from user_msg where userName = #{userName}
+    </select>
+
+    <select id="getByUserId" parameterType="java.lang.Integer">
+        select * from user_msg where userId = #{userId}
+    </select>
 </mapper>

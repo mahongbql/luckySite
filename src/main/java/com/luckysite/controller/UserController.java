@@ -1,11 +1,13 @@
 package com.luckysite.controller;
 
+import com.luckysite.config.AppConfig;
 import com.luckysite.enmu.ResultCode;
 import com.luckysite.enmu.UserStatusEnmu;
 import com.luckysite.enmu.UserTypeEnmu;
 import com.luckysite.entity.User;
 import com.luckysite.model.Result;
 import com.luckysite.service.UserService;
+import com.luckysite.util.HttpUtil;
 import com.luckysite.util.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +31,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AppConfig appConfig;
+
     /**
      * 用户注册
      * @param user
@@ -51,34 +56,47 @@ public class UserController {
 
     /**
      * 用户登录
-     * @param loginUser
+     * @param resCode
+     * @param httpSession
+     * @return
      */
     @RequestMapping("/login")
     public @ResponseBody
-    Result login(User loginUser, HttpSession httpSession){
-        String userName = loginUser.getUserName();
-        log.info("user-login：用户 " + userName + "进行登录验证");
+    Result login(@RequestParam("resCode") String resCode, HttpSession httpSession){
+        log.info("user-login-用户resCode: " + resCode);
 
-        User user = userService.get(userName);
+        String appId = appConfig.getAppId();
+        String appSecret = appConfig.getAppSecret();
 
-        if(null == user){
-            log.error("user-login-用户进行注册：用户 " + loginUser.getUserName());
-            user.setUserName(userName);
-            user = register(user);
+        String url = appConfig.getUrl()+"&appid=" + appId + "&secret=" + appSecret + "&js_code=" + resCode;
+        log.info("user-login-远程访问url：" + url);
 
-            if(null == user){
-                log.error("user-login-注册失败：用户 " + loginUser.getUserName());
-                return ResultUtil.error(ResultCode.ERROR.getCode(), "用户注册异常", null);
-            }
-        }
+        String jsonStr = HttpUtil.doGet(url);
+        log.info("user-login-返回参数：" + jsonStr);
 
-        log.info("user-login：用户 " + user.getUserName() + " 登陆成功");
-        httpSession.setAttribute(user.getUserId()+"", user);
 
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("user", user);
-        result.put("url", "/page/index/index");
 
-        return ResultUtil.success(result);
+//        User user = userService.getByUserName(userName);
+//
+//        if(null == user){
+//            log.error("user-login-用户进行注册：用户 " + loginUser.getUserName());
+//            user.setUserName(userName);
+//            user = register(user);
+//
+//            if(null == user){
+//                log.error("user-login-注册失败：用户 " + loginUser.getUserName());
+//                return ResultUtil.error(ResultCode.ERROR.getCode(), "用户注册异常", null);
+//            }
+//        }
+//
+//        log.info("user-login：用户 " + user.getUserName() + " 登陆成功");
+//        httpSession.setAttribute(user.getUserId()+"", user);
+//
+//        HashMap<String, Object> result = new HashMap<>();
+//        result.put("user", user);
+//        result.put("url", "/page/index/index");
+//
+//        return ResultUtil.success(result);
+        return null;
     }
 }

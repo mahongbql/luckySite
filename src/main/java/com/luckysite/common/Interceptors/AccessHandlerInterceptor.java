@@ -74,7 +74,7 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
                     Auth auth = method.getAnnotation(Auth.class);
                     log.info("AccessHandlerInterceptor-preHandle-用户 " + userId + " ，auth: " + auth.role());
 
-                    User user = userService.get(userId);
+                    User user = userService.getByUserId(Integer.parseInt(userId));
 
                     if(null == user){
                         response.sendRedirect("/pages/login/login");

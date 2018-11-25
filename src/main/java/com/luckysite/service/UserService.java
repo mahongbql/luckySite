@@ -14,12 +14,12 @@ public interface UserService {
      * @param userName
      * @return
      */
-    User get(String userName);
+    User getByUserName(String userName);
 
     /**
      * 通过用户名获取一个用户
      * @param userId
      * @return
      */
-    User get(int userId);
+    User getByUserId(int userId);
 }
