@@ -9,6 +9,7 @@ import com.luckysite.model.Result;
 import com.luckysite.service.UserService;
 import com.luckysite.util.HttpUtil;
 import com.luckysite.util.ResultUtil;
+import com.luckysite.util.TimeUtil;
 import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -102,7 +102,10 @@ public class UserController {
         userService.updateLoginInfo(user);
 
         HashMap<String, Object> result = new HashMap<>();
-        result.put("user", user);
+        result.put("token", sessionKey);
+        result.put("userId", user.getUserId());
+        result.put("rolo", user.getRole());
+        result.put("lastLoginTime", TimeUtil.transFormDate(user.getLoginTime()));
 
         return ResultUtil.success(result);
     }
