@@ -65,11 +65,11 @@ public class UserController {
             log.error("user-login-用户进行注册：用户 " + loginUser.getUserName());
             user.setUserName(userName);
             user = register(user);
-        }
 
-        if(null == user){
-            log.error("user-login-注册失败：用户 " + loginUser.getUserName());
-            return ResultUtil.error(ResultCode.ERROR.getCode(), "用户注册异常", null);
+            if(null == user){
+                log.error("user-login-注册失败：用户 " + loginUser.getUserName());
+                return ResultUtil.error(ResultCode.ERROR.getCode(), "用户注册异常", null);
+            }
         }
 
         log.info("user-login：用户 " + user.getUserName() + " 登陆成功");

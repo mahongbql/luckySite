@@ -49,15 +49,21 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object obj) throws Exception {
         log.info("AccessHandlerInterceptor-preHandle-开始执行");
 
-        HttpSession httpSession = request.getSession();
-
-        User usr = (User) httpSession.getAttribute("user");
-
-        String ip = request.getRemoteHost();
-        log.info("AccessHandlerInterceptor-preHandle-request ip: " + ip);
+        String userId = request.getParameter("userId");
 
         String methodName = ((HandlerMethod)obj).getMethod().getName();
         log.info("AccessHandlerInterceptor-preHandle-访问方法名：" + methodName);
+
+        if(null == userId && !"login".equals(methodName)){
+            log.error("AccessHandlerInterceptor-非登录方法无认证userId，拒绝访问");
+            return false;
+        }else if("login".equals(methodName)){
+            log.info("AccessHandlerInterceptor-用户进行登录：" + userId + " 拦截器放行");
+            return true;
+        }
+
+        String ip = request.getRemoteHost();
+        log.info("AccessHandlerInterceptor-preHandle-request ip: " + ip);
 
         Method[] methods = ((HandlerMethod)obj).getBean().getClass().getMethods();
 
@@ -66,9 +72,9 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
             if (method.isAnnotationPresent(Auth.class)){
                 if(methodName.equals(method.getName())) {
                     Auth auth = method.getAnnotation(Auth.class);
-                    log.info("AccessHandlerInterceptor-preHandle-用户 " + usr.getUserId() + " ，auth: " + auth.role());
+                    log.info("AccessHandlerInterceptor-preHandle-用户 " + userId + " ，auth: " + auth.role());
 
-                    User user = userService.get(usr.getUserId()+"");
+                    User user = userService.get(userId);
 
                     if(null == user){
                         response.sendRedirect("/pages/login/login");
