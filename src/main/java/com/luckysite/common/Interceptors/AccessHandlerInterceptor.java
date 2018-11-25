@@ -58,7 +58,7 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
             log.error("AccessHandlerInterceptor-非登录方法无认证userId，拒绝访问");
             return false;
         }else if("login".equals(methodName)){
-            log.info("AccessHandlerInterceptor-用户进行登录：" + userId + " 拦截器放行");
+            log.info("AccessHandlerInterceptor-用户进行登录,拦截器放行");
             return true;
         }
 
