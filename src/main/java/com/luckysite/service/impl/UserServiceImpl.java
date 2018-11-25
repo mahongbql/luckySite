@@ -28,7 +28,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateLoginInfo(User user) {
+    public User getByToken(String token) {
+        return userMapper.getByToken(token);
+    }
 
+    @Override
+    public void updateLoginInfo(User user) {
+        userMapper.updateLoginInfo(user);
     }
 }

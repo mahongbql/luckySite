@@ -24,6 +24,13 @@ public interface UserService {
     User getByUserId(int userId);
 
     /**
+     * 通过token获取用户信息
+     * @param token
+     * @return
+     */
+    User getByToken(String token);
+
+    /**
      * 跟新用户信息
      * @param user
      */

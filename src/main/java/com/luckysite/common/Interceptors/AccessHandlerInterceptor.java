@@ -49,18 +49,20 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object obj) throws Exception {
         log.info("AccessHandlerInterceptor-preHandle-开始执行");
 
-        String userId = request.getParameter("userId");
+        String token = request.getParameter("token");
 
         String methodName = ((HandlerMethod)obj).getMethod().getName();
         log.info("AccessHandlerInterceptor-preHandle-访问方法名：" + methodName);
 
-        if(null == userId && !"login".equals(methodName)){
+        if(null == token && !"login".equals(methodName)){
             log.error("AccessHandlerInterceptor-非登录方法无认证userId，拒绝访问");
             return false;
         }else if("login".equals(methodName)){
             log.info("AccessHandlerInterceptor-用户进行登录,拦截器放行");
             return true;
         }
+
+        User user = userService.getByToken(token);
 
         String ip = request.getRemoteHost();
         log.info("AccessHandlerInterceptor-preHandle-request ip: " + ip);
@@ -72,18 +74,9 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
             if (method.isAnnotationPresent(Auth.class)){
                 if(methodName.equals(method.getName())) {
                     Auth auth = method.getAnnotation(Auth.class);
-                    log.info("AccessHandlerInterceptor-preHandle-用户 " + userId + " ，auth: " + auth.role());
-
-                    User user = userService.getByUserId(Integer.parseInt(userId));
-
-                    if(null == user){
-                        response.sendRedirect("/pages/login/login");
-                        log.info("AccessHandlerInterceptor-preHandle-用户未登录");
-                        return false;
-                    }
+                    log.info("AccessHandlerInterceptor-preHandle-用户 " + user.getUserName() + " ，auth: " + auth.role());
 
                     int uAuth = user.getRole();
-
                     if(uAuth >= auth.role()){
                         log.info("AccessHandlerInterceptor-preHandle-用户 " + user.getUserName() + "权限通过");
                         return true;
