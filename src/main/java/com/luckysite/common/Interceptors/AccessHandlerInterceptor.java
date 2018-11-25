@@ -63,6 +63,11 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
         }
 
         User user = userService.getByToken(token);
+        if(null == user){
+            log.error("AccessHandlerInterceptor-token失效");
+            response.sendRedirect("/pages/index/index");
+            return false;
+        }
 
         String ip = request.getRemoteHost();
         log.info("AccessHandlerInterceptor-preHandle-request ip: " + ip);
