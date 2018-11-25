@@ -18,6 +18,15 @@ public class User implements Serializable {
     private Date refreshTime;
     private String sex;
     private int role;
+    private String token;
+
+    public String getToken() {
+        return this.token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public void setRole(int role) {
         this.role = role;

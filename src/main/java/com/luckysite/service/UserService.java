@@ -22,4 +22,10 @@ public interface UserService {
      * @return
      */
     User getByUserId(int userId);
+
+    /**
+     * 跟新用户信息
+     * @param user
+     */
+    void updateLoginInfo(User user);
 }

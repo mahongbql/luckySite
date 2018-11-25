@@ -14,4 +14,8 @@
     <select id="getByUserId" parameterType="java.lang.Integer">
         select * from user_msg where userId = #{userId}
     </select>
+
+    <update id="updateLoginInfo" parameterType="com.luckysite.entity.User">
+        update user_msg set token = #{token}, loginTime = now(), refreshTime = now()
+    </update>
 </mapper>

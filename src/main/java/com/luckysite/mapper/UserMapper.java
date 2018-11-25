@@ -11,4 +11,6 @@ public interface UserMapper {
     User getByUserName(@Param("userName") String userName);
 
     User getByUserId(@Param("userId") int userId);
+
+    void updateLoginInfo(User user);
 }

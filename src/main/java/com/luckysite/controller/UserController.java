@@ -9,6 +9,8 @@ import com.luckysite.model.Result;
 import com.luckysite.service.UserService;
 import com.luckysite.util.HttpUtil;
 import com.luckysite.util.ResultUtil;
+import net.sf.json.JSON;
+import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,29 +73,35 @@ public class UserController {
         String jsonStr = HttpUtil.doGet(url);
         log.info("user-login-返回参数：" + jsonStr);
 
+        JSON json = JSONObject.fromObject(jsonStr);
+        String sessionKey = ((JSONObject) json).getString("session_key");
+        String openid = ((JSONObject) json).getString("openid");
 
+        log.info("user-login-sessionKey：" + sessionKey);
+        log.info("user-login-openid：" + openid);
 
-//        User user = userService.getByUserName(userName);
-//
-//        if(null == user){
-//            log.error("user-login-用户进行注册：用户 " + loginUser.getUserName());
-//            user.setUserName(userName);
-//            user = register(user);
-//
-//            if(null == user){
-//                log.error("user-login-注册失败：用户 " + loginUser.getUserName());
-//                return ResultUtil.error(ResultCode.ERROR.getCode(), "用户注册异常", null);
-//            }
-//        }
-//
-//        log.info("user-login：用户 " + user.getUserName() + " 登陆成功");
-//        httpSession.setAttribute(user.getUserId()+"", user);
-//
-//        HashMap<String, Object> result = new HashMap<>();
-//        result.put("user", user);
-//        result.put("url", "/page/index/index");
-//
-//        return ResultUtil.success(result);
-        return null;
+        User user = userService.getByUserName(openid);
+
+        if(null == user){
+            log.error("user-login-用户进行注册：用户 " + openid);
+            user.setUserName(openid);
+            user = register(user);
+
+            if(null == user){
+                log.error("user-login-注册失败：用户 " + openid);
+                return ResultUtil.error(ResultCode.ERROR.getCode(), "用户注册异常", null);
+            }
+        }
+
+        log.info("user-login：用户 " + openid + " 登陆成功");
+        httpSession.setAttribute(sessionKey, user);
+
+        user.setToken(sessionKey);
+        userService.updateLoginInfo(user);
+
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("user", user);
+
+        return ResultUtil.success(result);
     }
 }
