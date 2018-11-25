@@ -4,7 +4,7 @@ server:
 # spring基础配置
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/mhb
+    url: jdbc:mysql://127.0.0.1:3306/lucky_site
     username: root
     password: mhb19940803751X
     driver-class-name: com.mysql.jdbc.Driver

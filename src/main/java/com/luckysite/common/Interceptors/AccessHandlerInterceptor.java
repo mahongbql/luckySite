@@ -57,6 +57,7 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
         log.info("AccessHandlerInterceptor-preHandle-request ip: " + ip);
 
         String methodName = ((HandlerMethod)obj).getMethod().getName();
+        log.info("AccessHandlerInterceptor-preHandle-访问方法名：" + methodName);
 
         Method[] methods = ((HandlerMethod)obj).getBean().getClass().getMethods();
 
