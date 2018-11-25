@@ -48,6 +48,7 @@ public class UserController {
             log.info("user-register-用户注册：用户信息存储完毕");
         }catch (Exception ex) {
             log.error("user-register-用户注册：用户 " + user.getUserName() + " 信息存储异常，注册失败");
+            log.error("Exception is " + ex);
         }
 
         return user;
@@ -84,6 +85,7 @@ public class UserController {
 
         if(null == user){
             log.error("user-login-用户进行注册：用户 " + openid);
+            user = new User();
             user.setUserName(openid);
             user = register(user);
 

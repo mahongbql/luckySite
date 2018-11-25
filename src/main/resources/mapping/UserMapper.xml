@@ -3,19 +3,19 @@
 <!--客户映射 指定到mapper接口 -->
 <mapper namespace="com.luckysite.mapper.UserMapper">
     <insert id="insertUser" parameterType="com.luckysite.entity.User">
-        insert into user_msg (username, freez, registerTime, loginTime, refreshTime, sex, role) values
-        (#{username}, #{freez}, #{registerTime}, #{loginTime}, #{refreshTime}, #{sex}, #{role})
+        insert into user_msg (userName, freez, registerTime, loginTime, refreshTime, role) values
+        (#{userName}, #{freez}, #{registerTime}, #{loginTime}, #{refreshTime}, #{role})
     </insert>
 
-    <select id="getByUserName" parameterType="java.lang.String">
+    <select id="getByUserName" parameterType="java.lang.String" resultType="com.luckysite.entity.User">
         select * from user_msg where userName = #{userName}
     </select>
 
-    <select id="getByUserId" parameterType="java.lang.Integer">
+    <select id="getByUserId" parameterType="java.lang.Integer" resultType="com.luckysite.entity.User">
         select * from user_msg where userId = #{userId}
     </select>
 
-    <select id="getByToken" parameterType="java.lang.String">
+    <select id="getByToken" parameterType="java.lang.String" resultType="com.luckysite.entity.User">
         select * from user_msg where token = #{token}
     </select>
 

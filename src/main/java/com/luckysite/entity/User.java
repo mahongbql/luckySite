@@ -16,7 +16,6 @@ public class User implements Serializable {
     private Date registerTime;
     private Date loginTime;
     private Date refreshTime;
-    private String sex;
     private int role;
     private String token;
 
@@ -56,10 +55,6 @@ public class User implements Serializable {
         this.registerTime = registerTime;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
     public Long getUserId() {
         return this.userId;
     }
@@ -82,10 +77,6 @@ public class User implements Serializable {
 
     public Date getRefreshTime() {
         return this.refreshTime;
-    }
-
-    public String getSex() {
-        return this.sex;
     }
 
     public int getRole() {
