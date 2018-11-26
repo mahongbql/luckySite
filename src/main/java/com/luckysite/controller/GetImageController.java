@@ -36,7 +36,7 @@ public class GetImageController {
      * @param picParamModel
      * @return
      */
-//    @Auth(role = AuthConfig.VISTOR)
+    @Auth(role = AuthConfig.USER)
     @RequestMapping("/getImageList")
     @ResponseBody
     public Result getImageList(PicParamModel picParamModel){
