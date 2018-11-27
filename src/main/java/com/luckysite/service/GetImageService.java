@@ -15,4 +15,11 @@ public interface GetImageService {
      * @return
      */
     List<Pic> getImage(PicParamModel picParamModel);
+
+    /**
+     * 获取同一批次的图片信息
+     * @param picParamModel
+     * @return
+     */
+    List<Pic> getImageById(PicParamModel picParamModel);
 }

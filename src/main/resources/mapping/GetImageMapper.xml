@@ -5,4 +5,11 @@
     <select id="getImage" resultType="com.luckysite.entity.Pic">
         SELECT * FROM pic WHERE status = 1
     </select>
+
+    <select id="getImageById" resultType="com.luckysite.entity.Pic">
+        SELECT * FROM pic p, (
+          SELECT uploadId FROM pic WHERE id = #{id}
+        )t
+        WHERE p.uploadId = t.uploadId
+    </select>
 </mapper>

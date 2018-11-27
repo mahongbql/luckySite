@@ -48,4 +48,22 @@ public class GetImageController {
 
         return ResultUtil.success(result);
     }
+
+    /**
+     * 获取指定批次的图片
+     * @param picParamModel
+     * @return
+     */
+    @Auth(role = AuthConfig.USER)
+    @RequestMapping("/getImageById")
+    @ResponseBody
+    public Result getImageById(PicParamModel picParamModel){
+        List<Pic> picList = getImageService.getImageById(picParamModel);
+        log.info("GetImageController-getImageList-获取到指定批次【" + picList.get(0).getUploadId() + "】的图片数量为：" + picList.size());
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("data", picList);
+
+        return ResultUtil.success(result);
+    }
 }

@@ -26,4 +26,9 @@ public class GetImageServiceImpl implements GetImageService {
 
         return getImageMapper.getImage();
     }
+
+    @Override
+    public List<Pic> getImageById(PicParamModel picParamModel) {
+        return getImageMapper.getImageById(picParamModel);
+    }
 }

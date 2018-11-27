@@ -1,6 +1,7 @@
 package com.luckysite.mapper;
 
 import com.luckysite.entity.Pic;
+import com.luckysite.model.PicParamModel;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -15,4 +16,11 @@ public interface GetImageMapper {
      * @return
      */
     List<Pic> getImage();
+
+    /**
+     * 获取同一批次的图片信息
+     * @param picParamModel
+     * @return
+     */
+    List<Pic> getImageById(PicParamModel picParamModel);
 }
