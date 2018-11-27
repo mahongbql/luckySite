@@ -6,6 +6,7 @@ import com.luckysite.entity.Pic;
 import com.luckysite.model.PicParamModel;
 import com.luckysite.model.Result;
 import com.luckysite.service.GetImageService;
+import com.luckysite.util.RedisUtil;
 import com.luckysite.util.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,12 @@ public class GetImageController {
     @Autowired
     private GetImageService getImageService;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
+    //图片浏览次数
+    private static final String VIEW_NUMBER = "view_number_";
+
     /**
      * 获取图片信息列表
      * @param picParamModel
@@ -40,7 +47,7 @@ public class GetImageController {
     @RequestMapping("/getImageList")
     @ResponseBody
     public Result getImageList(PicParamModel picParamModel){
-        List<Pic> picList = getImageService.getImage(picParamModel);
+        List<Pic> picList = getViewNumber(getImageService.getImage(picParamModel));
         log.info("GetImageController-getImageList-获取到的图片数量为：" + picList.size());
 
         Map<String, Object> result = new HashMap<>();
@@ -59,11 +66,39 @@ public class GetImageController {
     @ResponseBody
     public Result getImageById(PicParamModel picParamModel){
         List<Pic> picList = getImageService.getImageById(picParamModel);
+        Long uploadId = picList.get(0).getUploadId();
+        setViewNumber(uploadId);
+        picList = getViewNumber(picList);
         log.info("GetImageController-getImageList-获取到指定批次【" + picList.get(0).getUploadId() + "】的图片数量为：" + picList.size());
 
         Map<String, Object> result = new HashMap<>();
         result.put("data", picList);
 
         return ResultUtil.success(result);
+    }
+
+    /**
+     * 获得图片浏览次数
+     * @return
+     */
+    private List<Pic> getViewNumber(List<Pic> picList){
+        for(Pic pic : picList){
+            Integer viewNumber = Integer.parseInt(redisUtil.get(VIEW_NUMBER + pic.getUploadId()).toString());
+            pic.setViewNumber(viewNumber);
+            log.info("GetImageController-getViewNumber-批次【" + pic.getUploadId() + "】浏览次数为：" + viewNumber);
+        }
+
+        return picList;
+    }
+
+    /**
+     * 设置picId
+     * @param uploadId
+     */
+    private void setViewNumber(Long uploadId){
+        Integer viewNumber = Integer.parseInt(redisUtil.get(VIEW_NUMBER + uploadId).toString());
+        viewNumber = viewNumber == null ? 1 : viewNumber+1;
+        redisUtil.set(VIEW_NUMBER + uploadId, viewNumber);
+        log.info("GetImageController-setViewNumber-批次【" + uploadId + "】浏览次数 + 1，变为：" + viewNumber);
     }
 }

@@ -1,6 +1,8 @@
 package com.luckysite.controller;
 
+import com.luckysite.common.annotation.Auth;
 import com.luckysite.config.AppConfig;
+import com.luckysite.config.AuthConfig;
 import com.luckysite.enmu.ResultCode;
 import com.luckysite.enmu.UserStatusEnmu;
 import com.luckysite.enmu.UserTypeEnmu;

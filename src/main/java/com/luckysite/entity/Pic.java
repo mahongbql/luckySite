@@ -10,6 +10,16 @@ public class Pic {
     private String des;     //图片描述
     private int status;     //图片状态
     private Long uploadId;  //上传编号
+    private Integer viewNumber; //浏览次数
+
+    public Integer getViewNumber() {
+        viewNumber = viewNumber == null ? 0 : viewNumber;
+        return viewNumber;
+    }
+
+    public void setViewNumber(Integer viewNumber) {
+        this.viewNumber = viewNumber;
+    }
 
     public void setUploadId(Long uploadId) {
         this.uploadId = uploadId;
