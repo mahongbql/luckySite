@@ -36,6 +36,7 @@ public class FileController {
     @Auth(role = AuthConfig.USER)
     public Result fdfsUpload(@RequestParam("file") MultipartFile file,  @RequestParam("userId") int userId,
                              @RequestParam("des") String des, @RequestParam("uploadId") Long uploadId,
+                             @RequestParam("userIcon") String userIcon,
                              RedirectAttributes redirectAttributes, HttpSession httpSession) {
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Please select a file to upload");

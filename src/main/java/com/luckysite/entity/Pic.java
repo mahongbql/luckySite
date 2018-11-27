@@ -11,6 +11,15 @@ public class Pic {
     private int status;     //图片状态
     private Long uploadId;  //上传编号
     private Integer viewNumber; //浏览次数
+    private String userIcon;    //用户头像
+
+    public String getUserIcon() {
+        return this.userIcon;
+    }
+
+    public void setUserIcon(String userIcon) {
+        this.userIcon = userIcon;
+    }
 
     public Integer getViewNumber() {
         viewNumber = viewNumber == null ? 0 : viewNumber;
