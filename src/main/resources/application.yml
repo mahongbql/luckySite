@@ -34,10 +34,6 @@ pagehelper:
   support-methods-arguments: true
   params: count=countSql
 
-# 小程序配置
-app:
-  appId: wx1ba1d504c0635c65
-  appSecret: f936af5ebc7f6f95c0c0d7e673fe43c1
-  url: https://api.weixin.qq.com/sns/jscode2session?grant_type=authorization_code&
+
 
 
