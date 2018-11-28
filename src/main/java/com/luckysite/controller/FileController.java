@@ -47,7 +47,6 @@ public class FileController {
                 ", des：" + des +
                 ", uploadId：" + uploadId +
                 ", userIcon：" + userIcon);
-
         try {
             String fileUrl = fileService.uploadFile(file);
 
