@@ -25,6 +25,9 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private HttpSession httpSession;
+
     //无论controller中是否抛出异常，都会调用该方法
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object obj, Exception ex)
@@ -68,6 +71,8 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
             response.sendRedirect("/pages/index/index");
             return false;
         }
+
+        httpSession.setAttribute(token, user);
 
         String ip = request.getRemoteHost();
         log.info("AccessHandlerInterceptor-preHandle-request ip: " + ip);

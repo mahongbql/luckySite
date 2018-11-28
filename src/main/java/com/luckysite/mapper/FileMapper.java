@@ -12,11 +12,4 @@ public interface FileMapper {
      * @param pic
      */
     void insertPic(Pic pic);
-
-    /**
-     * 上传文件
-     * @param file
-     * @return 文件地址
-     */
-    String uploadFile(MultipartFile file);
 }

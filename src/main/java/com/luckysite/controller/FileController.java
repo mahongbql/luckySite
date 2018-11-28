@@ -34,7 +34,7 @@ public class FileController {
 
     @PostMapping("/upload")
     @Auth(role = AuthConfig.USER)
-    public Result fdfsUpload(@RequestParam("file") MultipartFile file,  @RequestParam("userId") int userId,
+    public Result fdfsUpload(@RequestParam("file") MultipartFile file,  @RequestParam("token") String token,
                              @RequestParam("des") String des, @RequestParam("uploadId") String uploadId,
                              @RequestParam("userIcon") String userIcon,
                              RedirectAttributes redirectAttributes, HttpSession httpSession) {
@@ -43,7 +43,7 @@ public class FileController {
             return ResultUtil.error(ResultCode.ERROR.getCode(), "File can not be null !", null);
         }
 
-        log.info("FileController-fdfsUpload-获取到信息为：userId：" + userId +
+        log.info("FileController-fdfsUpload-获取到信息为：token：" + token +
                 ", des：" + des +
                 ", uploadId：" + uploadId +
                 ", userIcon：" + userIcon);
@@ -55,13 +55,13 @@ public class FileController {
                 throw new Exception("path is null Exception");
             }
 
-            User user = (User) httpSession.getAttribute(userId+"");
+            User user = (User) httpSession.getAttribute(token);
             fileService.insertPic(fileUrl, user, des, Long.parseLong(uploadId), userIcon);
 
             log.info("FileUploadController-fdfsUpload-上传文件返回地址：" + fileUrl);
 
             HashMap<String, Object> result = new HashMap<>();
-            result.put("data", null);
+            result.put("uploadId", uploadId);
 
             return ResultUtil.success(result);
         } catch (Exception ex) {
