@@ -29,7 +29,6 @@ public class FileServiceImpl implements FileService {
     public void insertPic(String path, User user, String des, Long uploadId, String userIcon) {
         Pic pic = new Pic();
 
-        pic.setCreateTime(new Date());
         pic.setPath(path);
         pic.setUserId(user.getUserId());
         pic.setDes(des);

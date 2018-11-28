@@ -43,6 +43,11 @@ public class FileController {
             return ResultUtil.error(ResultCode.ERROR.getCode(), "File can not be null !", null);
         }
 
+        log.info("FileController-fdfsUpload-获取到信息为：userId：" + userId +
+                ", des：" + des +
+                ", uploadId：" + uploadId +
+                ", userIcon：" + userIcon);
+
         try {
             String fileUrl = fileService.uploadFile(file);
 
@@ -56,7 +61,7 @@ public class FileController {
             log.info("FileUploadController-fdfsUpload-上传文件返回地址：" + fileUrl);
 
             HashMap<String, Object> result = new HashMap<>();
-            result.put("data", fileUrl);
+            result.put("data", null);
 
             return ResultUtil.success(result);
         } catch (Exception ex) {

@@ -4,6 +4,6 @@
 <mapper namespace="com.luckysite.mapper.FileMapper">
     <insert id="insertUser" parameterType="com.luckysite.entity.User">
         insert into pic (userId, createTime, path, des, status, uploadId, userIcon) values
-        (#{userId}, #{createTime}, #{path}, #{des}, #{status}, #{uploadId}, #{userIcon})
+        (#{userId}, now(), #{path}, #{des}, #{status}, #{uploadId}, #{userIcon})
     </insert>
 </mapper>
