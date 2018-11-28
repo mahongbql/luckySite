@@ -35,7 +35,7 @@ public class FileController {
     @PostMapping("/upload")
     @Auth(role = AuthConfig.USER)
     public Result fdfsUpload(@RequestParam("file") MultipartFile file,  @RequestParam("userId") int userId,
-                             @RequestParam("des") String des, @RequestParam("uploadId") Long uploadId,
+                             @RequestParam("des") String des, @RequestParam("uploadId") String uploadId,
                              @RequestParam("userIcon") String userIcon,
                              RedirectAttributes redirectAttributes, HttpSession httpSession) {
         if (file.isEmpty()) {
@@ -51,7 +51,7 @@ public class FileController {
             }
 
             User user = (User) httpSession.getAttribute(userId+"");
-            fileService.insertPic(fileUrl, user, des, uploadId);
+            fileService.insertPic(fileUrl, user, des, Long.parseLong(uploadId), userIcon);
 
             log.info("FileUploadController-fdfsUpload-上传文件返回地址：" + fileUrl);
 
