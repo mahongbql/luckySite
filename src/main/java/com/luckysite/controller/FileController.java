@@ -33,7 +33,7 @@ public class FileController {
     private FileService fileService;
 
     @PostMapping("/upload")
-    @Auth(role = AuthConfig.USER)
+    @Auth(role = AuthConfig.VIP)
     public Result fdfsUpload(@RequestParam("file") MultipartFile file,  @RequestParam("token") String token,
                              @RequestParam("des") String des, @RequestParam("uploadId") String uploadId,
                              @RequestParam("userIcon") String userIcon,

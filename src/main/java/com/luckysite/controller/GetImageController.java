@@ -38,6 +38,9 @@ public class GetImageController {
     //图片浏览次数
     private static final String VIEW_NUMBER = "view_number_";
 
+    //图片收藏次数
+    private static final String COLLECT_NUMBER = "collect_number_";
+
     /**
      * 获取图片信息列表
      * @param picParamModel
@@ -47,7 +50,8 @@ public class GetImageController {
     @RequestMapping("/getImageList")
     @ResponseBody
     public Result getImageList(PicParamModel picParamModel){
-        List<Pic> picList = getViewNumber(getImageService.getImage(picParamModel));
+//        List<Pic> picList = getViewNumber(getImageService.getImage(picParamModel));
+        List<Pic> picList = getImageService.getImage(picParamModel);
         log.info("GetImageController-getImageList-获取到的图片数量为：" + picList.size());
 
         Map<String, Object> result = new HashMap<>();

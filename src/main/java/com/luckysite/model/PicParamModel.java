@@ -6,7 +6,17 @@ package com.luckysite.model;
 public class PicParamModel {
     private int pageNum;    //分页起始
     private int pageSize;   //分页数量
-    private Long picId; //图片id
+    private Long uploadId; //批次
+    private Integer type;   //图片类型
+
+    public Integer getType() {
+        type = type == null ? 0 : type;
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
 
     public int getPageNum() {
         return pageNum;
@@ -24,11 +34,11 @@ public class PicParamModel {
         this.pageSize = pageSize;
     }
 
-    public Long getPicId() {
-        return picId;
+    public Long getUploadId() {
+        return this.uploadId;
     }
 
-    public void setPicId(Long picId) {
-        this.picId = picId;
+    public void setUploadId(Long uploadId) {
+        this.uploadId = uploadId;
     }
 }

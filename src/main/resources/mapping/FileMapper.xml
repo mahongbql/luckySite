@@ -3,7 +3,7 @@
 <!--图片映射 指定到mapper接口 -->
 <mapper namespace="com.luckysite.mapper.FileMapper">
     <insert id="insertPic" parameterType="com.luckysite.entity.Pic">
-        insert into pic (userId, createTime, path, des, status, uploadId, userIcon) values
-        (#{userId}, now(), #{path}, #{des}, #{status}, #{uploadId}, #{userIcon})
+        insert into pic (userId, createTime, path, des, status, uploadId, userIcon, type) values
+        (#{userId}, now(), #{path}, #{des}, #{status}, #{uploadId}, #{userIcon}, #{type})
     </insert>
 </mapper>

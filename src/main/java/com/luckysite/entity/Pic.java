@@ -11,7 +11,26 @@ public class Pic {
     private int status;     //图片状态
     private Long uploadId;  //上传编号
     private Integer viewNumber; //浏览次数
+    private Integer collectNum; //收藏次数
     private String userIcon;    //用户头像
+    private Integer type;       //图片类型
+
+    public Integer getType() {
+        return this.type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getCollectNum() {
+        collectNum = collectNum == null ? 0 : collectNum;
+        return collectNum;
+    }
+
+    public void setCollectNum(Integer collectNum) {
+        this.collectNum = collectNum;
+    }
 
     public String getUserIcon() {
         return this.userIcon;
