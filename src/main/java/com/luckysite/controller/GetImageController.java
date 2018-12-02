@@ -71,9 +71,9 @@ public class GetImageController {
     @ResponseBody
     public Result getImageById(PicParamModel picParamModel){
         List<Pic> picList = getImageService.getImageById(picParamModel);
-        Long uploadId = picList.get(0).getUploadId();
-        setViewNumber(uploadId);
-        picList = getViewNumber(picList);
+//        Long uploadId = picList.get(0).getUploadId();
+//        setViewNumber(uploadId);
+//        picList = getViewNumber(picList);
         log.info("GetImageController-getImageList-获取到指定批次【" + picList.get(0).getUploadId() + "】的图片数量为：" + picList.size());
 
         Map<String, Object> result = new HashMap<>();
@@ -101,7 +101,9 @@ public class GetImageController {
      * @param uploadId
      */
     private void setViewNumber(Long uploadId){
-        Integer viewNumber = Integer.parseInt(redisUtil.get(VIEW_NUMBER + uploadId).toString());
+        Object times = redisUtil.get(VIEW_NUMBER + uploadId);
+        times = times == null ? "0" : times;
+        Integer viewNumber = Integer.parseInt(times.toString());
         viewNumber = viewNumber == null ? 1 : viewNumber+1;
         redisUtil.set(VIEW_NUMBER + uploadId, viewNumber);
         log.info("GetImageController-setViewNumber-批次【" + uploadId + "】浏览次数 + 1，变为：" + viewNumber);
