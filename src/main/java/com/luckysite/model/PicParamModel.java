@@ -4,9 +4,9 @@ package com.luckysite.model;
  * Created by mahongbin on 2018/11/24.
  */
 public class PicParamModel {
-    private int pageNum;    //分页起始
-    private int pageSize;   //分页数量
-    private Long uploadId; //批次
+    private Integer pageNum;    //分页起始
+    private Integer pageSize;   //分页数量
+    private String picId;        //图片id
     private Integer type;   //图片类型
 
     public Integer getType() {
@@ -18,27 +18,27 @@ public class PicParamModel {
         this.type = type;
     }
 
-    public int getPageNum() {
-        return pageNum;
+    public Integer getPageNum() {
+        return this.pageNum;
     }
 
-    public void setPageNum(int pageNum) {
+    public Integer getPageSize() {
+        return this.pageSize;
+    }
+
+    public void setPageNum(Integer pageNum) {
         this.pageNum = pageNum;
     }
 
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
+    public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
     }
 
-    public Long getUploadId() {
-        return this.uploadId;
+    public String getPicId() {
+        return this.picId;
     }
 
-    public void setUploadId(Long uploadId) {
-        this.uploadId = uploadId;
+    public void setPicId(String picId) {
+        this.picId = picId;
     }
 }

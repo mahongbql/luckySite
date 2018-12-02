@@ -8,7 +8,7 @@
 
     <select id="getImageById" resultType="com.luckysite.entity.Pic">
         SELECT * FROM pic p, (
-          SELECT uploadId FROM pic WHERE id = #{id}
+          SELECT uploadId FROM pic WHERE id = #{picId}
         )t
         WHERE p.uploadId = t.uploadId
     </select>

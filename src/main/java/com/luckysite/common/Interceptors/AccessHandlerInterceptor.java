@@ -33,8 +33,6 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object obj, Exception ex)
             throws Exception {
         log.info("AccessHandlerInterceptor-afterCompletion-开始执行");
-        long start=new Date().getTime();
-        log.info("AccessHandlerInterceptor-afterCompletion-最后耗时为:"+(new Date().getTime() - start));
         if(null != ex){
             log.error("ex is " + ex);
         }
