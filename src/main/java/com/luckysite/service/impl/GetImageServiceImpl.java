@@ -24,7 +24,7 @@ public class GetImageServiceImpl implements GetImageService {
         //使用分页插件,核心代码就这一行
         PageHelper.startPage(picParamModel.getPageNum(), picParamModel.getPageSize());
 
-        return getImageMapper.getImage();
+        return getImageMapper.getImage(picParamModel);
     }
 
     @Override

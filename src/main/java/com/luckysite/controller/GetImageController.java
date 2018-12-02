@@ -51,6 +51,7 @@ public class GetImageController {
     @ResponseBody
     public Result getImageList(PicParamModel picParamModel){
 //        List<Pic> picList = getViewNumber(getImageService.getImage(picParamModel));
+        log.info("GetImageController-getImageList-参数：type = " + picParamModel.getType() + " pageSize = " + picParamModel.getPageSize() + " pageNumber = " + picParamModel.getPageNum() );
         List<Pic> picList = getImageService.getImage(picParamModel);
         log.info("GetImageController-getImageList-获取到的图片数量为：" + picList.size());
 

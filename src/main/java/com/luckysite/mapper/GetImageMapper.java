@@ -15,7 +15,7 @@ public interface GetImageMapper {
      * 获取所有图片信息
      * @return
      */
-    List<Pic> getImage();
+    List<Pic> getImage(PicParamModel picParamModel);
 
     /**
      * 获取同一批次的图片信息
