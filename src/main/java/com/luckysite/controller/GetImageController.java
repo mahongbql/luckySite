@@ -71,9 +71,9 @@ public class GetImageController {
     @ResponseBody
     public Result getImageById(PicParamModel picParamModel){
         List<Pic> picList = getImageService.getImageById(picParamModel);
-//        Long uploadId = picList.get(0).getUploadId();
-//        setViewNumber(uploadId);
-//        picList = getViewNumber(picList);
+        Long uploadId = picList.get(0).getUploadId();
+        setViewNumber(uploadId);
+        picList = getViewNumber(picList);
         log.info("GetImageController-getImageList-获取到指定批次【" + picList.get(0).getUploadId() + "】的图片数量为：" + picList.size());
 
         Map<String, Object> result = new HashMap<>();
