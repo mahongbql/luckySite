@@ -50,9 +50,9 @@ public class GetImageController {
     @RequestMapping("/getImageList")
     @ResponseBody
     public Result getImageList(PicParamModel picParamModel){
-//        List<Pic> picList = getViewNumber(getImageService.getImage(picParamModel));
+        List<Pic> picList = getViewNumber(getImageService.getImage(picParamModel));
         log.info("GetImageController-getImageList-参数：type = " + picParamModel.getType() + " pageSize = " + picParamModel.getPageSize() + " pageNumber = " + picParamModel.getPageNum() );
-        List<Pic> picList = getImageService.getImage(picParamModel);
+
         log.info("GetImageController-getImageList-获取到的图片数量为：" + picList.size());
 
         Map<String, Object> result = new HashMap<>();
@@ -88,7 +88,9 @@ public class GetImageController {
      */
     private List<Pic> getViewNumber(List<Pic> picList){
         for(Pic pic : picList){
-            Integer viewNumber = Integer.parseInt(redisUtil.get(VIEW_NUMBER + pic.getUploadId()).toString());
+            Object times = redisUtil.get(VIEW_NUMBER + pic.getUploadId());
+            times = times == null ? "0" : times;
+            Integer viewNumber = Integer.parseInt(times.toString());
             pic.setViewNumber(viewNumber);
             log.info("GetImageController-getViewNumber-批次【" + pic.getUploadId() + "】浏览次数为：" + viewNumber);
         }
