@@ -8,6 +8,15 @@ public class PicParamModel {
     private Integer pageSize;   //分页数量
     private String picId;        //图片id
     private Integer type;   //图片类型
+    private String userId;  //用户id
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUserId() {
+        return this.userId;
+    }
 
     public Integer getType() {
         type = type == null ? 0 : type;
