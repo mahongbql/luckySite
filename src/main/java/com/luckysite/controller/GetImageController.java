@@ -151,7 +151,6 @@ public class GetImageController {
 
             pic.setViewNumber(viewNumber);
             pic.setCollectNum(collectNum);
-            log.info("GetImageController-getViewNumber-批次【" + pic.getUploadId() + "】浏览次数为：" + viewNumber);
         }
 
         return picList;
