@@ -86,6 +86,19 @@ public class GetImageController {
     }
 
     /**
+     * 用户添加收藏
+     * @param picParamModel
+     * @return
+     */
+    @Auth(role = AuthConfig.USER)
+    @RequestMapping("/collect")
+    @ResponseBody
+    public Result collect(PicParamModel picParamModel){
+        setCollectNumber(picParamModel.getPicId(), picParamModel.getUserId());
+        return ResultUtil.success();
+    }
+
+    /**
      * 获取用户是否收藏
      * @param picParamModel
      * @return
