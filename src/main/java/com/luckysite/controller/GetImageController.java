@@ -95,7 +95,9 @@ public class GetImageController {
     @ResponseBody
     public Result collect(PicParamModel picParamModel){
         setCollectNumber(picParamModel.getPicId(), picParamModel.getUserId());
-        return ResultUtil.success();
+        Map<String, Object> result = new HashMap<>();
+        result.put("status", true);
+        return ResultUtil.success(result);
     }
 
     /**
@@ -122,7 +124,9 @@ public class GetImageController {
     @ResponseBody
     public Result cancel(PicParamModel picParamModel){
         cancelCollect(picParamModel.getPicId(), picParamModel.getUserId());
-        return ResultUtil.success();
+        Map<String, Object> result = new HashMap<>();
+        result.put("status", false);
+        return ResultUtil.success(result);
     }
 
     /**
@@ -131,7 +135,7 @@ public class GetImageController {
      * @param userId
      */
     private void cancelCollect(String id, String userId){
-        redisUtil.hdel(userId, COLLECT_NUMBER + id);
+        redisUtil.hdel(userId, PIC_COLLECT + id);
     }
 
     /**
