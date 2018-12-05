@@ -136,6 +136,15 @@ public class GetImageController {
      */
     private void cancelCollect(String id, String userId){
         redisUtil.hdel(userId, PIC_COLLECT + id);
+        Object collectTimes = redisUtil.get(COLLECT_NUMBER + id);
+
+        if(null == collectTimes){
+            redisUtil.set(COLLECT_NUMBER + id, 0);
+        }else{
+            Integer collectNum = Integer.parseInt(collectTimes.toString());
+            collectNum -= 1;
+            redisUtil.set(COLLECT_NUMBER + id, collectNum);
+        }
     }
 
     /**
