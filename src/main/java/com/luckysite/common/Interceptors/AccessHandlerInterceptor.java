@@ -92,6 +92,7 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
                     }
 
                     log.info("AccessHandlerInterceptor-preHandle-用户 " + user.getUserName() + "无权限访问");
+                    response.sendRedirect("/pages/index/index");
                     return false;
                 }
             }
