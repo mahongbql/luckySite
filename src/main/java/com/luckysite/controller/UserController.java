@@ -106,7 +106,7 @@ public class UserController {
         HashMap<String, Object> result = new HashMap<>();
         result.put("token", sessionKey);
         result.put("userId", user.getUserId());
-        result.put("rolo", user.getRole());
+        result.put("role", user.getRole());
         result.put("lastLoginTime", TimeUtil.transFormDate(user.getLoginTime()));
 
         return ResultUtil.success(result);

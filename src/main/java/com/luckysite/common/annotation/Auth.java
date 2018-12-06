@@ -7,5 +7,5 @@ import java.lang.annotation.*;
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Auth {
-    int role() default 0;
+    int role() default 1;
 }
