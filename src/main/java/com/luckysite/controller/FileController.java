@@ -36,10 +36,9 @@ public class FileController {
     @Auth(role = AuthConfig.VIP)
     public Result fdfsUpload(@RequestParam("file") MultipartFile file,  @RequestParam("token") String token,
                              @RequestParam("des") String des, @RequestParam("uploadId") String uploadId,
-                             @RequestParam("userIcon") String userIcon,
-                             RedirectAttributes redirectAttributes, HttpSession httpSession) {
+                             @RequestParam("userIcon") String userIcon, @RequestParam("type") Integer type,
+                             HttpSession httpSession) {
         if (file.isEmpty()) {
-            redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
             return ResultUtil.error(ResultCode.ERROR.getCode(), "File can not be null !", null);
         }
 
@@ -55,7 +54,7 @@ public class FileController {
             }
 
             User user = (User) httpSession.getAttribute(token);
-            fileService.insertPic(fileUrl, user, des, Long.parseLong(uploadId), userIcon);
+            fileService.insertPic(fileUrl, user, des, Long.parseLong(uploadId), userIcon, type);
 
             log.info("FileUploadController-fdfsUpload-上传文件返回地址：" + fileUrl);
 

@@ -26,7 +26,7 @@ public class FileServiceImpl implements FileService {
     private FastDFSClientWrapper fastDFSClientWrapper;
 
     @Override
-    public void insertPic(String path, User user, String des, Long uploadId, String userIcon) {
+    public void insertPic(String path, User user, String des, Long uploadId, String userIcon, int type) {
         Pic pic = new Pic();
 
         pic.setPath(path);
@@ -34,6 +34,7 @@ public class FileServiceImpl implements FileService {
         pic.setDes(des);
         pic.setUserIcon(userIcon);
         pic .setUploadId(uploadId);
+        pic.setType(type);
         pic.setStatus(PicStatusEnum.NOT_PASS.getStatus());
 
         fileMapper.insertPic(pic);
