@@ -128,7 +128,10 @@ public class UserController {
     @ResponseBody
     public Result getDataList(UserDataModel userDataModel){
         Map<String, Object> result = new HashMap<>();
-        switch (userDataModel.getType()) {
+        int type = userDataModel.getType();
+        log.info("UserController-getDataList-类型：" + (type == 1 ? "获取图片" : "获取文章"));
+
+        switch (type) {
             case 0:
                 result.put("data", null);
                 break;
