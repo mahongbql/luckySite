@@ -1,6 +1,10 @@
 package com.luckysite.service;
 
+import com.luckysite.entity.Pic;
 import com.luckysite.entity.User;
+import com.luckysite.model.UserDataModel;
+
+import java.util.List;
 
 public interface UserService {
     /**
@@ -35,4 +39,11 @@ public interface UserService {
      * @param user
      */
     void updateLoginInfo(User user);
+
+    /**
+     * 获取用户图片信息
+     * @param userDataModel
+     * @return
+     */
+    List<Pic> getImage(UserDataModel userDataModel);
 }

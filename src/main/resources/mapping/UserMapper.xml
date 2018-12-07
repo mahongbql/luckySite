@@ -22,4 +22,8 @@
     <update id="updateLoginInfo" parameterType="com.luckysite.entity.User">
         update user_msg set token = #{token}, loginTime = now(), refreshTime = now()
     </update>
+
+    <select id="getImage" resultType="com.luckysite.entity.Pic">
+        SELECT * FROM pic WHERE status = 1 and userId = #{userId} group by uploadId
+    </select>
 </mapper>

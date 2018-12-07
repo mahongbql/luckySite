@@ -6,8 +6,12 @@ import com.luckysite.config.AuthConfig;
 import com.luckysite.enmu.ResultCode;
 import com.luckysite.enmu.UserStatusEnmu;
 import com.luckysite.enmu.UserTypeEnmu;
+import com.luckysite.entity.Pic;
 import com.luckysite.entity.User;
+import com.luckysite.model.PicParamModel;
 import com.luckysite.model.Result;
+import com.luckysite.model.UserDataModel;
+import com.luckysite.service.GetImageService;
 import com.luckysite.service.UserService;
 import com.luckysite.util.HttpUtil;
 import com.luckysite.util.ResultUtil;
@@ -22,6 +26,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -108,6 +114,29 @@ public class UserController {
         result.put("userId", user.getUserId());
         result.put("role", user.getRole());
         result.put("lastLoginTime", TimeUtil.transFormDate(user.getLoginTime()));
+
+        return ResultUtil.success(result);
+    }
+
+    /**
+     * 获取图片信息列表
+     * @param userDataModel
+     * @return
+     */
+    @Auth(role = AuthConfig.USER)
+    @RequestMapping("/getDataList")
+    @ResponseBody
+    public Result getDataList(UserDataModel userDataModel){
+        Map<String, Object> result = new HashMap<>();
+        switch (userDataModel.getType()) {
+            case 0:
+                result.put("data", null);
+                break;
+            case 1:
+                List<Pic> dataList = userService.getImage(userDataModel);
+                result.put("data", dataList);
+                break;
+        }
 
         return ResultUtil.success(result);
     }
