@@ -1,5 +1,7 @@
 package com.luckysite.entity;
 
+import com.luckysite.util.TimeUtil;
+
 import java.util.Date;
 
 public class Pic {
@@ -73,8 +75,8 @@ public class Pic {
         return this.des;
     }
 
-    public Date getCreateTime() {
-        return this.createTime;
+    public String getCreateTime() {
+        return TimeUtil.format.format(this.createTime);
     }
 
     public String getPath() {
