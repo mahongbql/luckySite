@@ -135,7 +135,8 @@ public class GetImageController {
      * @param userId
      */
     private void cancelCollect(String id, String userId){
-        redisUtil.hdel(userId, PIC_COLLECT + id);
+        redisUtil.lRemove(PIC_COLLECT+userId, 1, id);
+
         Object collectTimes = redisUtil.get(COLLECT_NUMBER + id);
 
         if(null == collectTimes){
@@ -194,7 +195,7 @@ public class GetImageController {
         collectNum += 1;
         redisUtil.set(COLLECT_NUMBER + id, collectNum);
 
-        redisUtil.hset(userId, PIC_COLLECT + id, true);
+        redisUtil.lSet(PIC_COLLECT+userId, id);
     }
 
     /**
@@ -203,9 +204,9 @@ public class GetImageController {
      */
     private boolean getCollect(String id, String userId){
         boolean status = false;
-        Object obj = redisUtil.hget(userId, PIC_COLLECT + id);
+        List<Object> list = redisUtil.lGet(PIC_COLLECT+userId, 0, -1);
 
-        if(null != obj){
+        if(-1 != list.indexOf(id)){
             status = true;
         }
 
