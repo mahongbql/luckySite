@@ -3,6 +3,7 @@ package com.luckysite.common.Interceptors;
 import com.luckysite.common.annotation.Auth;
 import com.luckysite.entity.User;
 import com.luckysite.service.UserService;
+import com.luckysite.util.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
     @Autowired
     private HttpSession httpSession;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
     //无论controller中是否抛出异常，都会调用该方法
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object obj, Exception ex)
@@ -49,6 +53,11 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object obj) throws Exception {
         log.info("AccessHandlerInterceptor-preHandle-开始执行");
+
+        if(isIllegalIp(request)){
+            log.error("AccessHandlerInterceptor-preHandle-非法ip: " + request.getRemoteHost());
+            return false;
+        }
 
         String token = request.getParameter("token");
 
@@ -73,9 +82,6 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
 
         httpSession.setAttribute(token, user);
 
-        String ip = request.getRemoteHost();
-        log.info("AccessHandlerInterceptor-preHandle-request ip: " + ip);
-
         Method[] methods = ((HandlerMethod)obj).getBean().getClass().getMethods();
 
         for(Method method : methods) {
@@ -99,5 +105,19 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
         }
 
         return true;
+    }
+
+    private boolean isIllegalIp(HttpServletRequest request){
+        boolean status = true;
+
+        String ip = request.getRemoteHost();
+        log.info("AccessHandlerInterceptor-preHandle-request ip: " + ip);
+
+        if(null == redisUtil.get("login_ip_" + ip)){
+            redisUtil.set("login_ip_" + ip, ip,1);
+            status = false;
+        }
+
+        return status;
     }
 }
