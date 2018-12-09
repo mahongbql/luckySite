@@ -147,15 +147,4 @@ public class UserController {
 
         return ResultUtil.success(result);
     }
-
-    @RequestMapping("/getCollectNumber")
-    public @ResponseBody
-    Result getCollectNumber(@RequestParam("userId") String userId){
-        Map<String, Object> result = new HashMap<>();
-
-        Map<Object,Object> map = redisUtil.hmget(userId);
-
-
-        return ResultUtil.success(result);
-    }
 }

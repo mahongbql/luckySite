@@ -212,4 +212,14 @@ public class GetImageController {
 
         return status;
     }
+
+    @RequestMapping("/getCollectNumber")
+    public @ResponseBody
+    Result getCollectNumber(@RequestParam("userId") String userId){
+        Map<String, Object> result = new HashMap<>();
+
+        Long number = redisUtil.lGetListSize(PIC_COLLECT+userId);
+        result.put("number", number);
+        return ResultUtil.success(result);
+    }
 }
