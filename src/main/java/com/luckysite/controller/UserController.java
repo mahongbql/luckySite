@@ -147,4 +147,20 @@ public class UserController {
 
         return ResultUtil.success(result);
     }
+
+    /**
+     * vip升级
+     * @param userDataModel
+     * @return
+     */
+    @Auth(role = AuthConfig.USER)
+    @RequestMapping("/upVipLevel")
+    @ResponseBody
+    public Result upVipLevel(UserDataModel userDataModel){
+        Long userId = Long.parseLong(userDataModel.getUserId());
+
+        userService.upVipLevel(userId);
+
+        return ResultUtil.success();
+    }
 }

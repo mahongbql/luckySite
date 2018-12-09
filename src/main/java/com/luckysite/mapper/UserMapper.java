@@ -1,6 +1,7 @@
 package com.luckysite.mapper;
 
 import com.luckysite.entity.Pic;
+import com.luckysite.entity.UpLevel;
 import com.luckysite.entity.User;
 import com.luckysite.model.UserDataModel;
 import org.apache.ibatis.annotations.Mapper;
@@ -21,4 +22,6 @@ public interface UserMapper {
     void updateLoginInfo(User user);
 
     List<Pic> getImage(UserDataModel userDataModel);
+
+    void upVipLevel(UpLevel upLevel);
 }

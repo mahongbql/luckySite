@@ -1,7 +1,10 @@
 package com.luckysite.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.luckysite.enmu.UpLevelEnmu;
+import com.luckysite.enmu.UpLevelTypeEnmu;
 import com.luckysite.entity.Pic;
+import com.luckysite.entity.UpLevel;
 import com.luckysite.entity.User;
 import com.luckysite.mapper.UserMapper;
 import com.luckysite.model.UserDataModel;
@@ -48,5 +51,23 @@ public class UserServiceImpl implements UserService {
         PageHelper.startPage(userDataModel.getPageNum(), userDataModel.getPageSize());
 
         return userMapper.getImage(userDataModel);
+    }
+
+    @Override
+    public void upVipLevel(Long userId) {
+        UpLevel upLevel = new UpLevel();
+
+        User user = userMapper.getByUserId(Integer.parseInt(userId+""));
+
+        upLevel.setUserId(userId);
+        upLevel.setStatus(UpLevelEnmu.APPLICATION.getStatus());
+
+        switch (user.getRole()){
+            case 1:
+                upLevel.setType(UpLevelTypeEnmu.UP_LEVEL_TO_VIP.getType());
+                break;
+        }
+
+        userMapper.upVipLevel(upLevel);
     }
 }

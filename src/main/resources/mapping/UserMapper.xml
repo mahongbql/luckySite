@@ -26,4 +26,9 @@
     <select id="getImage" resultType="com.luckysite.entity.Pic">
         SELECT * FROM pic WHERE status = 1 and userId = #{userId} group by uploadId
     </select>
+
+    <insert id="upVipLevel" parameterType="com.luckysite.entity.UpLevel">
+        insert into uplevel set (userId, sendTime, status, type) values
+        (#{userId}, now(), #{status}, #{type})
+    </insert>
 </mapper>

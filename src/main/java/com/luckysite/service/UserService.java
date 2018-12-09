@@ -46,4 +46,10 @@ public interface UserService {
      * @return
      */
     List<Pic> getImage(UserDataModel userDataModel);
+
+    /**
+     * 用户申请升级
+     * @param userId
+     */
+    void upVipLevel(Long userId);
 }
