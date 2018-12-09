@@ -113,8 +113,18 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
         String ip = request.getRemoteHost();
         log.info("AccessHandlerInterceptor-preHandle-request ip: " + ip);
 
-        if(null == redisUtil.get("login_ip_" + ip)){
-            redisUtil.set("login_ip_" + ip, ip,1);
+        Object objTimes = redisUtil.get("login_ip_" + ip);
+
+        if(null != objTimes){
+            int number = Integer.parseInt(objTimes.toString());
+            if(number <= 3){
+                redisUtil.set("login_ip_" + ip, number+1, 1);
+                status = false;
+            }else{
+                redisUtil.set("login_ip_" + ip, 0,60);
+            }
+        }else{
+            redisUtil.set("login_ip_" + ip, 0,1);
             status = false;
         }
 

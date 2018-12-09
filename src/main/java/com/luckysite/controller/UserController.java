@@ -14,6 +14,7 @@ import com.luckysite.model.UserDataModel;
 import com.luckysite.service.GetImageService;
 import com.luckysite.service.UserService;
 import com.luckysite.util.HttpUtil;
+import com.luckysite.util.RedisUtil;
 import com.luckysite.util.ResultUtil;
 import com.luckysite.util.TimeUtil;
 import net.sf.json.JSON;
@@ -40,6 +41,9 @@ public class UserController {
 
     @Autowired
     private AppConfig appConfig;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     /**
      * 用户注册
@@ -140,6 +144,17 @@ public class UserController {
                 result.put("data", dataList);
                 break;
         }
+
+        return ResultUtil.success(result);
+    }
+
+    @RequestMapping("/getCollectNumber")
+    public @ResponseBody
+    Result getCollectNumber(@RequestParam("userId") String userId){
+        Map<String, Object> result = new HashMap<>();
+
+        Map<Object,Object> map = redisUtil.hmget(userId);
+
 
         return ResultUtil.success(result);
     }
