@@ -51,5 +51,5 @@ public interface UserService {
      * 用户申请升级
      * @param userId
      */
-    void upVipLevel(Long userId);
+    boolean upVipLevel(Long userId);
 }

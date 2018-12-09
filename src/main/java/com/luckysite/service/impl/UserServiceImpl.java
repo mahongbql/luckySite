@@ -9,6 +9,8 @@ import com.luckysite.entity.User;
 import com.luckysite.mapper.UserMapper;
 import com.luckysite.model.UserDataModel;
 import com.luckysite.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    private Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserMapper userMapper;
@@ -54,10 +58,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void upVipLevel(Long userId) {
+    public boolean upVipLevel(Long userId) {
         UpLevel upLevel = new UpLevel();
+        boolean status = false;
 
         User user = userMapper.getByUserId(Integer.parseInt(userId+""));
+
+        if(user.getRole() == 2){
+            log.info("UserServiceImpl-upVipLevel-用户【"+userId+"】已经是最高级");
+            return true;
+        }
 
         upLevel.setUserId(userId);
         upLevel.setStatus(UpLevelEnmu.APPLICATION.getStatus());
@@ -69,5 +79,7 @@ public class UserServiceImpl implements UserService {
         }
 
         userMapper.upVipLevel(upLevel);
+
+        return status;
     }
 }
