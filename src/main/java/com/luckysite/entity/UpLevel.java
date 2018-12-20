@@ -1,5 +1,7 @@
 package com.luckysite.entity;
 
+import com.luckysite.util.TimeUtil;
+
 import java.util.Date;
 
 public class UpLevel {
@@ -22,12 +24,12 @@ public class UpLevel {
         return this.userId;
     }
 
-    public Date getConfirmTime() {
-        return this.confirmTime;
+    public String getConfirmTime() {
+        return confirmTime == null ? "" : TimeUtil.format.format(confirmTime);
     }
 
-    public Date getSendTime() {
-        return this.sendTime;
+    public String getSendTime() {
+        return TimeUtil.format.format(sendTime);
     }
 
     public String getType() {

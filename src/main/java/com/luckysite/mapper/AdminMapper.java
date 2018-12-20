@@ -36,7 +36,7 @@ public interface AdminMapper {
      * 修改用户等级（user_msg）
      * @param role
      */
-    void updateUserRole(@Param("role") Integer role);
+    void updateUserRole(@Param("role") Integer role, @Param("userId") int userId);
 
     /**
      * 修改图片状态

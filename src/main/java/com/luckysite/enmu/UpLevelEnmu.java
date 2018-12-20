@@ -2,10 +2,9 @@ package com.luckysite.enmu;
 
 public enum  UpLevelEnmu {
     APPLICATION(0),
-    HAS_ADOPTED(1),
-    NOT_ADOPTED(2);
+    HAS_ADOPTED(1);
 
-    private UpLevelEnmu(int status){
+    UpLevelEnmu(int status){
         this.status = status;
     }
 

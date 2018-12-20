@@ -4,11 +4,9 @@ import com.luckysite.common.annotation.Auth;
 import com.luckysite.config.AuthConfig;
 import com.luckysite.entity.Pic;
 import com.luckysite.entity.UpLevel;
-import com.luckysite.entity.User;
 import com.luckysite.model.AdminPicModel;
 import com.luckysite.model.AdminUserModel;
 import com.luckysite.model.Result;
-import com.luckysite.model.UserDataModel;
 import com.luckysite.service.AdminService;
 import com.luckysite.util.ResultUtil;
 import org.slf4j.Logger;
@@ -58,7 +56,7 @@ public class AdminController {
     @RequestMapping("/updatePicStatus")
     @ResponseBody
     public Result updatePicStatus(AdminPicModel adminPicModel){
-
+        adminService.updatePicStatus(adminPicModel);
 
         return ResultUtil.success();
     }
@@ -67,7 +65,7 @@ public class AdminController {
     @RequestMapping("/updateUserStatus")
     @ResponseBody
     public Result updateUserStatus(AdminUserModel adminUserModel){
-
+        adminService.updateUserStatus(adminUserModel);
 
         return ResultUtil.success();
     }
