@@ -1,6 +1,7 @@
 package com.luckysite.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.luckysite.enmu.UpLevelEnmu;
 import com.luckysite.entity.Pic;
 import com.luckysite.entity.UpLevel;
 import com.luckysite.entity.User;
@@ -33,5 +34,21 @@ public class AdminServiceImpl implements AdminService {
         PageHelper.startPage(adminUserModel.getPageNum(), adminUserModel.getPageSize());
 
         return adminMapper.getUserList(adminUserModel);
+    }
+
+    @Override
+    public void updateUserStatus(AdminUserModel adminUserModel) {
+        UpLevel upLevel = new UpLevel();
+        upLevel.setStatus(adminUserModel.getStatus());
+        upLevel.setUserId(Long.parseLong(adminUserModel.getUserId()));
+        upLevel.setType(adminUserModel.getType());
+
+        adminMapper.updateUpLevelStatus(upLevel);
+        adminMapper.updateUserRole(adminUserModel.getStatus());
+    }
+
+    @Override
+    public void updatePicStatus(AdminPicModel adminPicModel) {
+        adminMapper.updatePicStatus(adminPicModel);
     }
 }

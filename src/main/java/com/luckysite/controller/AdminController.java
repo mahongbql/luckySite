@@ -54,5 +54,21 @@ public class AdminController {
         return ResultUtil.success(result);
     }
 
+    @Auth(role = AuthConfig.ADMIN)
+    @RequestMapping("/updatePicStatus")
+    @ResponseBody
+    public Result updatePicStatus(AdminPicModel adminPicModel){
 
+
+        return ResultUtil.success();
+    }
+
+    @Auth(role = AuthConfig.ADMIN)
+    @RequestMapping("/updateUserStatus")
+    @ResponseBody
+    public Result updateUserStatus(AdminUserModel adminUserModel){
+
+
+        return ResultUtil.success();
+    }
 }

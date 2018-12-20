@@ -22,4 +22,16 @@ public interface AdminService {
      * @return
      */
     List<UpLevel> getUserList(AdminUserModel adminUserModel);
+
+    /**
+     * 修改用户等级
+     * @param adminUserModel
+     */
+    void updateUserStatus(AdminUserModel adminUserModel);
+
+    /**
+     * 修改图片状态
+     * @param adminPicModel
+     */
+    void updatePicStatus(AdminPicModel adminPicModel);
 }

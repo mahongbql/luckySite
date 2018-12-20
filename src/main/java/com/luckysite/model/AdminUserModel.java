@@ -5,6 +5,15 @@ public class AdminUserModel {
     private Integer pageNum;    //分页起始
     private Integer pageSize;   //分页数量
     private String userId; //用户id
+    private String type;    //升级类型
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return this.type;
+    }
 
     public Integer getPageSize() {
         return this.pageSize;

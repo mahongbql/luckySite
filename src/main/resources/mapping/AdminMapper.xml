@@ -11,4 +11,16 @@
             resultType="com.luckysite.entity.UpLevel">
         select * from uplevel where status = #{status} order by sendTime desc
     </select>
+
+    <update id="updateUpLevelStatus" parameterType="com.luckysite.entity.UpLevel">
+        update set uplevel status = #{status}, confirmTime = now() where userId = #{userId} and type = #{type}
+    </update>
+
+    <update id="updateUserRole" parameterType="java.lang.Integer">
+        update set user_msg role = #{role} where userId = #{userId}
+    </update>
+
+    <update id="updatePicStatus" parameterType="com.luckysite.model.AdminPicModel">
+        update set pic status = #{status} where id = #{picId}
+    </update>
 </mapper>
