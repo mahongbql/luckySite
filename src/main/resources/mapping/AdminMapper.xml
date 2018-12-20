@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--管理员映射 指定到mapper接口 -->
+<mapper namespace="com.luckysite.mapper.AdminMapper">
+    <select id="getPicList" parameterType="com.luckysite.model.AdminPicModel"
+            resultType="com.luckysite.entity.Pic">
+        select * from pic where status = #{status} order by createTime desc
+    </select>
+
+    <select id="getUserList" parameterType="com.luckysite.model.AdminUserModel"
+            resultType="com.luckysite.entity.UpLevel">
+        select * from uplevel where status = #{status} order by sendTime desc
+    </select>
+</mapper>

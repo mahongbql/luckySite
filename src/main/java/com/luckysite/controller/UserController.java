@@ -159,6 +159,10 @@ public class UserController {
     public Result upVipLevel(UserDataModel userDataModel){
         Long userId = Long.parseLong(userDataModel.getUserId());
 
+        if(userService.haveApplied(userId)){
+            return ResultUtil.error(ResultCode.ERROR.getCode(),"审核中", null);
+        }
+
         if (userService.upVipLevel(userId)){
             return ResultUtil.error(ResultCode.ERROR.getCode(),"用户已经是最高级", null);
         }

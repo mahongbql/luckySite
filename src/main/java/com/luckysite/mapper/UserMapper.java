@@ -24,4 +24,6 @@ public interface UserMapper {
     List<Pic> getImage(UserDataModel userDataModel);
 
     void upVipLevel(UpLevel upLevel);
+
+    UpLevel getUpLevel(@Param("userId") Long userId);
 }

@@ -1,8 +1,11 @@
 package com.luckysite.enmu;
 
+import com.luckysite.config.AuthConfig;
+
 public enum  UserTypeEnmu{
-    USER("user", 1),   //用户角色
-    VIP("vip", 2);
+    USER("user", AuthConfig.USER),   //用户角色
+    VIP("vip", AuthConfig.VIP),
+    ADMIN("admin", AuthConfig.ADMIN);
 
     private String role;
     private int roleId;

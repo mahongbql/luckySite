@@ -52,4 +52,11 @@ public interface UserService {
      * @param userId
      */
     boolean upVipLevel(Long userId);
+
+    /**
+     * 用户是否申请过
+     * @param userId
+     * @return
+     */
+    boolean haveApplied(Long userId);
 }

@@ -1,6 +1,7 @@
 package com.luckysite.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.luckysite.config.AuthConfig;
 import com.luckysite.enmu.UpLevelEnmu;
 import com.luckysite.enmu.UpLevelTypeEnmu;
 import com.luckysite.entity.Pic;
@@ -64,7 +65,7 @@ public class UserServiceImpl implements UserService {
 
         User user = userMapper.getByUserId(Integer.parseInt(userId+""));
 
-        if(user.getRole() == 2){
+        if(user.getRole() == AuthConfig.VIP){
             log.info("UserServiceImpl-upVipLevel-用户【"+userId+"】已经是最高级");
             return true;
         }
@@ -81,5 +82,12 @@ public class UserServiceImpl implements UserService {
         userMapper.upVipLevel(upLevel);
 
         return status;
+    }
+
+    @Override
+    public boolean haveApplied(Long userId) {
+        UpLevel upLevel = userMapper.getUpLevel(userId);
+
+        return upLevel == null ? false : true;
     }
 }
