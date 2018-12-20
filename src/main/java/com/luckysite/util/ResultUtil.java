@@ -54,6 +54,19 @@ public class ResultUtil {
      * @return
      */
     public static Result success() {
-        return new Result();
+        Result r = new Result();
+        r.setCode(ResultCode.SUCCESS.getCode());
+        return r;
+    }
+
+    /**
+     * 成功
+     * @return
+     */
+    public static Result success(String msg) {
+        Result r = new Result();
+        r.setCode(ResultCode.SUCCESS.getCode());
+        r.setMsg(msg);
+        return r;
     }
 }

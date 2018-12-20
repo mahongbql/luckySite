@@ -28,7 +28,11 @@
     </select>
 
     <insert id="upVipLevel" parameterType="com.luckysite.entity.UpLevel">
-        insert into uplevel set (userId, sendTime, status, type) values
+        insert into uplevel (userId, sendTime, status, type) values
         (#{userId}, now(), #{status}, #{type})
     </insert>
+
+    <select id="getUpLevel" parameterType="java.lang.Long" resultType="com.luckysite.entity.UpLevel">
+        select * from uplevel where userId = #{userId}
+    </select>
 </mapper>
