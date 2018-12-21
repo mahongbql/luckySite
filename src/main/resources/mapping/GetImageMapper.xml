@@ -11,5 +11,6 @@
           SELECT uploadId FROM pic WHERE id = #{picId}
         )t
         WHERE p.uploadId = t.uploadId
+        AND p.status = 1
     </select>
 </mapper>
