@@ -1,6 +1,7 @@
 package com.luckysite.service;
 
 import com.luckysite.entity.Pic;
+import com.luckysite.entity.PostPic;
 import com.luckysite.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -23,4 +24,10 @@ public interface FileService {
      * @return 文件地址
      */
     String uploadFile(MultipartFile file) throws Exception;
+
+    /**
+     * 保存文章图片地址
+     * @param postPic
+     */
+    void insertPostPic(PostPic postPic);
 }

@@ -3,6 +3,7 @@ package com.luckysite.controller;
 import com.luckysite.common.annotation.Auth;
 import com.luckysite.config.AuthConfig;
 import com.luckysite.enmu.ResultCode;
+import com.luckysite.entity.PostPic;
 import com.luckysite.entity.User;
 import com.luckysite.model.Result;
 import com.luckysite.service.FileService;
@@ -64,6 +65,44 @@ public class FileController {
             return ResultUtil.success(result);
         } catch (Exception ex) {
             log.error("FileController-fdfsUpload-上传文件失败：" + ex);
+            return ResultUtil.error(ResultCode.ERROR.getCode(), "文件上传失败", null);
+        }
+    }
+
+    /**
+     * 上传文章的图片
+     * @param file
+     * @param upload_name
+     * @return
+     */
+    @PostMapping("/uploadPostPic")
+    @Auth(role = AuthConfig.AUTHOR)
+    public Result uploadPostPic(@RequestParam("file") MultipartFile file, @RequestParam("upload_name") String upload_name,
+                                @RequestParam("userId") String userId) {
+        if (file.isEmpty()) {
+            return ResultUtil.error(ResultCode.ERROR.getCode(), "File can not be null !", null);
+        }
+
+        log.info("userId :" + userId + "upload_name: " + upload_name);
+
+        try {
+            String fileUrl = fileService.uploadFile(file);
+
+            if(null == fileUrl){
+                throw new Exception("path is null Exception");
+            }
+
+            PostPic postPic = new PostPic();
+            postPic.setUploadName(upload_name);
+            postPic.setUrl(fileUrl);
+            postPic.setUserId(Long.parseLong(userId));
+            fileService.insertPostPic(postPic);
+
+            HashMap<String, Object> result = new HashMap<>();
+            result.put("fileUrl", fileUrl);
+            return ResultUtil.success(result);
+        }catch (Exception ex) {
+            log.error("FileController-uploadPostPic-上传文件失败：" + ex);
             return ResultUtil.error(ResultCode.ERROR.getCode(), "文件上传失败", null);
         }
     }

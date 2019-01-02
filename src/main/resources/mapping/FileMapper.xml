@@ -6,4 +6,8 @@
         insert into pic (userId, createTime, path, des, status, uploadId, userIcon, type) values
         (#{userId}, now(), #{path}, #{des}, #{status}, #{uploadId}, #{userIcon}, #{type})
     </insert>
+
+    <insert id="insertPostPic" parameterType="com.luckysite.entity.PostPic">
+        insert into post_pic (upload_name, url, userId) values (#{upload_name}, #{url}, #{userId})
+    </insert>
 </mapper>

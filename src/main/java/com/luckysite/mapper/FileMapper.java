@@ -1,6 +1,7 @@
 package com.luckysite.mapper;
 
 import com.luckysite.entity.Pic;
+import com.luckysite.entity.PostPic;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -12,4 +13,10 @@ public interface FileMapper {
      * @param pic
      */
     void insertPic(Pic pic);
+
+    /**
+     * 插入文章图片信息
+     * @param postPic
+     */
+    void insertPostPic(PostPic postPic);
 }
