@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
 
         User user = userMapper.getByUserId(Integer.parseInt(userId+""));
 
-        if(user.getRole() == AuthConfig.VIP){
+        if(user.getRole() == AuthConfig.AUTHOR){
             log.info("UserServiceImpl-upVipLevel-用户【"+userId+"】已经是最高级");
             return true;
         }
@@ -76,6 +76,9 @@ public class UserServiceImpl implements UserService {
         switch (user.getRole()){
             case 1:
                 upLevel.setType(UpLevelTypeEnmu.UP_LEVEL_TO_VIP.getType());
+                break;
+            case 2:
+                upLevel.setType(UpLevelTypeEnmu.UP_LEVEL_TO_AUTHOR.getType());
                 break;
         }
 

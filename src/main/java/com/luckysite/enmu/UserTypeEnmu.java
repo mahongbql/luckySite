@@ -4,8 +4,9 @@ import com.luckysite.config.AuthConfig;
 
 public enum  UserTypeEnmu{
     USER("user", AuthConfig.USER),   //用户角色
-    VIP("vip", AuthConfig.VIP),
-    ADMIN("admin", AuthConfig.ADMIN);
+    VIP("vip", AuthConfig.VIP),      //vip角色
+    AUTHOR("author", AuthConfig.AUTHOR),    //认证作者
+    ADMIN("admin", AuthConfig.ADMIN);       //管理员
 
     private String role;
     private int roleId;
