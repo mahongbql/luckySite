@@ -2,7 +2,9 @@ package com.luckysite.controller;
 
 import com.luckysite.common.annotation.Auth;
 import com.luckysite.config.AuthConfig;
+import com.luckysite.enmu.PostStatusEnmu;
 import com.luckysite.enmu.ResultCode;
+import com.luckysite.entity.Post;
 import com.luckysite.entity.PostPic;
 import com.luckysite.entity.User;
 import com.luckysite.model.Result;
@@ -112,6 +114,14 @@ public class FileController {
     public Result uploadPost(@RequestParam("content") String content, @RequestParam("upload_name") String upload_name,
                                 @RequestParam("userId") String userId) {
         try {
+            Post post = new Post();
+
+            post.setContent(content);
+            post.setPost_name(upload_name);
+            post.setStatus(PostStatusEnmu.APPLICATION.getStatus());
+            post.setUserId(Long.parseLong(userId));
+
+            fileService.insertPost(post);
 
             return ResultUtil.success();
         } catch (Exception ex) {

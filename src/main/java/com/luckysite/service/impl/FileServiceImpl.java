@@ -2,6 +2,7 @@ package com.luckysite.service.impl;
 
 import com.luckysite.enmu.PicStatusEnum;
 import com.luckysite.entity.Pic;
+import com.luckysite.entity.Post;
 import com.luckysite.entity.PostPic;
 import com.luckysite.entity.User;
 import com.luckysite.mapper.FileMapper;
@@ -58,5 +59,10 @@ public class FileServiceImpl implements FileService {
     @Override
     public void insertPostPic(PostPic postPic) {
         fileMapper.insertPostPic(postPic);
+    }
+
+    @Override
+    public void insertPost(Post post) {
+
     }
 }
