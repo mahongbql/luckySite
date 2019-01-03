@@ -108,20 +108,4 @@ public class FileController {
             return ResultUtil.error(ResultCode.ERROR.getCode(), "文件上传失败", null);
         }
     }
-
-    @PostMapping("/uploadPost")
-    @Auth(role = AuthConfig.AUTHOR)
-    public Result uploadPost(@RequestParam("content") String content, @RequestParam("upload_name") String upload_name,
-                                @RequestParam("userId") String userId) {
-        Post post = new Post();
-
-        post.setContent(content);
-        post.setPost_name(upload_name);
-        post.setStatus(PostStatusEnmu.APPLICATION.getStatus());
-        post.setUserId(Long.parseLong(userId));
-
-        fileService.insertPost(post);
-
-        return ResultUtil.success();
-    }
 }

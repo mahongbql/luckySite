@@ -31,10 +31,4 @@ public interface FileService {
      * @param postPic
      */
     void insertPostPic(PostPic postPic);
-
-    /**
-     * 插入一篇文章
-     * @param post
-     */
-    void insertPost(Post post);
 }

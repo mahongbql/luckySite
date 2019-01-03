@@ -60,9 +60,4 @@ public class FileServiceImpl implements FileService {
     public void insertPostPic(PostPic postPic) {
         fileMapper.insertPostPic(postPic);
     }
-
-    @Override
-    public void insertPost(Post post) {
-        fileMapper.insertPost(post);
-    }
 }
