@@ -5,7 +5,7 @@ import java.util.Date;
 public class Post {
     private Long id;
     private String post_name;
-    private String post_position;
+    private String content;
     private int status;
     private Long userId;
     private Date sendTime;
@@ -47,10 +47,6 @@ public class Post {
         return this.post_name;
     }
 
-    public String getPost_position() {
-        return this.post_position;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -63,7 +59,11 @@ public class Post {
         this.post_name = post_name;
     }
 
-    public void setPost_position(String post_position) {
-        this.post_position = post_position;
+    public String getContent() {
+        return this.content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }
