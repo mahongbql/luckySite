@@ -63,6 +63,6 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void insertPost(Post post) {
-
+        fileMapper.insertPost(post);
     }
 }

@@ -4,6 +4,9 @@ import com.luckysite.common.annotation.Auth;
 import com.luckysite.entity.User;
 import com.luckysite.service.UserService;
 import com.luckysite.util.RedisUtil;
+import net.sf.json.JSON;
+import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
 import java.lang.reflect.Method;
 import java.util.Date;
 
@@ -59,14 +63,13 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        String token = request.getParameter("token");
+        String token = getToken(request);
 
         String methodName = ((HandlerMethod)obj).getMethod().getName();
         log.info("AccessHandlerInterceptor-preHandle-访问方法名：" + methodName);
 
         if(null == token && !"login".equals(methodName)){
             log.error("AccessHandlerInterceptor-非登录方法无认证userId，拒绝访问");
-            response.sendRedirect("/pages/index/index");
             return false;
         }else if("login".equals(methodName)){
             log.info("AccessHandlerInterceptor-用户进行登录,拦截器放行");
@@ -76,7 +79,6 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
         User user = userService.getByToken(token);
         if(null == user){
             log.error("AccessHandlerInterceptor-token失效");
-            response.sendRedirect("/pages/index/index");
             return false;
         }
 
@@ -98,13 +100,42 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
                     }
 
                     log.info("AccessHandlerInterceptor-preHandle-用户 " + user.getUserName() + "无权限访问");
-                    response.sendRedirect("/pages/index/index");
+
                     return false;
                 }
             }
         }
 
         return true;
+    }
+
+    /**
+     * 获取前端参数的token
+     * @param request
+     * @return
+     */
+    private String getToken(HttpServletRequest request){
+        String token = request.getParameter("token");
+
+        if(null == token){
+            StringBuffer jb = new StringBuffer();
+            String line = null;
+            try {
+                BufferedReader reader = request.getReader();
+                while ((line = reader.readLine()) != null)
+                    jb.append(line);
+
+                if(jb.toString().isEmpty()){
+                    return null;
+                }
+                token = JSONObject.fromObject(jb.toString()).getString("token");
+                log.info("token: " + token + " ----------------");
+            } catch (Exception e) {
+                token = null;
+                log.error("AccessHandlerInterceptor-getToken-token转换失败: " + e);
+            }
+        }
+        return token;
     }
 
     private boolean isIllegalIp(HttpServletRequest request){

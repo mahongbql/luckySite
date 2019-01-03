@@ -113,20 +113,15 @@ public class FileController {
     @Auth(role = AuthConfig.AUTHOR)
     public Result uploadPost(@RequestParam("content") String content, @RequestParam("upload_name") String upload_name,
                                 @RequestParam("userId") String userId) {
-        try {
-            Post post = new Post();
+        Post post = new Post();
 
-            post.setContent(content);
-            post.setPost_name(upload_name);
-            post.setStatus(PostStatusEnmu.APPLICATION.getStatus());
-            post.setUserId(Long.parseLong(userId));
+        post.setContent(content);
+        post.setPost_name(upload_name);
+        post.setStatus(PostStatusEnmu.APPLICATION.getStatus());
+        post.setUserId(Long.parseLong(userId));
 
-            fileService.insertPost(post);
+        fileService.insertPost(post);
 
-            return ResultUtil.success();
-        } catch (Exception ex) {
-            log.error("FileController-uploadPost-保存文章失败：" + ex);
-            return ResultUtil.error(ResultCode.ERROR.getCode(), "保存文章失败", null);
-        }
+        return ResultUtil.success();
     }
 }
