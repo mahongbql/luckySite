@@ -8,6 +8,6 @@
     </insert>
 
     <insert id="insertPostPic" parameterType="com.luckysite.entity.PostPic">
-        insert into post_pic (upload_name, url, userId) values (#{upload_name}, #{url}, #{userId})
+        insert into post_pic (upload_name, url, userId) values (#{uploadName}, #{url}, #{userId})
     </insert>
 </mapper>
