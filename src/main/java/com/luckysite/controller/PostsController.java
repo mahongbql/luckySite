@@ -10,10 +10,10 @@ import com.luckysite.util.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/posts")
@@ -27,7 +27,7 @@ public class PostsController {
     @PostMapping("/uploadPost")
     @Auth(role = AuthConfig.AUTHOR)
     public Result uploadPost(@RequestParam("content") String content, @RequestParam("upload_name") String upload_name,
-                             @RequestParam("userId") String userId) {
+                             @RequestParam("userId") String userId, @RequestParam("title") String title) {
         Post post = postsService.searchPost(upload_name);
 
         if(null == post){
@@ -36,15 +36,34 @@ public class PostsController {
             post.setPost_name(upload_name);
             post.setStatus(PostStatusEnmu.APPLICATION.getStatus());
             post.setUserId(Long.parseLong(userId));
+            post.setTitle(title);
 
             postsService.insertPost(post);
             log.info("posts-uploadPost-文章添加：用户【" + userId + "】");
         }else{
             post.setContent(content);
+            post.setTitle(title);
             postsService.updataPost(post);
             log.info("posts-uploadPost-文章修改：用户【" + userId + "】");
         }
 
         return ResultUtil.success();
+    }
+
+    /**
+     * 获取文章详情
+     * @param postName
+     * @return
+     */
+    @Auth(role = AuthConfig.USER)
+    @RequestMapping("/getPosts")
+    @ResponseBody
+    public Result getPosts(@RequestParam("postName") String postName){
+        Post post = postsService.searchPost(postName);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("data", post);
+
+        return ResultUtil.success(result);
     }
 }

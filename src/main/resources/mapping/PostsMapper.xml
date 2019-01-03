@@ -3,8 +3,8 @@
 <!--图片映射 指定到mapper接口 -->
 <mapper namespace="com.luckysite.mapper.PostsMapper">
     <insert id="insertPost" parameterType="com.luckysite.entity.Post">
-        insert into post (post_name, status, userId, send_time, confirm_time, content) values
-        (#{post_name},#{status},#{userId},now(),now(),#{content})
+        insert into post (post_name, status, userId, send_time, confirm_time, content, title) values
+        (#{post_name},#{status},#{userId},now(),now(),#{content}, #{title})
     </insert>
 
     <select id="searchPost" parameterType="java.lang.String" resultType="com.luckysite.entity.Post">
@@ -12,6 +12,6 @@
     </select>
 
     <update id="updataPost" parameterType="com.luckysite.entity.Post">
-        update post set content = #{content}, send_time = now(), confirm_time = now() where post_name = #{post_name}
+        update post set title = #{title}, content = #{content}, send_time = now(), confirm_time = now() where post_name = #{post_name}
     </update>
 </mapper>

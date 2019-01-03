@@ -1,5 +1,7 @@
 package com.luckysite.entity;
 
+import com.luckysite.util.TimeUtil;
+
 import java.util.Date;
 
 public class Post {
@@ -10,13 +12,22 @@ public class Post {
     private Long userId;
     private Date sendTime;
     private Date confirmTime;
+    private String title;
 
-    public Date getSendTime() {
-        return this.sendTime;
+    public String getTitle() {
+        return this.title;
     }
 
-    public Date getConfirmTime() {
-        return this.confirmTime;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getSendTime() {
+        return TimeUtil.format.format(this.sendTime);
+    }
+
+    public String getConfirmTime() {
+        return TimeUtil.format.format(this.confirmTime);
     }
 
     public void setSendTime(Date sendTime) {
