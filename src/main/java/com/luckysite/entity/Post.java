@@ -10,8 +10,8 @@ public class Post {
     private String content;
     private int status;
     private Long userId;
-    private Date sendTime;
-    private Date confirmTime;
+    private Date send_time;
+    private Date confirm_time;
     private String title;
 
     public String getTitle() {
@@ -22,20 +22,21 @@ public class Post {
         this.title = title;
     }
 
-    public String getSendTime() {
-        return TimeUtil.format.format(this.sendTime);
+    public String getConfirm_time() {
+        return TimeUtil.format.format(this.confirm_time);
     }
 
-    public String getConfirmTime() {
-        return TimeUtil.format.format(this.confirmTime);
+    public String getSend_time() {
+
+        return TimeUtil.format.format(this.send_time);
     }
 
-    public void setSendTime(Date sendTime) {
-        this.sendTime = sendTime;
+    public void setConfirm_time(Date confirm_time) {
+        this.confirm_time = confirm_time;
     }
 
-    public void setConfirmTime(Date confirmTime) {
-        this.confirmTime = confirmTime;
+    public void setSend_time(Date send_time) {
+        this.send_time = send_time;
     }
 
     public Long getUserId() {
