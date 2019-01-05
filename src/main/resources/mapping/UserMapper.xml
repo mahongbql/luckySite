@@ -35,4 +35,8 @@
     <select id="getUpLevel" parameterType="java.lang.Long" resultType="com.luckysite.entity.UpLevel">
         select * from uplevel where userId = #{userId}
     </select>
+
+    <update id="perfectUserInfo" parameterType="com.luckysite.model.UserDataModel">
+        update user_msg set nickName = #{nickName}, avatarUrl = #{avatarUrl} where userId = #{userId}
+    </update>
 </mapper>

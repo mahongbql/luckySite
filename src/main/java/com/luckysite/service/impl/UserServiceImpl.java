@@ -93,4 +93,9 @@ public class UserServiceImpl implements UserService {
 
         return upLevel == null ? false : true;
     }
+
+    @Override
+    public void perfectUserInfo(UserDataModel userDataModel) {
+        userMapper.perfectUserInfo(userDataModel);
+    }
 }

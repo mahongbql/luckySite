@@ -18,6 +18,24 @@ public class User implements Serializable {
     private Date refreshTime;
     private int role;
     private String token;
+    private String nickName;    //用户昵称
+    private String avatarUrl;   //用户头像
+
+    public String getNickName() {
+        return this.nickName;
+    }
+
+    public String getAvatarUrl() {
+        return this.avatarUrl;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
 
     public String getToken() {
         return this.token;

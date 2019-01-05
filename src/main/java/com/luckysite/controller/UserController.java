@@ -169,4 +169,18 @@ public class UserController {
 
         return ResultUtil.success();
     }
+
+    /**
+     * 完善用户信息
+     * @param userDataModel
+     * @return
+     */
+    @Auth(role = AuthConfig.USER)
+    @RequestMapping("/perfectUserInfo")
+    @ResponseBody
+    public Result perfectUserInfo(UserDataModel userDataModel){
+        userService.perfectUserInfo(userDataModel);
+
+        return ResultUtil.success();
+    }
 }

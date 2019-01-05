@@ -26,4 +26,10 @@ public interface UserMapper {
     void upVipLevel(UpLevel upLevel);
 
     UpLevel getUpLevel(@Param("userId") Long userId);
+
+    /**
+     * 完善用户信息
+     * @param userDataModel
+     */
+    void perfectUserInfo(UserDataModel userDataModel);
 }

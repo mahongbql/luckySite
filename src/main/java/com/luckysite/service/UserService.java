@@ -59,4 +59,10 @@ public interface UserService {
      * @return
      */
     boolean haveApplied(Long userId);
+
+    /**
+     * 完善用户信息
+     * @param userDataModel
+     */
+    void perfectUserInfo(UserDataModel userDataModel);
 }
