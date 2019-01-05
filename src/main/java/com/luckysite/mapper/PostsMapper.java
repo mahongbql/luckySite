@@ -1,7 +1,10 @@
 package com.luckysite.mapper;
 
 import com.luckysite.entity.Post;
+import com.luckysite.model.PostsParamModel;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface PostsMapper {
@@ -23,4 +26,11 @@ public interface PostsMapper {
      * @param post
      */
     void updataPost(Post post);
+
+    /**
+     * 获取文章列表
+     * @param postsParamModel
+     * @return
+     */
+    List<Post> getPostsList(PostsParamModel postsParamModel);
 }

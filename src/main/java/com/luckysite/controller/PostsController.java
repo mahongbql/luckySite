@@ -4,6 +4,7 @@ import com.luckysite.common.annotation.Auth;
 import com.luckysite.config.AuthConfig;
 import com.luckysite.enmu.PostStatusEnmu;
 import com.luckysite.entity.Post;
+import com.luckysite.model.PostsParamModel;
 import com.luckysite.model.Result;
 import com.luckysite.service.PostsService;
 import com.luckysite.util.ResultUtil;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -63,6 +65,24 @@ public class PostsController {
 
         Map<String, Object> result = new HashMap<>();
         result.put("data", post);
+
+        return ResultUtil.success(result);
+    }
+
+    /**
+     * 获取文章列表
+     * @param postsParamModel
+     * @return
+     */
+    @Auth(role = AuthConfig.USER)
+    @RequestMapping("/getPostsList")
+    @ResponseBody
+    public Result getPostsList(PostsParamModel postsParamModel){
+        postsParamModel.setStatus(PostStatusEnmu.APPLICATION.getStatus());
+        List<Post> postList = postsService.getPostsList(postsParamModel);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("postList", postList);
 
         return ResultUtil.success(result);
     }

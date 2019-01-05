@@ -1,6 +1,9 @@
 package com.luckysite.service;
 
 import com.luckysite.entity.Post;
+import com.luckysite.model.PostsParamModel;
+
+import java.util.List;
 
 public interface PostsService {
 
@@ -23,4 +26,11 @@ public interface PostsService {
      * @param post
      */
     void updataPost(Post post);
+
+    /**
+     * 获取文章列表
+     * @param postsParamModel
+     * @return
+     */
+    List<Post> getPostsList(PostsParamModel postsParamModel);
 }

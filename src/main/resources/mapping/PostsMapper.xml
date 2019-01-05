@@ -14,4 +14,8 @@
     <update id="updataPost" parameterType="com.luckysite.entity.Post">
         update post set title = #{title}, avatarUrl = #{avatarUrl}, content = #{content}, send_time = now(), confirm_time = now() where post_name = #{post_name}
     </update>
+
+    <select id="getPostsList" parameterType="com.luckysite.model.PostsParamModel" resultType="com.luckysite.entity.Post">
+        select * from post where status = #{status} order by confirm_time desc
+    </select>
 </mapper>
