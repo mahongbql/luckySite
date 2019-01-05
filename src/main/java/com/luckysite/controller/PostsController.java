@@ -27,7 +27,8 @@ public class PostsController {
     @PostMapping("/uploadPost")
     @Auth(role = AuthConfig.AUTHOR)
     public Result uploadPost(@RequestParam("content") String content, @RequestParam("upload_name") String upload_name,
-                             @RequestParam("userId") String userId, @RequestParam("title") String title) {
+                             @RequestParam("userId") String userId, @RequestParam("title") String title,
+                             @RequestParam("avatarUrl") String avatarUrl) {
         Post post = postsService.searchPost(upload_name);
 
         if(null == post){
@@ -37,12 +38,14 @@ public class PostsController {
             post.setStatus(PostStatusEnmu.APPLICATION.getStatus());
             post.setUserId(Long.parseLong(userId));
             post.setTitle(title);
+            post.setAvatarUrl(avatarUrl);
 
             postsService.insertPost(post);
             log.info("posts-uploadPost-文章添加：用户【" + userId + "】");
         }else{
             post.setContent(content);
             post.setTitle(title);
+            post.setAvatarUrl(avatarUrl);
             postsService.updataPost(post);
             log.info("posts-uploadPost-文章修改：用户【" + userId + "】");
         }

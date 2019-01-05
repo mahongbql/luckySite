@@ -13,6 +13,15 @@ public class Post {
     private Date send_time;
     private Date confirm_time;
     private String title;
+    private String avatarUrl;
+
+    public String getAvatarUrl() {
+        return this.avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
 
     public String getTitle() {
         return this.title;
