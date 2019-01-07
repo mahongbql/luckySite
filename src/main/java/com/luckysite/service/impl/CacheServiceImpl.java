@@ -32,4 +32,18 @@ public class CacheServiceImpl implements CacheService {
 
         return Integer.parseInt(times.toString());
     }
+
+    @Override
+    public void setViewNumber(String key, String id) {
+        Object times = redisUtil.get(key + id);
+        times = times == null ? "0" : times;
+        Integer viewNumber = Integer.parseInt(times.toString());
+        viewNumber += 1;
+        redisUtil.set(key + id, viewNumber);
+    }
+
+    @Override
+    public void setCollectNumber(String key, String id, int status) {
+
+    }
 }

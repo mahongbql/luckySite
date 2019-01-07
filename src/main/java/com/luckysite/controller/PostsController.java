@@ -68,6 +68,8 @@ public class PostsController {
     public Result getPosts(@RequestParam("postName") String postName){
         Post post = postsService.searchPost(postName);
 
+        cacheService.setViewNumber(CacheKeyUtil.POST_VIEW_NUMBER, post.getId().toString());
+
         Map<String, Object> result = new HashMap<>();
         result.put("data", post);
 

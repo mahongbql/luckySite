@@ -86,7 +86,8 @@ public class GetImageController {
     public Result getImageById(PicParamModel picParamModel){
         List<Pic> picList = getImageService.getImageById(picParamModel);
         Long uploadId = picList.get(0).getUploadId();
-        setViewNumber(uploadId);
+
+        cacheService.setViewNumber(CacheKeyUtil.PIC_VIEW_NUMBER, uploadId.toString());
 
         for(Pic pic : picList){
             pic.setCollectNum(cacheService.getCollectNumber(CacheKeyUtil.PIC_COLLECT_NUMBER, pic.getUploadId().toString()));
@@ -162,19 +163,6 @@ public class GetImageController {
             collectNum -= 1;
             redisUtil.set(COLLECT_NUMBER + id, collectNum);
         }
-    }
-
-    /**
-     * 设置浏览次数
-     * @param uploadId
-     */
-    private void setViewNumber(Long uploadId){
-        Object times = redisUtil.get(VIEW_NUMBER + uploadId);
-        times = times == null ? "0" : times;
-        Integer viewNumber = Integer.parseInt(times.toString());
-        viewNumber += 1;
-        redisUtil.set(VIEW_NUMBER + uploadId, viewNumber);
-        log.info("GetImageController-setViewNumber-批次【" + uploadId + "】浏览次数 + 1，变为：" + viewNumber);
     }
 
     /**
