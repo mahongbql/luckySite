@@ -15,8 +15,18 @@ public class Post {
     private String title;
     private String avatarUrl;
 
+    private Integer type;   //0:科技  1:生活
+
     public Integer viewNumber;     //浏览次数
     public Integer collectNumber;  //收藏数量
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getType() {
+        return this.type;
+    }
 
     public Integer getCollectNumber() {
         return this.collectNumber;

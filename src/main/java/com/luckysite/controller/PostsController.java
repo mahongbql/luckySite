@@ -34,7 +34,8 @@ public class PostsController {
     @PostMapping("/uploadPost")
     @Auth(role = AuthConfig.AUTHOR)
     public Result uploadPost(@RequestParam("content") String content, @RequestParam("upload_name") String upload_name,
-                             @RequestParam("userId") String userId, @RequestParam("title") String title) {
+                             @RequestParam("userId") String userId, @RequestParam("title") String title,
+                             @RequestParam("type") Integer type) {
         Post post = postsService.searchPost(upload_name);
 
         if(null == post){
@@ -44,12 +45,15 @@ public class PostsController {
             post.setStatus(PostStatusEnmu.APPLICATION.getStatus());
             post.setUserId(Long.parseLong(userId));
             post.setTitle(title);
+            post.setType(type);
 
             postsService.insertPost(post);
             log.info("posts-uploadPost-文章添加：用户【" + userId + "】");
         }else{
             post.setContent(content);
             post.setTitle(title);
+            post.setType(type);
+
             postsService.updataPost(post);
             log.info("posts-uploadPost-文章修改：用户【" + userId + "】");
         }
@@ -85,7 +89,7 @@ public class PostsController {
     @RequestMapping("/getPostsList")
     @ResponseBody
     public Result getPostsList(PostsParamModel postsParamModel){
-        postsParamModel.setStatus(PostStatusEnmu.APPLICATION.getStatus());
+        postsParamModel.setStatus(PostStatusEnmu.PASS.getStatus());
         List<Post> postList = postsService.getPostsList(postsParamModel);
 
         for(Post post : postList){

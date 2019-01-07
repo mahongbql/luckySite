@@ -3,8 +3,8 @@
 <!--图片映射 指定到mapper接口 -->
 <mapper namespace="com.luckysite.mapper.PostsMapper">
     <insert id="insertPost" parameterType="com.luckysite.entity.Post">
-        insert into post (post_name, status, userId, send_time, confirm_time, content, title) values
-        (#{post_name},#{status},#{userId},now(),now(),#{content}, #{title})
+        insert into post (post_name, status, userId, send_time, confirm_time, content, title, type) values
+        (#{post_name},#{status},#{userId},now(),now(),#{content}, #{title}, type)
     </insert>
 
     <select id="searchPost" parameterType="java.lang.String" resultType="com.luckysite.entity.Post">
@@ -12,10 +12,10 @@
     </select>
 
     <update id="updataPost" parameterType="com.luckysite.entity.Post">
-        update post set title = #{title}, avatarUrl = #{avatarUrl}, content = #{content}, send_time = now(), confirm_time = now() where post_name = #{post_name}
+        update post set title = #{title}, avatarUrl = #{avatarUrl}, content = #{content}, send_time = now(), confirm_time = now(), type = #{type} where post_name = #{post_name}
     </update>
 
     <select id="getPostsList" parameterType="com.luckysite.model.PostsParamModel" resultType="com.luckysite.entity.Post">
-        select * from post where status = #{status} order by confirm_time desc
+        select * from post where status = #{status} and type = #{type} order by confirm_time desc
     </select>
 </mapper>
