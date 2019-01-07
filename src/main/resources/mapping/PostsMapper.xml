@@ -16,6 +16,12 @@
     </update>
 
     <select id="getPostsList" parameterType="com.luckysite.model.PostsParamModel" resultType="com.luckysite.entity.Post">
-        select * from post where status = #{status} and type = #{type} order by confirm_time desc
+        select
+          u.nickName, u.avatarUrl, p.*
+        from user_msg u, post p
+        where p.status = #{status}
+        and p.type = #{type}
+        and p.userId = u.userId
+        order by p.confirm_time desc
     </select>
 </mapper>

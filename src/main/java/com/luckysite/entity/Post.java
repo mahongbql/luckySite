@@ -13,12 +13,22 @@ public class Post {
     private Date send_time;
     private Date confirm_time;
     private String title;
-    private String avatarUrl;
 
     private Integer type;   //0:科技  1:生活
 
     public Integer viewNumber;     //浏览次数
     public Integer collectNumber;  //收藏数量
+
+    private String nickName;
+    private String avatarUrl;
+
+    public String getNickName() {
+        return this.nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
     public void setType(Integer type) {
         this.type = type;
