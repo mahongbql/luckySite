@@ -6,7 +6,9 @@ import com.luckysite.enmu.PostStatusEnmu;
 import com.luckysite.entity.Post;
 import com.luckysite.model.PostsParamModel;
 import com.luckysite.model.Result;
+import com.luckysite.service.CacheService;
 import com.luckysite.service.PostsService;
+import com.luckysite.util.CacheKeyUtil;
 import com.luckysite.util.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,9 @@ import java.util.Map;
 public class PostsController {
 
     private Logger log = LoggerFactory.getLogger(PostsController.class);
+
+    @Autowired
+    private CacheService cacheService;
 
     @Autowired
     private PostsService postsService;
@@ -80,6 +85,11 @@ public class PostsController {
     public Result getPostsList(PostsParamModel postsParamModel){
         postsParamModel.setStatus(PostStatusEnmu.APPLICATION.getStatus());
         List<Post> postList = postsService.getPostsList(postsParamModel);
+
+        for(Post post : postList){
+            post.setViewNumber(cacheService.getViewNumber(CacheKeyUtil.POST_VIEW_NUMBER, post.getId().toString()));
+            post.setCollectNumber(cacheService.getCollectNumber(CacheKeyUtil.POST_COLLECT_NUMBER, post.getId().toString()));
+        }
 
         Map<String, Object> result = new HashMap<>();
         result.put("postList", postList);

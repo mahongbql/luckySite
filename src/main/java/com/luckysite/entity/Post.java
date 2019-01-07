@@ -15,6 +15,25 @@ public class Post {
     private String title;
     private String avatarUrl;
 
+    public Integer viewNumber;     //浏览次数
+    public Integer collectNumber;  //收藏数量
+
+    public Integer getCollectNumber() {
+        return this.collectNumber;
+    }
+
+    public Integer getViewNumber() {
+        return this.viewNumber;
+    }
+
+    public void setCollectNumber(Integer collectNumber) {
+        this.collectNumber = collectNumber;
+    }
+
+    public void setViewNumber(Integer viewNumber) {
+        this.viewNumber = viewNumber;
+    }
+
     public String getAvatarUrl() {
         return this.avatarUrl;
     }

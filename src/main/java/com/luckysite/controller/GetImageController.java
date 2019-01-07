@@ -5,7 +5,9 @@ import com.luckysite.config.AuthConfig;
 import com.luckysite.entity.Pic;
 import com.luckysite.model.PicParamModel;
 import com.luckysite.model.Result;
+import com.luckysite.service.CacheService;
 import com.luckysite.service.GetImageService;
+import com.luckysite.util.CacheKeyUtil;
 import com.luckysite.util.RedisUtil;
 import com.luckysite.util.ResultUtil;
 import org.slf4j.Logger;
@@ -33,6 +35,9 @@ public class GetImageController {
     private GetImageService getImageService;
 
     @Autowired
+    private CacheService cacheService;
+
+    @Autowired
     private RedisUtil redisUtil;
 
     //图片浏览次数
@@ -53,7 +58,13 @@ public class GetImageController {
     @RequestMapping("/getImageList")
     @ResponseBody
     public Result getImageList(PicParamModel picParamModel){
-        List<Pic> picList = getViewNumber(getImageService.getImage(picParamModel));
+        List<Pic> picList = getImageService.getImage(picParamModel);
+
+        for(Pic pic : picList){
+            pic.setCollectNum(cacheService.getCollectNumber(CacheKeyUtil.PIC_COLLECT_NUMBER, pic.getUploadId().toString()));
+            pic.setViewNumber(cacheService.getViewNumber(CacheKeyUtil.PIC_VIEW_NUMBER, pic.getId().toString()));
+        }
+
         log.info("GetImageController-getImageList-参数：type = " + picParamModel.getType() + " pageSize = " + picParamModel.getPageSize() + " pageNumber = " + picParamModel.getPageNum() );
 
         log.info("GetImageController-getImageList-获取到的图片数量为：" + picList.size());
@@ -76,7 +87,12 @@ public class GetImageController {
         List<Pic> picList = getImageService.getImageById(picParamModel);
         Long uploadId = picList.get(0).getUploadId();
         setViewNumber(uploadId);
-        picList = getViewNumber(picList);
+
+        for(Pic pic : picList){
+            pic.setCollectNum(cacheService.getCollectNumber(CacheKeyUtil.PIC_COLLECT_NUMBER, pic.getUploadId().toString()));
+            pic.setViewNumber(cacheService.getViewNumber(CacheKeyUtil.PIC_VIEW_NUMBER, pic.getId().toString()));
+        }
+
         log.info("GetImageController-getImageList-获取到指定批次【" + picList.get(0).getUploadId() + "】的图片数量为：" + picList.size());
 
         Map<String, Object> result = new HashMap<>();
@@ -146,28 +162,6 @@ public class GetImageController {
             collectNum -= 1;
             redisUtil.set(COLLECT_NUMBER + id, collectNum);
         }
-    }
-
-    /**
-     * 获得图片浏览次数
-     * @return
-     */
-    private List<Pic> getViewNumber(List<Pic> picList){
-        for(Pic pic : picList){
-            Object times = redisUtil.get(VIEW_NUMBER + pic.getUploadId());
-            Object collectTimes = redisUtil.get(COLLECT_NUMBER + pic.getId());
-
-            times = times == null ? "0" : times;
-            collectTimes = collectTimes == null ? "0" : collectTimes;
-
-            Integer viewNumber = Integer.parseInt(times.toString());
-            Integer collectNum = Integer.parseInt(collectTimes.toString());
-
-            pic.setViewNumber(viewNumber);
-            pic.setCollectNum(collectNum);
-        }
-
-        return picList;
     }
 
     /**
