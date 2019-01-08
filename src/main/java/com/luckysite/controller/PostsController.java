@@ -95,6 +95,7 @@ public class PostsController {
         for(Post post : postList){
             post.setViewNumber(cacheService.getViewNumber(CacheKeyUtil.POST_VIEW_NUMBER, post.getId().toString()));
             post.setCollectNumber(cacheService.getCollectNumber(CacheKeyUtil.POST_COLLECT_NUMBER, post.getId().toString()));
+            post.setUrl(postsService.getPostsUrl(post.getPost_name()));
         }
 
         Map<String, Object> result = new HashMap<>();

@@ -33,4 +33,11 @@ public interface PostsService {
      * @return
      */
     List<Post> getPostsList(PostsParamModel postsParamModel);
+
+    /**
+     * 获取文章的图片
+     * @param postName
+     * @return
+     */
+    String getPostsUrl(String postName);
 }

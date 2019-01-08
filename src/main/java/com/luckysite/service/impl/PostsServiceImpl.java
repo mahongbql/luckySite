@@ -38,4 +38,9 @@ public class PostsServiceImpl implements PostsService {
 
         return postsMapper.getPostsList(postsParamModel);
     }
+
+    @Override
+    public String getPostsUrl(String postName) {
+        return null;
+    }
 }

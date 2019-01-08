@@ -24,4 +24,8 @@
         and p.userId = u.userId
         order by p.confirm_time desc
     </select>
+
+    <select id="getPostsUrl" parameterType="java.lang.String">
+        select url from post_pic where upload_name = #{postName} limit 0, 1
+    </select>
 </mapper>

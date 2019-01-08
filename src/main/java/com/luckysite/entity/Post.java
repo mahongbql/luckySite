@@ -22,6 +22,16 @@ public class Post {
     private String nickName;
     private String avatarUrl;
 
+    private String url;
+
+    public String getUrl() {
+        return this.url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public String getNickName() {
         return this.nickName;
     }

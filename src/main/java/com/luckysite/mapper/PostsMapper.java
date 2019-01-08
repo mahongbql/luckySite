@@ -3,6 +3,7 @@ package com.luckysite.mapper;
 import com.luckysite.entity.Post;
 import com.luckysite.model.PostsParamModel;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -33,4 +34,11 @@ public interface PostsMapper {
      * @return
      */
     List<Post> getPostsList(PostsParamModel postsParamModel);
+
+    /**
+     * 获取文章的图片
+     * @param postName
+     * @return
+     */
+    String getPostsUrl(@Param("postName") String postName);
 }
