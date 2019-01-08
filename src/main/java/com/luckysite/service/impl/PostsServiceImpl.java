@@ -41,6 +41,6 @@ public class PostsServiceImpl implements PostsService {
 
     @Override
     public String getPostsUrl(String postName) {
-        return null;
+        return postsMapper.getPostsUrl(postName);
     }
 }
