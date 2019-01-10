@@ -8,14 +8,14 @@ public class PostsParamModel {
 
     private String postId;
     private String userId;
-    private Boolean isCollect;  //文章是否收藏
+    private Boolean collect;  //文章是否收藏
 
     public Boolean getCollect() {
-        return this.isCollect;
+        return this.collect;
     }
 
     public void setCollect(Boolean collect) {
-        this.isCollect = collect;
+        this.collect = collect;
     }
 
     public String getUserId() {
