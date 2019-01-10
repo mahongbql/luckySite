@@ -4,10 +4,12 @@ import com.github.pagehelper.PageHelper;
 import com.luckysite.enmu.UpLevelEnmu;
 import com.luckysite.enmu.UserTypeEnmu;
 import com.luckysite.entity.Pic;
+import com.luckysite.entity.Post;
 import com.luckysite.entity.UpLevel;
 import com.luckysite.entity.User;
 import com.luckysite.mapper.AdminMapper;
 import com.luckysite.model.AdminPicModel;
+import com.luckysite.model.AdminPostsModel;
 import com.luckysite.model.AdminUserModel;
 import com.luckysite.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +49,10 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void updatePicStatus(AdminPicModel adminPicModel) {
         adminMapper.updatePicStatus(adminPicModel);
+    }
+
+    @Override
+    public List<Post> getPostsList(AdminPostsModel adminPostsModel) {
+        return adminMapper.getPostsList(adminPostsModel);
     }
 }

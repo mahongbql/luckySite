@@ -23,4 +23,13 @@
     <update id="updatePicStatus" parameterType="com.luckysite.model.AdminPicModel">
         update pic set status = #{status} where id = #{picId}
     </update>
+
+    <select id="getPostsList" resultType="com.luckysite.entity.Post">
+        select
+          u.nickName, u.avatarUrl, p.*
+        from user_msg u, post p
+        where p.status = #{status}
+        and p.userId = u.userId
+        order by p.send_time desc
+    </select>
 </mapper>

@@ -1,9 +1,11 @@
 package com.luckysite.mapper;
 
 import com.luckysite.entity.Pic;
+import com.luckysite.entity.Post;
 import com.luckysite.entity.UpLevel;
 import com.luckysite.entity.User;
 import com.luckysite.model.AdminPicModel;
+import com.luckysite.model.AdminPostsModel;
 import com.luckysite.model.AdminUserModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -43,4 +45,11 @@ public interface AdminMapper {
      * @param adminPicModel
      */
     void updatePicStatus(AdminPicModel adminPicModel);
+
+    /**
+     * 获取文章列表
+     * @param adminPostsModel
+     * @return
+     */
+    List<Post> getPostsList(AdminPostsModel adminPostsModel);
 }
