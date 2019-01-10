@@ -24,6 +24,16 @@ public class Post {
 
     private String url;
 
+    private Boolean isCollect;  //用户是否收藏该文章
+
+    public Boolean getCollect() {
+        return this.isCollect;
+    }
+
+    public void setCollect(Boolean collect) {
+        this.isCollect = collect;
+    }
+
     public String getUrl() {
         return this.url;
     }

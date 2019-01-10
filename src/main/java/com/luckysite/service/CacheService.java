@@ -30,7 +30,18 @@ public interface CacheService {
      * 设置收藏次数
      * @param key
      * @param id
-     * @param status    0：取消关注  1：添加关注
+     * @param userId
+     * @param status
+     * @return
      */
-    void setCollectNumber(String key, String id, int status);
+    Boolean setCollectNumber(String key, String id, String userId, Boolean status);
+
+    /**
+     * 查看用户是否收藏了指定文章
+     * @param key
+     * @param id
+     * @param userId
+     * @return
+     */
+    Boolean checkIsCollect(String key, String id, String userId);
 }

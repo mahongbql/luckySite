@@ -69,8 +69,9 @@ public class PostsController {
     @Auth(role = AuthConfig.USER)
     @RequestMapping("/getPosts")
     @ResponseBody
-    public Result getPosts(@RequestParam("postName") String postName){
+    public Result getPosts(@RequestParam("postName") String postName, @RequestParam("userId") String userId){
         Post post = postsService.searchPost(postName);
+        post.setCollect(cacheService.checkIsCollect(CacheKeyUtil.POST_COLLECT_NUMBER, post.getId().toString(), userId));
 
         cacheService.setViewNumber(CacheKeyUtil.POST_VIEW_NUMBER, post.getId().toString());
 
@@ -100,6 +101,24 @@ public class PostsController {
 
         Map<String, Object> result = new HashMap<>();
         result.put("postList", postList);
+
+        return ResultUtil.success(result);
+    }
+
+    /**
+     * 修改文章收藏状态
+     * @param postsParamModel
+     * @return
+     */
+    @Auth(role = AuthConfig.USER)
+    @RequestMapping("/setCollectStatus")
+    @ResponseBody
+    public Result setCollectStatus(PostsParamModel postsParamModel){
+        Boolean status = cacheService.setCollectNumber(CacheKeyUtil.POST_COLLECT_NUMBER, postsParamModel.getPostId(),
+                postsParamModel.getUserId(), postsParamModel.getCollect());
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("status", status);
 
         return ResultUtil.success(result);
     }
