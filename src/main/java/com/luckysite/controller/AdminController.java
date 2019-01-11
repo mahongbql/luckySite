@@ -85,4 +85,13 @@ public class AdminController {
 
         return ResultUtil.success(result);
     }
+
+    @Auth(role = AuthConfig.ADMIN)
+    @RequestMapping("/updatePostsStatus")
+    @ResponseBody
+    public Result updatePostsStatus(AdminPostsModel adminPostsModel){
+        adminService.updatePostsStatus(adminPostsModel);
+
+        return ResultUtil.success();
+    }
 }

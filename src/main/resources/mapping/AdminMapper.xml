@@ -32,4 +32,8 @@
         and p.userId = u.userId
         order by p.send_time desc
     </select>
+
+    <update id="updatePostsStatus" parameterType="com.luckysite.model.AdminPostsModel">
+        update post set status = #{status} where post_name = #{postName}
+    </update>
 </mapper>

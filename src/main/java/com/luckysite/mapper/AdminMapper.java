@@ -52,4 +52,10 @@ public interface AdminMapper {
      * @return
      */
     List<Post> getPostsList(AdminPostsModel adminPostsModel);
+
+    /**
+     * 修改文章状态
+     * @param adminPostsModel
+     */
+    void updatePostsStatus(AdminPostsModel adminPostsModel);
 }

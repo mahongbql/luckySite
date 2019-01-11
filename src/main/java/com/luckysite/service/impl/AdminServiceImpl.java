@@ -55,4 +55,9 @@ public class AdminServiceImpl implements AdminService {
     public List<Post> getPostsList(AdminPostsModel adminPostsModel) {
         return adminMapper.getPostsList(adminPostsModel);
     }
+
+    @Override
+    public void updatePostsStatus(AdminPostsModel adminPostsModel) {
+        adminMapper.updatePostsStatus(adminPostsModel);
+    }
 }

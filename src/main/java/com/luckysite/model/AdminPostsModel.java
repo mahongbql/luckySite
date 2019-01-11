@@ -4,6 +4,15 @@ public class AdminPostsModel {
     private Integer pageNum;    //分页起始
     private Integer pageSize;   //分页数量
     private Integer status;
+    private String postName;
+
+    public String getPostName() {
+        return this.postName;
+    }
+
+    public void setPostName(String postName) {
+        this.postName = postName;
+    }
 
     public Integer getStatus() {
         return this.status;
