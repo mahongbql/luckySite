@@ -28,13 +28,14 @@ public interface CacheService {
 
     /**
      * 设置收藏次数
-     * @param key
+     * @param key1  文件收藏记录键值
+     * @param key2  用户收藏记录键值
      * @param id
      * @param userId
      * @param status
      * @return
      */
-    Boolean setCollectNumber(String key, String id, String userId, Boolean status);
+    Boolean setCollectNumber(String key1, String key2, String id, String userId, Boolean status);
 
     /**
      * 查看用户是否收藏了指定文章

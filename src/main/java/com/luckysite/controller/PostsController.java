@@ -71,7 +71,7 @@ public class PostsController {
     @ResponseBody
     public Result getPosts(@RequestParam("postName") String postName, @RequestParam("userId") String userId){
         Post post = postsService.searchPost(postName);
-        post.setCollect(cacheService.checkIsCollect(CacheKeyUtil.POST_COLLECT_NUMBER, post.getId().toString(), userId));
+        post.setCollect(cacheService.checkIsCollect(CacheKeyUtil.POST_COLLECT, post.getId().toString(), userId));
 
         cacheService.setViewNumber(CacheKeyUtil.POST_VIEW_NUMBER, post.getId().toString());
 
@@ -114,7 +114,7 @@ public class PostsController {
     @RequestMapping("/setCollectStatus")
     @ResponseBody
     public Result setCollectStatus(PostsParamModel postsParamModel){
-        Boolean status = cacheService.setCollectNumber(CacheKeyUtil.POST_COLLECT_NUMBER, postsParamModel.getPostId(),
+        Boolean status = cacheService.setCollectNumber(CacheKeyUtil.POST_COLLECT_NUMBER, CacheKeyUtil.POST_COLLECT, postsParamModel.getPostId(),
                 postsParamModel.getUserId(), postsParamModel.getCollect());
 
         Map<String, Object> result = new HashMap<>();

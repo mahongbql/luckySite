@@ -21,7 +21,6 @@ public class CacheServiceImpl implements CacheService {
     public Integer getViewNumber(String key, String id) {
         Object times = redisUtil.get(key + id);
         times = times == null ? "0" : times;
-        log.info("浏览次数：" + times + " 键值：" + key + id);
 
         return Integer.parseInt(times.toString());
     }
@@ -30,6 +29,8 @@ public class CacheServiceImpl implements CacheService {
     public Integer getCollectNumber(String key, String id) {
         Object times = redisUtil.get(key + id);
         times = times == null ? "0" : times;
+
+        log.info("收藏次数：" + key + id + " ---> " + times);
 
         return Integer.parseInt(times.toString());
     }
@@ -41,25 +42,24 @@ public class CacheServiceImpl implements CacheService {
         Integer viewNumber = Integer.parseInt(times.toString());
         viewNumber += 1;
         redisUtil.set(key + id, viewNumber);
-        log.info("浏览次数加一存入：" + viewNumber + " 键值：" + key + id);
     }
 
     @Override
-    public Boolean setCollectNumber(String key, String id, String userId, Boolean status) {
-        Object collectTimes = redisUtil.get(key + id);
+    public Boolean setCollectNumber(String key1, String key2, String id, String userId, Boolean status) {
+        Object collectTimes = redisUtil.get(key1 + id);
         collectTimes = collectTimes == null ? "0" : collectTimes;
         Integer collectNum = Integer.parseInt(collectTimes.toString());
 
         if (status){
             collectNum += 1;
-            redisUtil.set(key + id, collectNum);
+            redisUtil.set(key1 + id, collectNum);
 
-            redisUtil.lSet(key+userId, id);
+            redisUtil.lSet(key2 + userId, id);
         }else {
             collectNum -= 1;
-            redisUtil.set(key + id, collectNum);
+            redisUtil.set(key1 + id, collectNum);
 
-            redisUtil.lRemove(key+userId, 1, id);
+            redisUtil.lRemove(key2 + userId, 1, id);
         }
 
         return status;

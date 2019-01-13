@@ -40,15 +40,6 @@ public class GetImageController {
     @Autowired
     private RedisUtil redisUtil;
 
-    //图片浏览次数
-    private static final String VIEW_NUMBER = "view_number_";
-
-    //图片收藏次数
-    private static final String COLLECT_NUMBER = "collect_number_";
-
-    //用户收藏记录
-    private static final String PIC_COLLECT = "pic_";
-
     /**
      * 获取图片信息列表
      * @param picParamModel
@@ -61,7 +52,7 @@ public class GetImageController {
         List<Pic> picList = getImageService.getImage(picParamModel);
 
         for(Pic pic : picList){
-            pic.setCollectNum(cacheService.getCollectNumber(CacheKeyUtil.PIC_COLLECT_NUMBER, pic.getUploadId().toString()));
+            pic.setCollectNum(cacheService.getCollectNumber(CacheKeyUtil.PIC_COLLECT_NUMBER, pic.getId().toString()));
             pic.setViewNumber(cacheService.getViewNumber(CacheKeyUtil.PIC_VIEW_NUMBER, pic.getUploadId().toString()));
         }
 
@@ -152,17 +143,7 @@ public class GetImageController {
      * @param userId
      */
     private void cancelCollect(String id, String userId){
-        redisUtil.lRemove(PIC_COLLECT+userId, 1, id);
-
-        Object collectTimes = redisUtil.get(COLLECT_NUMBER + id);
-
-        if(null == collectTimes){
-            redisUtil.set(COLLECT_NUMBER + id, 0);
-        }else{
-            Integer collectNum = Integer.parseInt(collectTimes.toString());
-            collectNum -= 1;
-            redisUtil.set(COLLECT_NUMBER + id, collectNum);
-        }
+        cacheService.setCollectNumber(CacheKeyUtil.PIC_COLLECT_NUMBER, CacheKeyUtil.PIC_COLLECT, id, userId, false);
     }
 
     /**
@@ -170,14 +151,7 @@ public class GetImageController {
      * @param id
      */
     private void setCollectNumber(String id, String userId) {
-        Object collectTimes = redisUtil.get(COLLECT_NUMBER + id);
-
-        collectTimes = collectTimes == null ? "0" : collectTimes;
-        Integer collectNum = Integer.parseInt(collectTimes.toString());
-        collectNum += 1;
-        redisUtil.set(COLLECT_NUMBER + id, collectNum);
-
-        redisUtil.lSet(PIC_COLLECT+userId, id);
+        cacheService.setCollectNumber(CacheKeyUtil.PIC_COLLECT_NUMBER, CacheKeyUtil.PIC_COLLECT, id, userId, true);
     }
 
     /**
@@ -185,14 +159,7 @@ public class GetImageController {
      * @return
      */
     private boolean getCollect(String id, String userId){
-        boolean status = false;
-        List<Object> list = redisUtil.lGet(PIC_COLLECT+userId, 0, -1);
-
-        if(-1 != list.indexOf(id)){
-            status = true;
-        }
-
-        return status;
+        return cacheService.checkIsCollect(CacheKeyUtil.PIC_COLLECT, id, userId);
     }
 
     @RequestMapping("/getCollectNumber")
@@ -200,7 +167,7 @@ public class GetImageController {
     Result getCollectNumber(@RequestParam("userId") String userId){
         Map<String, Object> result = new HashMap<>();
 
-        Long number = redisUtil.lGetListSize(PIC_COLLECT+userId);
+        Long number = redisUtil.lGetListSize(CacheKeyUtil.PIC_COLLECT + userId);
         result.put("number", number);
         return ResultUtil.success(result);
     }
