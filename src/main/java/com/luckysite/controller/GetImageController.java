@@ -62,7 +62,7 @@ public class GetImageController {
 
         for(Pic pic : picList){
             pic.setCollectNum(cacheService.getCollectNumber(CacheKeyUtil.PIC_COLLECT_NUMBER, pic.getUploadId().toString()));
-            pic.setViewNumber(cacheService.getViewNumber(CacheKeyUtil.PIC_VIEW_NUMBER, pic.getId().toString()));
+            pic.setViewNumber(cacheService.getViewNumber(CacheKeyUtil.PIC_VIEW_NUMBER, pic.getUploadId().toString()));
         }
 
         log.info("GetImageController-getImageList-参数：type = " + picParamModel.getType() + " pageSize = " + picParamModel.getPageSize() + " pageNumber = " + picParamModel.getPageNum() );
@@ -91,7 +91,7 @@ public class GetImageController {
 
         for(Pic pic : picList){
             pic.setCollectNum(cacheService.getCollectNumber(CacheKeyUtil.PIC_COLLECT_NUMBER, pic.getUploadId().toString()));
-            pic.setViewNumber(cacheService.getViewNumber(CacheKeyUtil.PIC_VIEW_NUMBER, pic.getId().toString()));
+            pic.setViewNumber(cacheService.getViewNumber(CacheKeyUtil.PIC_VIEW_NUMBER, pic.getUploadId().toString()));
         }
 
         log.info("GetImageController-getImageList-获取到指定批次【" + picList.get(0).getUploadId() + "】的图片数量为：" + picList.size());

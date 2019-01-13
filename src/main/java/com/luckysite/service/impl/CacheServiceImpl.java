@@ -21,6 +21,7 @@ public class CacheServiceImpl implements CacheService {
     public Integer getViewNumber(String key, String id) {
         Object times = redisUtil.get(key + id);
         times = times == null ? "0" : times;
+        log.info("浏览次数：" + times + " 键值：" + key + id);
 
         return Integer.parseInt(times.toString());
     }
@@ -40,6 +41,7 @@ public class CacheServiceImpl implements CacheService {
         Integer viewNumber = Integer.parseInt(times.toString());
         viewNumber += 1;
         redisUtil.set(key + id, viewNumber);
+        log.info("浏览次数加一存入：" + viewNumber + " 键值：" + key + id);
     }
 
     @Override
