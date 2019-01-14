@@ -21,6 +21,7 @@
 
     <update id="updateLoginInfo" parameterType="com.luckysite.entity.User">
         update user_msg set token = #{token}, loginTime = now(), refreshTime = now()
+        where userName = #{userName}
     </update>
 
     <select id="getImage" resultType="com.luckysite.entity.Pic">
