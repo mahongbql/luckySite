@@ -1,6 +1,7 @@
 package com.luckysite.mapper;
 
 import com.luckysite.entity.Pic;
+import com.luckysite.entity.Post;
 import com.luckysite.entity.UpLevel;
 import com.luckysite.entity.User;
 import com.luckysite.model.UserDataModel;
@@ -32,4 +33,11 @@ public interface UserMapper {
      * @param userDataModel
      */
     void perfectUserInfo(UserDataModel userDataModel);
+
+    /**
+     * 获取用户文章信息
+     * @param userDataModel
+     * @return
+     */
+    List<Post> getPosts(UserDataModel userDataModel);
 }

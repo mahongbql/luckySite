@@ -40,4 +40,8 @@
     <update id="perfectUserInfo" parameterType="com.luckysite.model.UserDataModel">
         update user_msg set nickName = #{nickName}, avatarUrl = #{avatarUrl} where userId = #{userId}
     </update>
+
+    <select id="getPosts" parameterType="com.luckysite.model.UserDataModel" resultType="com.luckysite.entity.Post">
+        select * from post where userId = #{userId} order by send_time desc
+    </select>
 </mapper>

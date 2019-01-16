@@ -7,16 +7,15 @@ import com.luckysite.enmu.ResultCode;
 import com.luckysite.enmu.UserStatusEnmu;
 import com.luckysite.enmu.UserTypeEnmu;
 import com.luckysite.entity.Pic;
+import com.luckysite.entity.Post;
 import com.luckysite.entity.User;
 import com.luckysite.model.PicParamModel;
 import com.luckysite.model.Result;
 import com.luckysite.model.UserDataModel;
+import com.luckysite.service.CacheService;
 import com.luckysite.service.GetImageService;
 import com.luckysite.service.UserService;
-import com.luckysite.util.HttpUtil;
-import com.luckysite.util.RedisUtil;
-import com.luckysite.util.ResultUtil;
-import com.luckysite.util.TimeUtil;
+import com.luckysite.util.*;
 import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
@@ -43,7 +42,7 @@ public class UserController {
     private AppConfig appConfig;
 
     @Autowired
-    private RedisUtil redisUtil;
+    private CacheService cacheService;
 
     /**
      * 用户注册
@@ -137,7 +136,12 @@ public class UserController {
 
         switch (type) {
             case 0:
-                result.put("data", null);
+                List<Post> postList = userService.getPosts(userDataModel);
+                for(Post post : postList){
+                    post.setViewNumber(cacheService.getViewNumber(CacheKeyUtil.POST_VIEW_NUMBER, post.getId().toString()));
+                    post.setCollectNumber(cacheService.getCollectNumber(CacheKeyUtil.POST_COLLECT_NUMBER, post.getId().toString()));
+                }
+                result.put("data", postList);
                 break;
             case 1:
                 List<Pic> dataList = userService.getImage(userDataModel);

@@ -5,6 +5,7 @@ import com.luckysite.config.AuthConfig;
 import com.luckysite.enmu.UpLevelEnmu;
 import com.luckysite.enmu.UpLevelTypeEnmu;
 import com.luckysite.entity.Pic;
+import com.luckysite.entity.Post;
 import com.luckysite.entity.UpLevel;
 import com.luckysite.entity.User;
 import com.luckysite.mapper.UserMapper;
@@ -56,6 +57,12 @@ public class UserServiceImpl implements UserService {
         PageHelper.startPage(userDataModel.getPageNum(), userDataModel.getPageSize());
 
         return userMapper.getImage(userDataModel);
+    }
+
+    @Override
+    public List<Post> getPosts(UserDataModel userDataModel) {
+        PageHelper.startPage(userDataModel.getPageNum(), userDataModel.getPageSize());
+        return userMapper.getPosts(userDataModel);
     }
 
     @Override
