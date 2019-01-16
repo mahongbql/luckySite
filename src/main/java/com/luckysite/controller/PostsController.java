@@ -82,6 +82,23 @@ public class PostsController {
     }
 
     /**
+     * 获取文章详情
+     * @param postName
+     * @return
+     */
+    @Auth(role = AuthConfig.AUTHOR)
+    @RequestMapping("/authorGetPosts")
+    @ResponseBody
+    public Result authorGetPosts(@RequestParam("postName") String postName){
+        Post post = postsService.searchPost(postName);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("data", post.getContent());
+
+        return ResultUtil.success(result);
+    }
+
+    /**
      * 获取文章列表
      * @param postsParamModel
      * @return

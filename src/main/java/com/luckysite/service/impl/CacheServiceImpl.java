@@ -30,8 +30,6 @@ public class CacheServiceImpl implements CacheService {
         Object times = redisUtil.get(key + id);
         times = times == null ? "0" : times;
 
-        log.info("收藏次数：" + key + id + " ---> " + times);
-
         return Integer.parseInt(times.toString());
     }
 
