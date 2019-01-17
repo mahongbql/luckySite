@@ -38,6 +38,8 @@ public class PostsController {
                              @RequestParam("type") Integer type) {
         Post post = postsService.searchPost(upload_name);
 
+        log.info("-------content-------: " + content);
+
         if(null == post){
             post = new Post();
             post.setContent(content);
@@ -53,6 +55,7 @@ public class PostsController {
             post.setContent(content);
             post.setTitle(title);
             post.setType(type);
+            post.setStatus(PostStatusEnmu.APPLICATION.getStatus());
 
             postsService.updataPost(post);
             log.info("posts-uploadPost-文章修改：用户【" + userId + "】");

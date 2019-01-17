@@ -12,7 +12,7 @@
     </select>
 
     <update id="updataPost" parameterType="com.luckysite.entity.Post">
-        update post set title = #{title}, avatarUrl = #{avatarUrl}, content = #{content}, send_time = now(), confirm_time = now(), type = #{type} where post_name = #{post_name}
+        update post set title = #{title}, content = #{content}, send_time = now(), confirm_time = now(), type = #{type}, status = #{status} where post_name = #{post_name}
     </update>
 
     <select id="getPostsList" parameterType="com.luckysite.model.PostsParamModel" resultType="com.luckysite.entity.Post">
