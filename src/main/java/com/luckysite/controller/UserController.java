@@ -24,10 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/user")
@@ -146,6 +143,9 @@ public class UserController {
             case 1:
                 List<Pic> dataList = userService.getImage(userDataModel);
                 result.put("data", dataList);
+                break;
+            case 2:
+                result.put("data", null);
                 break;
         }
 
