@@ -38,8 +38,6 @@ public class PostsController {
                              @RequestParam("type") Integer type) {
         Post post = postsService.searchPost(upload_name);
 
-        log.info("-------content-------: " + content);
-
         if(null == post){
             post = new Post();
             post.setContent(content);
