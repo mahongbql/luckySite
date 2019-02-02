@@ -3,7 +3,7 @@
 <!--图片映射 指定到mapper接口 -->
 <mapper namespace="com.luckysite.mapper.GetImageMapper">
     <select id="getImage" resultType="com.luckysite.entity.Pic">
-        SELECT * FROM pic WHERE status = 1 and type = #{type} group by uploadId
+        SELECT * FROM pic WHERE status = 1 and type = #{type} group by uploadId order by createTime desc
     </select>
 
     <select id="getImageById" resultType="com.luckysite.entity.Pic">
