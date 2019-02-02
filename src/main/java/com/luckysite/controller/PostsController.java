@@ -7,6 +7,7 @@ import com.luckysite.entity.Post;
 import com.luckysite.model.PostsParamModel;
 import com.luckysite.model.Result;
 import com.luckysite.service.CacheService;
+import com.luckysite.service.FileService;
 import com.luckysite.service.PostsService;
 import com.luckysite.util.CacheKeyUtil;
 import com.luckysite.util.ResultUtil;
@@ -30,6 +31,9 @@ public class PostsController {
 
     @Autowired
     private PostsService postsService;
+
+    @Autowired
+    private FileService fileService;
 
     @PostMapping("/uploadPost")
     @Auth(role = AuthConfig.AUTHOR)
@@ -139,23 +143,5 @@ public class PostsController {
         result.put("status", status);
 
         return ResultUtil.success(result);
-    }
-
-    /**
-     * 修改文章清理旧文章图片
-     * @param upload_name
-     * @return
-     */
-    @Auth(role = AuthConfig.USER)
-    @RequestMapping("/clearPostPictures")
-    @ResponseBody
-    public Result clearPostPictures(@RequestParam("upload_name") String upload_name){
-        List<String> urlList = postsService.getPostPicList(upload_name);
-        for(String url : urlList){
-
-        }
-        postsService.clearPostPictures(upload_name);
-
-        return ResultUtil.success();
     }
 }

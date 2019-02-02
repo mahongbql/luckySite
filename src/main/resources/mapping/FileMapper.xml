@@ -8,7 +8,7 @@
     </insert>
 
     <insert id="insertPostPic" parameterType="com.luckysite.entity.PostPic">
-        insert into post_pic (upload_name, url, userId, status) values (#{uploadName}, #{url}, #{userId}, #{status})
+        insert into post_pic (upload_name, url, userId) values (#{uploadName}, #{url}, #{userId})
     </insert>
 
     <insert id="insertPost" parameterType="com.luckysite.entity.Post">

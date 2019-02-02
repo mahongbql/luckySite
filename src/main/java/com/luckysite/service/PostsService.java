@@ -40,17 +40,4 @@ public interface PostsService {
      * @return
      */
     String getPostsUrl(String postName);
-
-    /**
-     * 清除指定批次的图片
-     * @param upload_name
-     */
-    void clearPostPictures(String upload_name);
-
-    /**
-     * 获取指定批次名称图片的路径
-     * @param upload_name
-     * @return
-     */
-    List<String> getPostPicList(String upload_name);
 }

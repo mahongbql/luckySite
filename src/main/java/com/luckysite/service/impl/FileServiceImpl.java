@@ -64,10 +64,4 @@ public class FileServiceImpl implements FileService {
     public void insertPostPic(PostPic postPic) {
         fileMapper.insertPostPic(postPic);
     }
-
-    @Override
-    public void deletePostPicture(String path) {
-        String fileName = path.substring(path.indexOf(fdfsConfig.getResHost()) + 1);
-        fastDFSClientWrapper.deleteFile(fileName);
-    }
 }

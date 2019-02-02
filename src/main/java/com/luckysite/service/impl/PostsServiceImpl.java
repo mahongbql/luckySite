@@ -43,14 +43,4 @@ public class PostsServiceImpl implements PostsService {
     public String getPostsUrl(String postName) {
         return postsMapper.getPostsUrl(postName);
     }
-
-    @Override
-    public void clearPostPictures(String upload_name) {
-        postsMapper.clearPostPictures(upload_name);
-    }
-
-    @Override
-    public List<String> getPostPicList(String upload_name) {
-        return postsMapper.getPostPicList(upload_name);
-    }
 }

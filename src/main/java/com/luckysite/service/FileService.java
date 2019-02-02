@@ -31,10 +31,4 @@ public interface FileService {
      * @param postPic
      */
     void insertPostPic(PostPic postPic);
-
-    /**
-     * 删除指定文件
-     * @param path
-     */
-    void deletePostPicture(String path);
 }
