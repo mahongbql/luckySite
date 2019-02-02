@@ -41,4 +41,17 @@ public interface PostsMapper {
      * @return
      */
     String getPostsUrl(@Param("postName") String postName);
+
+    /**
+     * 清除指定批次的图片
+     * @param upload_name
+     */
+    void clearPostPictures(@Param("upload_name") String upload_name);
+
+    /**
+     * 获取指定批次名称图片的路径
+     * @param upload_name
+     * @return
+     */
+    List<String> getPostPicList(@Param("upload_name") String upload_name);
 }

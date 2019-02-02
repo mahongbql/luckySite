@@ -38,6 +38,14 @@ public class FastDFSClientWrapper {
         String fileUrl = fdfsConfig.getResHost() + "/" + storePath.getFullPath();
         return fileUrl;
     }
+
+    /**
+     * 删除指定文件
+     * @param fileName
+     */
+    public void deleteFile(String fileName){
+        storageClient.deleteFile(fileName);
+    }
 }
 
 

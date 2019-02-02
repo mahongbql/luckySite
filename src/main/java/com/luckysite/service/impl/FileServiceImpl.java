@@ -1,5 +1,6 @@
 package com.luckysite.service.impl;
 
+import com.luckysite.config.FdfsConfig;
 import com.luckysite.enmu.PicStatusEnum;
 import com.luckysite.entity.Pic;
 import com.luckysite.entity.Post;
@@ -26,6 +27,9 @@ public class FileServiceImpl implements FileService {
 
     @Autowired
     private FastDFSClientWrapper fastDFSClientWrapper;
+
+    @Autowired
+    private FdfsConfig fdfsConfig;
 
     @Override
     public void insertPic(String path, User user, String des, Long uploadId, String userIcon, int type) {
@@ -59,5 +63,11 @@ public class FileServiceImpl implements FileService {
     @Override
     public void insertPostPic(PostPic postPic) {
         fileMapper.insertPostPic(postPic);
+    }
+
+    @Override
+    public void deletePostPicture(String path) {
+        String fileName = path.substring(path.indexOf(fdfsConfig.getResHost()) + 1);
+        fastDFSClientWrapper.deleteFile(fileName);
     }
 }

@@ -2,6 +2,7 @@ package com.luckysite.controller;
 
 import com.luckysite.common.annotation.Auth;
 import com.luckysite.config.AuthConfig;
+import com.luckysite.enmu.PostPicStatusEnmu;
 import com.luckysite.enmu.PostStatusEnmu;
 import com.luckysite.enmu.ResultCode;
 import com.luckysite.entity.Post;
@@ -98,6 +99,7 @@ public class FileController {
             postPic.setUploadName(upload_name);
             postPic.setUrl(fileUrl);
             postPic.setUserId(Long.parseLong(userId));
+            postPic.setStatus(PostPicStatusEnmu.USING.getStatus());
             fileService.insertPostPic(postPic);
 
             HashMap<String, Object> result = new HashMap<>();

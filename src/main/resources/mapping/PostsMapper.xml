@@ -28,4 +28,12 @@
     <select id="getPostsUrl" parameterType="java.lang.String" resultType="java.lang.String">
         select url from post_pic where upload_name = #{postName} limit 0, 1
     </select>
+
+    <update id="clearPostPictures" parameterType="java.lang.String">
+        update post_pic set status = 0 where upload_name = #{upload_name}
+    </update>
+
+    <select id="getPostPicList" parameterType="java.lang.String" resultType="java.lang.String">
+        select url from post_pic where upload_name = #{upload_name} and status = 1
+    </select>
 </mapper>
