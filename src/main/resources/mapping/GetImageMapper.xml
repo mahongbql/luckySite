@@ -6,11 +6,14 @@
         SELECT * FROM pic WHERE status = 1 and type = #{type} group by uploadId order by createTime desc
     </select>
 
-    <select id="getImageById" resultType="com.luckysite.entity.Pic">
-        SELECT * FROM pic p, (
-          SELECT uploadId FROM pic WHERE id = #{picId}
-        )t
+    <select id="getImageById" resultType="com.luckysite.model.PicResultModel">
+        SELECT p.id, p.path, p.des, p.`status`, p.uploadId, u.avatarUrl, u.nickName FROM pic p, (
+            SELECT uploadId, userId FROM pic WHERE id = #{picId}
+        )t, (
+            SELECT avatarUrl, userId, nickName FROM user_msg
+        )u
         WHERE p.uploadId = t.uploadId
+        AND p.userId = u.userId
         AND p.status = 1
     </select>
 </mapper>

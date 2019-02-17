@@ -4,6 +4,7 @@ import com.luckysite.common.annotation.Auth;
 import com.luckysite.config.AuthConfig;
 import com.luckysite.entity.Pic;
 import com.luckysite.model.PicParamModel;
+import com.luckysite.model.PicResultModel;
 import com.luckysite.model.Result;
 import com.luckysite.service.CacheService;
 import com.luckysite.service.GetImageService;
@@ -75,17 +76,10 @@ public class GetImageController {
     @RequestMapping("/getImageById")
     @ResponseBody
     public Result getImageById(PicParamModel picParamModel){
-        List<Pic> picList = getImageService.getImageById(picParamModel);
+        List<PicResultModel> picList = getImageService.getImageById(picParamModel);
         Long uploadId = picList.get(0).getUploadId();
 
         cacheService.setViewNumber(CacheKeyUtil.PIC_VIEW_NUMBER, uploadId.toString());
-
-        for(Pic pic : picList){
-            pic.setCollectNum(cacheService.getCollectNumber(CacheKeyUtil.PIC_COLLECT_NUMBER, pic.getUploadId().toString()));
-            pic.setViewNumber(cacheService.getViewNumber(CacheKeyUtil.PIC_VIEW_NUMBER, pic.getUploadId().toString()));
-        }
-
-        log.info("GetImageController-getImageList-获取到指定批次【" + picList.get(0).getUploadId() + "】的图片数量为：" + picList.size());
 
         Map<String, Object> result = new HashMap<>();
         result.put("data", picList);

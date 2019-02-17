@@ -2,6 +2,7 @@ package com.luckysite.service;
 
 import com.luckysite.entity.Pic;
 import com.luckysite.model.PicParamModel;
+import com.luckysite.model.PicResultModel;
 
 import java.util.List;
 
@@ -21,5 +22,5 @@ public interface GetImageService {
      * @param picParamModel
      * @return
      */
-    List<Pic> getImageById(PicParamModel picParamModel);
+    List<PicResultModel> getImageById(PicParamModel picParamModel);
 }

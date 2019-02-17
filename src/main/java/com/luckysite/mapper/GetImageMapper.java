@@ -2,6 +2,7 @@ package com.luckysite.mapper;
 
 import com.luckysite.entity.Pic;
 import com.luckysite.model.PicParamModel;
+import com.luckysite.model.PicResultModel;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -22,5 +23,5 @@ public interface GetImageMapper {
      * @param picParamModel
      * @return
      */
-    List<Pic> getImageById(PicParamModel picParamModel);
+    List<PicResultModel> getImageById(PicParamModel picParamModel);
 }

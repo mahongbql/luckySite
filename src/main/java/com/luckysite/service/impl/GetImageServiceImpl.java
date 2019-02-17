@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.luckysite.entity.Pic;
 import com.luckysite.mapper.GetImageMapper;
 import com.luckysite.model.PicParamModel;
+import com.luckysite.model.PicResultModel;
 import com.luckysite.service.GetImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class GetImageServiceImpl implements GetImageService {
     }
 
     @Override
-    public List<Pic> getImageById(PicParamModel picParamModel) {
+    public List<PicResultModel> getImageById(PicParamModel picParamModel) {
         return getImageMapper.getImageById(picParamModel);
     }
 }
