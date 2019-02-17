@@ -6,7 +6,7 @@ public class PicResultModel {
     private String des;     //图片描述
     private int status;     //图片状态
     private Long uploadId;  //上传编号
-    private String userIcon;    //用户头像
+    private String avatarUrl;    //用户头像
     private String nickName; //用户昵称
 
     public void setId(Long id) {
@@ -33,8 +33,8 @@ public class PicResultModel {
         this.uploadId = uploadId;
     }
 
-    public void setUserIcon(String userIcon) {
-        this.userIcon = userIcon;
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
     public Long getId() {
@@ -61,7 +61,7 @@ public class PicResultModel {
         return this.uploadId;
     }
 
-    public String getUserIcon() {
-        return this.userIcon;
+    public String getAvatarUrl() {
+        return this.avatarUrl;
     }
 }

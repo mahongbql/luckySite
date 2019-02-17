@@ -3,7 +3,7 @@
 <!--图片映射 指定到mapper接口 -->
 <mapper namespace="com.luckysite.mapper.GetImageMapper">
     <select id="getImage" resultType="com.luckysite.entity.Pic">
-        SELECT p.createTime, p.path, p.des, p.`status`, p.uploadId, p.type, u.avatarUrl
+        SELECT p.id, p.createTime, p.path, p.des, p.`status`, p.uploadId, p.type, u.avatarUrl as userIcon
         FROM pic p LEFT JOIN (
           select userId, avatarUrl from user_msg
         ) u ON p.userId = u.userId
