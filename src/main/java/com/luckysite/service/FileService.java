@@ -14,10 +14,9 @@ public interface FileService {
      * @param user
      * @param des
      * @param uploadId
-     * @param userIcon
      * @param type
      */
-    void insertPic(String path, User user, String des, Long uploadId, String userIcon, int type);
+    void insertPic(String path, User user, String des, Long uploadId, int type);
 
     /**
      * 上传文件

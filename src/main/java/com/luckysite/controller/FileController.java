@@ -40,7 +40,7 @@ public class FileController {
     @Auth(role = AuthConfig.VIP)
     public Result fdfsUpload(@RequestParam("file") MultipartFile file,  @RequestParam("token") String token,
                              @RequestParam("des") String des, @RequestParam("uploadId") String uploadId,
-                             @RequestParam("userIcon") String userIcon, @RequestParam("type") Integer type,
+                             @RequestParam("type") Integer type,
                              HttpSession httpSession) {
         if (file.isEmpty()) {
             return ResultUtil.error(ResultCode.ERROR.getCode(), "File can not be null !", null);
@@ -48,8 +48,7 @@ public class FileController {
 
         log.info("FileController-fdfsUpload-获取到信息为：token：" + token +
                 ", des：" + des +
-                ", uploadId：" + uploadId +
-                ", userIcon：" + userIcon);
+                ", uploadId：" + uploadId);
         try {
             String fileUrl = fileService.uploadFile(file);
 
@@ -58,7 +57,7 @@ public class FileController {
             }
 
             User user = (User) httpSession.getAttribute(token);
-            fileService.insertPic(fileUrl, user, des, Long.parseLong(uploadId), userIcon, type);
+            fileService.insertPic(fileUrl, user, des, Long.parseLong(uploadId), type);
 
             log.info("FileUploadController-fdfsUpload-上传文件返回地址：" + fileUrl);
 
