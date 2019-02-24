@@ -3,6 +3,7 @@ package com.luckysite.controller;
 import com.luckysite.common.annotation.Auth;
 import com.luckysite.config.AppConfig;
 import com.luckysite.config.AuthConfig;
+import com.luckysite.config.RobotConfig;
 import com.luckysite.enmu.ResultCode;
 import com.luckysite.enmu.UserStatusEnmu;
 import com.luckysite.enmu.UserTypeEnmu;
@@ -40,6 +41,9 @@ public class UserController {
 
     @Autowired
     private CacheService cacheService;
+
+    @Autowired
+    private RobotConfig robotConfig;
 
     /**
      * 用户注册
@@ -186,5 +190,16 @@ public class UserController {
         userService.perfectUserInfo(userDataModel);
 
         return ResultUtil.success();
+    }
+
+    @Auth(role = AuthConfig.USER)
+    @RequestMapping("/getRobotMsg")
+    @ResponseBody
+    public Result getRobotMsg(){
+        Map<String, Object> robotMsg = new HashMap<>();
+        robotMsg.put("userId", robotConfig.getUserId());
+        robotMsg.put("apikey", robotConfig.getApiKey());
+
+        return ResultUtil.success(robotMsg);
     }
 }
