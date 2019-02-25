@@ -46,7 +46,6 @@ public class RobotServiceImpl implements RobotService {
         }catch (Exception e){
             log.error("RobotServiceImpl-sendMsg :" + e);
         }
-
         return rtnMsg;
     }
 }
