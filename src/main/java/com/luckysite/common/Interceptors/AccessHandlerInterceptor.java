@@ -40,7 +40,6 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object obj, Exception ex)
             throws Exception {
-        log.info("AccessHandlerInterceptor-afterCompletion-开始执行");
         if(null != ex){
             log.error("ex is " + ex);
         }
@@ -50,14 +49,11 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object obj, ModelAndView view)
             throws Exception {
-        log.info("AccessHandlerInterceptor-postHandle-方法执行成功");
     }
 
     //最先执行该方法
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object obj) throws Exception {
-        log.info("AccessHandlerInterceptor-preHandle-开始执行");
-
         if(isIllegalIp(request)){
             log.error("AccessHandlerInterceptor-preHandle-非法ip: " + request.getRemoteHost());
             return false;
@@ -66,7 +62,6 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
         String token = getToken(request);
 
         String methodName = ((HandlerMethod)obj).getMethod().getName();
-        log.info("AccessHandlerInterceptor-preHandle-访问方法名：" + methodName);
 
         if(null == token && !"login".equals(methodName)){
             log.error("AccessHandlerInterceptor-非登录方法无认证userId，拒绝访问");

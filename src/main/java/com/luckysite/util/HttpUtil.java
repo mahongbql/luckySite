@@ -142,7 +142,7 @@ public class HttpUtil {
             int state = status.getStatusCode();
             if (state == HttpStatus.SC_OK) {
                 HttpEntity responseEntity = response.getEntity();
-                String jsonString = EntityUtils.toString(responseEntity);
+                String jsonString = EntityUtils.toString(responseEntity, "UTF-8");
                 return jsonString;
             }
             else{

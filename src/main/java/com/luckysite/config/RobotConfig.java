@@ -11,6 +11,13 @@ public class RobotConfig {
     @Value("${robot.apikey}")
     private String apiKey;
 
+    @Value("${robot.url}")
+    private String url;
+
+    public String getUrl() {
+        return this.url;
+    }
+
     public String getUserId() {
         return this.userId;
     }

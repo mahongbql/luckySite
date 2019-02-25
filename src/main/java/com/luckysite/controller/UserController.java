@@ -3,22 +3,21 @@ package com.luckysite.controller;
 import com.luckysite.common.annotation.Auth;
 import com.luckysite.config.AppConfig;
 import com.luckysite.config.AuthConfig;
-import com.luckysite.config.RobotConfig;
 import com.luckysite.enmu.ResultCode;
 import com.luckysite.enmu.UserStatusEnmu;
 import com.luckysite.enmu.UserTypeEnmu;
 import com.luckysite.entity.Pic;
 import com.luckysite.entity.Post;
 import com.luckysite.entity.User;
-import com.luckysite.model.PicParamModel;
 import com.luckysite.model.Result;
 import com.luckysite.model.UserDataModel;
 import com.luckysite.service.CacheService;
-import com.luckysite.service.GetImageService;
+import com.luckysite.service.RobotService;
 import com.luckysite.service.UserService;
 import com.luckysite.util.*;
 import net.sf.json.JSON;
 import net.sf.json.JSONObject;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +42,7 @@ public class UserController {
     private CacheService cacheService;
 
     @Autowired
-    private RobotConfig robotConfig;
+    private RobotService robotService;
 
     /**
      * 用户注册
@@ -192,13 +191,17 @@ public class UserController {
         return ResultUtil.success();
     }
 
+    /**
+     * 机器人对话
+     * @param msg
+     * @return
+     */
     @Auth(role = AuthConfig.USER)
-    @RequestMapping("/getRobotMsg")
+    @RequestMapping("/robotTalk")
     @ResponseBody
-    public Result getRobotMsg(){
+    public Result robotTalk(@Param("msg") String msg){
         Map<String, Object> robotMsg = new HashMap<>();
-        robotMsg.put("userId", robotConfig.getUserId());
-        robotMsg.put("apikey", robotConfig.getApiKey());
+        robotMsg.put("rtnMsg", robotService.sendMsg(msg));
 
         return ResultUtil.success(robotMsg);
     }
