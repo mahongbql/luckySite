@@ -27,6 +27,8 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
 
     private Logger log = LoggerFactory.getLogger(AccessHandlerInterceptor.class);
 
+    private static final Integer ipTimes = 15;
+
     @Autowired
     private UserService userService;
 
@@ -143,7 +145,7 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
 
         if(null != objTimes){
             int number = Integer.parseInt(objTimes.toString());
-            if(number <= 3){
+            if(number <= ipTimes){
                 redisUtil.set("login_ip_" + ip, number+1, 1);
                 status = false;
             }else{
