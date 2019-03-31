@@ -1,0 +1,66 @@
+server:
+  port: 8085
+
+# spring基础配置
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/lucky_dog?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: mhb19940803751X
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: mhb19940803751X
+    timeout: 1000
+    database: 0
+    pool:
+      max-active: 10
+      max-idle: 8
+      min-idle: 2
+      max-wait: 100
+  http:
+    multipart:
+      maxFileSize: 10Mb
+      maxRequestSize: 100Mb
+  mvc:
+    view:
+      prefix: /
+      suffix: .html
+
+mybatis:
+  mapper-locations: classpath:mapping/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  type-aliases-package: entity # 注意：对应实体类的路径
+
+# 分布式文件系统FDFS配置
+fdfs:
+  soTimeout: 1500 #socket连接超时时长
+  connectTimeout: 600 #连接tracker服务器超时时长
+  resHost: https://luckydogma.work
+  thumbImage: #缩略图生成参数，可选
+    width: 150
+    height: 150
+  trackerList: 127.0.0.1:22122
+
+
+# 分页配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: truefdfs.resHost
+  support-methods-arguments: true
+  params: count=countSql
+
+# 小程序配置
+app:
+  appId: wx1ba1d504c0635c65
+  appSecret: f936af5ebc7f6f95c0c0d7e673fe43c1
+  url: https://api.weixin.qq.com/sns/jscode2session?grant_type=authorization_code&
+
+robot:
+  userId: 404363
+  apikey: beb61eac21cb4cc5a9452f3cafd6f481
+  url: http://openapi.tuling123.com/openapi/api/v2
