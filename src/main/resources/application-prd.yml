@@ -70,10 +70,3 @@ robot:
   url: http://openapi.tuling123.com/openapi/api/v2
   
 urlList: ""
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-    healthcheck:
-      enabled: true
