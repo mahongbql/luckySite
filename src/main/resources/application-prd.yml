@@ -3,8 +3,6 @@ server:
 
 # spring基础配置
 spring:
-  application:
-    name: luckySite
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/lucky_dog?useUnicode=true&characterEncoding=UTF-8
     username: root
@@ -18,19 +16,17 @@ spring:
     host: 127.0.0.1
     port: 6379
     password: mhb19940803751X
-    timeout: 1000ms
+    timeout: 1000
     database: 0
-    lettuce:
-      pool:
-        max-active: 10
-        max-idle: 8
-        min-idle: 2
-        max-wait: -1ms
+    pool:
+      max-active: 10
+      max-idle: 8
+      min-idle: 2
+      max-wait: 100
   http:
-    servlet:
-      multipart:
-        maxFileSize: 10Mb
-        maxRequestSize: 100Mb
+    multipart:
+      maxFileSize: 10Mb
+      maxRequestSize: 100Mb
   mvc:
     view:
       prefix: /
@@ -68,5 +64,10 @@ robot:
   userId: 404363
   apikey: beb61eac21cb4cc5a9452f3cafd6f481
   url: http://openapi.tuling123.com/openapi/api/v2
-  
-urlList: ""
+
+urlList: https://qiniu.luckydogma.work/animation_1.mp4,
+  https://qiniu.luckydogma.work/film_1.mp4,
+  https://qiniu.luckydogma.work/animation_2.mp4,
+  https://qiniu.luckydogma.work/film_2.mp4,
+  https://qiniu.luckydogma.work/animation_3.mp4,
+  https://qiniu.luckydogma.work/film_3.mp4
