@@ -3,6 +3,8 @@ server:
 
 # spring基础配置
 spring:
+  application:
+    name: luckySite
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/lucky_dog?useUnicode=true&characterEncoding=UTF-8
     username: root
