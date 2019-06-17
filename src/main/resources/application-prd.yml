@@ -43,6 +43,9 @@ fdfs:
   soTimeout: 1500 #socket连接超时时长
   connectTimeout: 600 #连接tracker服务器超时时长
   resHost: https://luckydogma.work
+  thumbImage: #缩略图生成参数，可选
+    width: 150
+    height: 150
   trackerList: 127.0.0.1:22122
 
 
