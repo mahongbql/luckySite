@@ -26,7 +26,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author 马弦
@@ -35,7 +36,7 @@ import org.apache.log4j.Logger;
  */
 public class HttpUtil {
 
-    private static Logger logger = Logger.getLogger(HttpUtil.class);
+    private static Logger logger = LoggerFactory.getLogger(HttpUtil.class);
 
     /**
      * get请求
