@@ -18,7 +18,7 @@ spring:
     host: 127.0.0.1
     port: 6379
     password: mhb19940803751X
-    timeout: 1000ms
+    timeout: 5000ms
     database: 0
     lettuce:
       pool:
