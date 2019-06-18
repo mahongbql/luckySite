@@ -3,6 +3,8 @@ server:
 
 # spring基础配置
 spring:
+  application:
+    name: luckySite
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/lucky_dog?useUnicode=true&characterEncoding=UTF-8
     username: root
@@ -16,17 +18,19 @@ spring:
     host: 127.0.0.1
     port: 6379
     password: mhb19940803751X
-    timeout: 1000
+    timeout: 1000ms
     database: 0
-    pool:
-      max-active: 10
-      max-idle: 8
-      min-idle: 2
-      max-wait: 100
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 8
+        min-idle: 2
+        max-wait: -1ms
   http:
-    multipart:
-      maxFileSize: 10Mb
-      maxRequestSize: 100Mb
+    servlet:
+      multipart:
+        maxFileSize: 10Mb
+        maxRequestSize: 100Mb
   mvc:
     view:
       prefix: /
@@ -71,3 +75,10 @@ urlList: https://qiniu.luckydogma.work/animation_1.mp4,
   https://qiniu.luckydogma.work/film_2.mp4,
   https://qiniu.luckydogma.work/animation_3.mp4,
   https://qiniu.luckydogma.work/film_3.mp4
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    healthcheck:
+      enabled: true
