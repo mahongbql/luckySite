@@ -27,7 +27,7 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
 
     private Logger log = LoggerFactory.getLogger(AccessHandlerInterceptor.class);
 
-    private static final Integer ipTimes = 15;
+    private static final String LOGIN_URL = "/login";
 
     @Autowired
     private UserService userService;
@@ -53,8 +53,13 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
     //最先执行该方法
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object obj) throws Exception {
-        String token = getToken(request);
+        String url = request.getRequestURI();
+        if (url.indexOf(LOGIN_URL) != -1) {
+            log.info("AccessHandlerInterceptor-登陆方法不做权限校验，url：" + url);
+            return true;
+        }
 
+        String token = getToken(request);
         String methodName = ((HandlerMethod)obj).getMethod().getName();
 
         Object userObj = redisUtil.get(token);
