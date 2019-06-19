@@ -69,12 +69,7 @@ robot:
   apikey: beb61eac21cb4cc5a9452f3cafd6f481
   url: http://openapi.tuling123.com/openapi/api/v2
 
-urlList: https://qiniu.luckydogma.work/animation_1.mp4,
-  https://qiniu.luckydogma.work/film_1.mp4,
-  https://qiniu.luckydogma.work/animation_2.mp4,
-  https://qiniu.luckydogma.work/film_2.mp4,
-  https://qiniu.luckydogma.work/animation_3.mp4,
-  https://qiniu.luckydogma.work/film_3.mp4
+urlList:
 
 eureka:
   client:
