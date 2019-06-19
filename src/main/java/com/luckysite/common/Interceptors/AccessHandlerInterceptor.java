@@ -33,9 +33,6 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
     private UserService userService;
 
     @Autowired
-    private HttpSession httpSession;
-
-    @Autowired
     private RedisUtil redisUtil;
 
     //无论controller中是否抛出异常，都会调用该方法
@@ -56,30 +53,17 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
     //最先执行该方法
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object obj) throws Exception {
-        if(isIllegalIp(request)){
-            log.error("AccessHandlerInterceptor-preHandle-非法ip: " + request.getRemoteHost());
-            return false;
-        }
-
         String token = getToken(request);
 
         String methodName = ((HandlerMethod)obj).getMethod().getName();
 
-        if(null == token && !"login".equals(methodName)){
-            log.error("AccessHandlerInterceptor-非登录方法无认证userId，拒绝访问");
-            return false;
-        }else if("login".equals(methodName)){
-            log.info("AccessHandlerInterceptor-用户进行登录,拦截器放行");
-            return true;
-        }
-
-        User user = userService.getByToken(token);
-        if(null == user){
+        Object userObj = redisUtil.get(token);
+        if(null == userObj){
             log.error("AccessHandlerInterceptor-token失效");
             return false;
         }
-
-        httpSession.setAttribute(token, user);
+        JSONObject userJson = JSONObject.fromObject(userObj);
+        User user = userService.getByUserId(Integer.parseInt(userJson.get("userId").toString()));
 
         Method[] methods = ((HandlerMethod)obj).getBean().getClass().getMethods();
 
@@ -119,8 +103,9 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
             String line = null;
             try {
                 BufferedReader reader = request.getReader();
-                while ((line = reader.readLine()) != null)
+                while ((line = reader.readLine()) != null) {
                     jb.append(line);
+                }
 
                 if(jb.toString().isEmpty()){
                     return null;
@@ -133,29 +118,5 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
             }
         }
         return token;
-    }
-
-    private boolean isIllegalIp(HttpServletRequest request){
-        boolean status = true;
-
-        String ip = request.getRemoteHost();
-        log.info("AccessHandlerInterceptor-preHandle-request ip: " + ip);
-
-        Object objTimes = redisUtil.get("login_ip_" + ip);
-
-        if(null != objTimes){
-            int number = Integer.parseInt(objTimes.toString());
-            if(number <= ipTimes){
-                redisUtil.set("login_ip_" + ip, number+1, 1);
-                status = false;
-            }else{
-                redisUtil.set("login_ip_" + ip, 0,60);
-            }
-        }else{
-            redisUtil.set("login_ip_" + ip, 0,1);
-            status = false;
-        }
-
-        return status;
     }
 }

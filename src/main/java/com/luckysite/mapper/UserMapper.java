@@ -18,8 +18,6 @@ public interface UserMapper {
 
     User getByUserId(@Param("userId") int userId);
 
-    User getByToken(@Param("token") String token);
-
     void updateLoginInfo(User user);
 
     List<Pic> getImage(UserDataModel userDataModel);

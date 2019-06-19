@@ -15,12 +15,8 @@
         select * from user_msg where userId = #{userId}
     </select>
 
-    <select id="getByToken" parameterType="java.lang.String" resultType="com.luckysite.entity.User">
-        select * from user_msg where token = #{token}
-    </select>
-
     <update id="updateLoginInfo" parameterType="com.luckysite.entity.User">
-        update user_msg set token = #{token}, loginTime = now(), refreshTime = now()
+        update user_msg set loginTime = now(), refreshTime = now()
         where userName = #{userName}
     </update>
 
