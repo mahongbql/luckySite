@@ -34,45 +34,74 @@ public class MDCFilter implements Filter {
         try {
             HttpServletRequest request = (HttpServletRequest) servletRequest;
 
-            InetAddress address = InetAddress.getLocalHost();
-            String hostAddress = address.getHostAddress();
+            String hostAddress = getLocalIp(request);
 
             String api = request.getRequestURI();
 
-            log.info("filter message hostAddress：" + hostAddress + " ，api：" + api);
+            log.info("filter message hostAddress：" + hostAddress);
 
 //            MDC.put("context.api", api);
 //            MDC.put("context.ip", hostAddress);
-//
-//            // http请求参数输出到索引
-//            MDC.put("context.method", request.getMethod());
+
+            // http请求参数输出到索引
+            MDC.put("context.method", request.getMethod());
             if ("GET".equals(request.getMethod())) {
                 Map<String, String> parameters = new HashMap<>(16);
                 Enumeration<String> parameterNames = request.getParameterNames();
                 while (parameterNames.hasMoreElements()) {
                     String name = parameterNames.nextElement();
                     String value = request.getParameter(name);
-                    parameters.put(name, value);
+//                    parameters.put(name, value);
                 }
-                log.info("get msg：" + parameters);
-//                MDC.put("context.parameters", parameters.toString());
+                MDC.put("context.parameters", parameters.toString());
 
             } else if ("POST".equals(request.getMethod())) {
                 newRequest = new HttpBodyReaderWrapper((HttpServletRequest) servletRequest);
                 String body = (new HttpBodyReaderWrapper(request)).getBody();
-                log.info("post body：" + body);
 //                MDC.put("context.parameters", body);
             }
 
         } catch (Exception e) {
             log.error(e.getMessage(), e);
+
         } finally {
             if(newRequest == null) {
                 filterChain.doFilter(servletRequest, servletResponse);
             } else {
                 filterChain.doFilter(newRequest, servletResponse);
             }
-//            MDC.clear();
+            MDC.clear();
         }
     }
+
+    /**
+     * 从Request对象中获得客户端IP，处理了HTTP代理服务器和Nginx的反向代理截取了ip
+     * @param request
+     * @return ip
+     */
+    public static String getLocalIp(HttpServletRequest request) {
+        String remoteAddr = request.getRemoteAddr();
+        String forwarded = request.getHeader("X-Forwarded-For");
+        String realIp = request.getHeader("X-Real-IP");
+
+        String ip = null;
+        if (realIp == null) {
+            if (forwarded == null) {
+                ip = remoteAddr;
+            } else {
+                ip = remoteAddr + "/" + forwarded.split(",")[0];
+            }
+        } else {
+            if (realIp.equals(forwarded)) {
+                ip = realIp;
+            } else {
+                if(forwarded != null){
+                    forwarded = forwarded.split(",")[0];
+                }
+                ip = realIp + "/" + forwarded;
+            }
+        }
+        return ip;
+    }
+
 }
