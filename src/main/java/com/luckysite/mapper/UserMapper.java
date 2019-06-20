@@ -1,5 +1,6 @@
 package com.luckysite.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.luckysite.entity.Pic;
 import com.luckysite.entity.Post;
 import com.luckysite.entity.UpLevel;
@@ -11,7 +12,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
     void insertUser(User user);
 
     User getByUserName(@Param("userName") String userName);

@@ -36,7 +36,7 @@ spring:
       prefix: /
       suffix: .html
 
-mybatis:
+mybatis-plus:
   mapper-locations: classpath:mapping/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
   type-aliases-package: entity # 注意：对应实体类的路径
 

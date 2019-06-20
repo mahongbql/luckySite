@@ -1,5 +1,6 @@
 package com.luckysite.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.luckysite.entity.Post;
 import com.luckysite.model.PostsParamModel;
 import org.apache.ibatis.annotations.Mapper;
@@ -8,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface PostsMapper {
+public interface PostsMapper extends BaseMapper<Post> {
     /**
      * 插入一篇文章
      * @param post
