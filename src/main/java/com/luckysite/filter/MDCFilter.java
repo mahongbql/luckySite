@@ -38,8 +38,6 @@ public class MDCFilter implements Filter {
 
             String api = request.getRequestURI();
 
-            log.info("filter message hostAddress：" + hostAddress);
-
 //            MDC.put("context.api", api);
 //            MDC.put("context.ip", hostAddress);
 
@@ -63,7 +61,6 @@ public class MDCFilter implements Filter {
 
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-
         } finally {
             if(newRequest == null) {
                 filterChain.doFilter(servletRequest, servletResponse);
