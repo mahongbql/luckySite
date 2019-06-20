@@ -39,11 +39,13 @@ public class MDCFilter implements Filter {
 
             String api = request.getRequestURI();
 
-            MDC.put("context.api", api);
-            MDC.put("context.ip", hostAddress);
+            log.info("filter message hostAddress：" + hostAddress + " ，api：" + api);
 
-            // http请求参数输出到索引
-            MDC.put("context.method", request.getMethod());
+//            MDC.put("context.api", api);
+//            MDC.put("context.ip", hostAddress);
+//
+//            // http请求参数输出到索引
+//            MDC.put("context.method", request.getMethod());
             if ("GET".equals(request.getMethod())) {
                 Map<String, String> parameters = new HashMap<>(16);
                 Enumeration<String> parameterNames = request.getParameterNames();
@@ -52,12 +54,14 @@ public class MDCFilter implements Filter {
                     String value = request.getParameter(name);
                     parameters.put(name, value);
                 }
-                MDC.put("context.parameters", parameters.toString());
+                log.info("get msg：" + parameters);
+//                MDC.put("context.parameters", parameters.toString());
 
             } else if ("POST".equals(request.getMethod())) {
                 newRequest = new HttpBodyReaderWrapper((HttpServletRequest) servletRequest);
                 String body = (new HttpBodyReaderWrapper(request)).getBody();
-                MDC.put("context.parameters", body);
+                log.info("post body：" + body);
+//                MDC.put("context.parameters", body);
             }
 
         } catch (Exception e) {
@@ -68,7 +72,7 @@ public class MDCFilter implements Filter {
             } else {
                 filterChain.doFilter(newRequest, servletResponse);
             }
-            MDC.clear();
+//            MDC.clear();
         }
     }
 }
