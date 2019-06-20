@@ -36,10 +36,9 @@ spring:
       prefix: /
       suffix: .html
 
-mybatis-plus:
+mybatis:
   mapper-locations: classpath:mapping/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
   type-aliases-package: entity # 注意：对应实体类的路径
-  type-aliases-super-type: java.lang.Object
 
 # 分布式文件系统FDFS配置
 fdfs:

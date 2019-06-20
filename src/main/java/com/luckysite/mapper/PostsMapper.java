@@ -1,6 +1,5 @@
 package com.luckysite.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.luckysite.entity.Post;
 import com.luckysite.model.PostsParamModel;
 import org.apache.ibatis.annotations.Mapper;
