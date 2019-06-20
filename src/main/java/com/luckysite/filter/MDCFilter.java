@@ -44,16 +44,16 @@ public class MDCFilter implements Filter {
 //            MDC.put("context.ip", hostAddress);
 
             // http请求参数输出到索引
-            MDC.put("context.method", request.getMethod());
+//            MDC.put("context.method", request.getMethod());
             if ("GET".equals(request.getMethod())) {
                 Map<String, String> parameters = new HashMap<>(16);
                 Enumeration<String> parameterNames = request.getParameterNames();
                 while (parameterNames.hasMoreElements()) {
                     String name = parameterNames.nextElement();
                     String value = request.getParameter(name);
-//                    parameters.put(name, value);
+                    parameters.put(name, value);
                 }
-                MDC.put("context.parameters", parameters.toString());
+//                MDC.put("context.parameters", parameters.toString());
 
             } else if ("POST".equals(request.getMethod())) {
                 newRequest = new HttpBodyReaderWrapper((HttpServletRequest) servletRequest);
@@ -70,7 +70,7 @@ public class MDCFilter implements Filter {
             } else {
                 filterChain.doFilter(newRequest, servletResponse);
             }
-            MDC.clear();
+//            MDC.clear();
         }
     }
 
