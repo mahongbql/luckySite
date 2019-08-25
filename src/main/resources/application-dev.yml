@@ -44,7 +44,6 @@ mybatis:
 fdfs:
   soTimeout: 1500 #socket连接超时时长
   connectTimeout: 600 #连接tracker服务器超时时长
-  resHost: https://luckydogma.work
   thumbImage: #缩略图生成参数，可选
     width: 150
     height: 150
@@ -58,16 +57,7 @@ pagehelper:
   support-methods-arguments: true
   params: count=countSql
 
-# 小程序配置
-app:
-  appId: wx1ba1d504c0635c65
-  appSecret: f936af5ebc7f6f95c0c0d7e673fe43c1
-  url: https://api.weixin.qq.com/sns/jscode2session?grant_type=authorization_code&
 
-robot:
-  userId: 404363
-  apikey: beb61eac21cb4cc5a9452f3cafd6f481
-  url: http://openapi.tuling123.com/openapi/api/v2
 
 urlList:
 
