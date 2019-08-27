@@ -58,9 +58,12 @@ public class PublicApiServiceImpl implements PublicApiService {
                 for (int i = 0; i < jsonArray.size(); i++) {
                     title = jsonArray.getJSONObject(i).getString("title");
                     des = jsonArray.getJSONObject(i).getString("des");
-                    JSONArray array = JSONArray.fromObject(jsonArray.getJSONObject(i).getString("list"));
-                    for (int j = 0; j < array.size(); j++) {
-                        list.add(array.getString(j));
+                    Object object = jsonArray.getJSONObject(i).getString("list");
+                    if (!object.toString().equals("null")) {
+                        JSONArray array = JSONArray.fromObject(object);
+                        for (int j = 0; j < array.size(); j++) {
+                            list.add(array.getString(j));
+                        }
                     }
                 }
             }
