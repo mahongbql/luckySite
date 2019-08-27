@@ -4,6 +4,7 @@ import com.luckysite.config.PublicApiConfig;
 import com.luckysite.dto.DreamAnalyticalDTO;
 import com.luckysite.service.PublicApiService;
 import com.luckysite.util.HttpUtil;
+import com.luckysite.util.ResponseResult;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
@@ -32,7 +33,8 @@ public class PublicApiServiceImpl implements PublicApiService {
     private PublicApiConfig publicApiConfig;
 
     @Override
-    public DreamAnalyticalDTO getDreamAnalytical(String q, int full) {
+    public ResponseResult<DreamAnalyticalDTO> getDreamAnalytical(String q, int full) {
+        ResponseResult responseResult = new ResponseResult();
         DreamAnalyticalDTO dreamAnalyticalDTO = new DreamAnalyticalDTO();
         List<String> list = new ArrayList<>();
         String title = "无解";
@@ -72,6 +74,6 @@ public class PublicApiServiceImpl implements PublicApiService {
         dreamAnalyticalDTO.setDes(des);
         dreamAnalyticalDTO.setTitle(title);
         dreamAnalyticalDTO.setList(list);
-        return dreamAnalyticalDTO;
+        return responseResult.success(dreamAnalyticalDTO);
     }
 }

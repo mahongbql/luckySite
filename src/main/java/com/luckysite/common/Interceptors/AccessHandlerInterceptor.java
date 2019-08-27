@@ -4,6 +4,7 @@ import com.luckysite.common.annotation.Auth;
 import com.luckysite.entity.User;
 import com.luckysite.service.UserService;
 import com.luckysite.util.RedisUtil;
+import lombok.extern.slf4j.Slf4j;
 import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
@@ -22,12 +23,9 @@ import java.io.BufferedReader;
 import java.lang.reflect.Method;
 import java.util.Date;
 
+@Slf4j
 @Component
 public class AccessHandlerInterceptor implements HandlerInterceptor {
-
-    private Logger log = LoggerFactory.getLogger(AccessHandlerInterceptor.class);
-
-    private static final String LOGIN_URL = "/login";
 
     @Autowired
     private UserService userService;
@@ -53,41 +51,37 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
     //最先执行该方法
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object obj) throws Exception {
-        String url = request.getRequestURI();
-        if (url.indexOf(LOGIN_URL) != -1) {
-            log.info("AccessHandlerInterceptor-登陆方法不做权限校验，url：" + url);
-            return true;
-        }
+        if (obj instanceof HandlerMethod) {
+            String token = getToken(request);
+            String methodName = ((HandlerMethod)obj).getMethod().getName();
 
-        String token = getToken(request);
-        String methodName = ((HandlerMethod)obj).getMethod().getName();
+            Object userObj = redisUtil.get(token);
+            if(null == userObj){
+                log.error("AccessHandlerInterceptor-token失效");
+                return false;
+            }
+            JSONObject userJson = JSONObject.fromObject(userObj);
+            User user = userService.getByUserId(Integer.parseInt(userJson.get("userId").toString()));
 
-        Object userObj = redisUtil.get(token);
-        if(null == userObj){
-            log.error("AccessHandlerInterceptor-token失效");
-            return false;
-        }
-        JSONObject userJson = JSONObject.fromObject(userObj);
-        User user = userService.getByUserId(Integer.parseInt(userJson.get("userId").toString()));
+            Method[] methods = ((HandlerMethod)obj).getBean().getClass().getMethods();
 
-        Method[] methods = ((HandlerMethod)obj).getBean().getClass().getMethods();
+            for(Method method : methods) {
+                // 如果此方法有注解，就把注解里面的数据赋值到user对象
+                if (method.isAnnotationPresent(Auth.class)){
+                    if(methodName.equals(method.getName())) {
+                        Auth auth = method.getAnnotation(Auth.class);
+                        log.info("AccessHandlerInterceptor-preHandle-用户 " + user.getUserName() + " ，auth: " + auth.role());
 
-        for(Method method : methods) {
-            // 如果此方法有注解，就把注解里面的数据赋值到user对象
-            if (method.isAnnotationPresent(Auth.class)){
-                if(methodName.equals(method.getName())) {
-                    Auth auth = method.getAnnotation(Auth.class);
-                    log.info("AccessHandlerInterceptor-preHandle-用户 " + user.getUserName() + " ，auth: " + auth.role());
+                        int uAuth = user.getRole();
+                        if(uAuth >= auth.role()){
+                            log.info("AccessHandlerInterceptor-preHandle-用户 " + user.getUserName() + "权限通过");
+                            return true;
+                        }
 
-                    int uAuth = user.getRole();
-                    if(uAuth >= auth.role()){
-                        log.info("AccessHandlerInterceptor-preHandle-用户 " + user.getUserName() + "权限通过");
-                        return true;
+                        log.info("AccessHandlerInterceptor-preHandle-用户 " + user.getUserName() + "无权限访问");
+
+                        return false;
                     }
-
-                    log.info("AccessHandlerInterceptor-preHandle-用户 " + user.getUserName() + "无权限访问");
-
-                    return false;
                 }
             }
         }
