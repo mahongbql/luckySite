@@ -33,24 +33,43 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
     @Autowired
     private RedisUtil redisUtil;
 
-    //无论controller中是否抛出异常，都会调用该方法
+    /**
+     * 无论controller中是否抛出异常，都会调用该方法
+     * @param request
+     * @param response
+     * @param obj
+     * @param ex
+     * @throws Exception
+     */
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object obj, Exception ex)
-            throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object obj, Exception ex) {
         if(null != ex){
             log.error("ex is " + ex);
         }
     }
 
-    //如果controller中抛出异常，则该方法不会被调用
+    /**
+     * 如果controller中抛出异常，则该方法不会被调用
+     * @param request
+     * @param response
+     * @param obj
+     * @param view
+     * @throws Exception
+     */
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object obj, ModelAndView view)
-            throws Exception {
-    }
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object obj, ModelAndView view) {}
 
-    //最先执行该方法
+    /**
+     * 最先执行该方法
+     * @param request
+     * @param response
+     * @param obj
+     * @return
+     * @throws Exception
+     */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object obj) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object obj) {
+        String url = request.getRequestURI();
         if (obj instanceof HandlerMethod) {
             String token = getToken(request);
             String methodName = ((HandlerMethod)obj).getMethod().getName();
@@ -58,7 +77,7 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
             Object userObj = redisUtil.get(token);
             if(null == userObj){
                 log.error("AccessHandlerInterceptor-token失效");
-                return false;
+                return true;
             }
             JSONObject userJson = JSONObject.fromObject(userObj);
             User user = userService.getByUserId(Integer.parseInt(userJson.get("userId").toString()));
