@@ -6,7 +6,7 @@ spring:
   application:
     name: luckySite
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/lucky_dog?useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://192.168.154.138:3306/xxl_job?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: mhb19940803751X
     driver-class-name: com.mysql.jdbc.Driver
@@ -48,6 +48,7 @@ fdfs:
     width: 150
     height: 150
   trackerList: 127.0.0.1:22122
+  resHost:
 
 
 # 分页配置
@@ -58,6 +59,20 @@ pagehelper:
   params: count=countSql
 
 urlList:
+
+robot:
+  userId:
+  apikey:
+  url:
+
+app:
+  appId:
+  appSecret:
+  url:
+
+publicApi:
+  url: http://v.juhe.cn/dream/query
+  key: 046d4abded5a07831e13498020bb95b4
 
 #eureka:
 #  client:
