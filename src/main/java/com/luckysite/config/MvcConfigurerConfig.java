@@ -45,6 +45,7 @@ public class MvcConfigurerConfig implements WebMvcConfigurer {
         List<String> excludePathList = new ArrayList<>();
         excludePathList.add("/login");
         excludePathList.add("/error");
+        excludePathList.add("/static/**");
         excludePathList.add("/swagger/**");
         excludePathList.add("/swagger-ui.html");
         excludePathList.add("/swagger-resources/**");
