@@ -4,13 +4,17 @@ import com.google.gson.Gson;
 import com.luckysite.config.PublicApiConfig;
 import com.luckysite.dto.publicApi.DreamAnalyticalDTO;
 import com.luckysite.dto.publicApi.DreamAnalyticalDetailsDTO;
+import com.luckysite.dto.publicApi.LaoHuangLiDTO;
 import com.luckysite.model.publicApi.DreamAnalyticalModel;
 import com.luckysite.model.publicApi.DreamDetailsModel;
+import com.luckysite.model.publicApi.LaoHuangLiDetailsModel;
+import com.luckysite.model.publicApi.LaoHuangLiModel;
 import com.luckysite.service.PublicApiService;
 import com.luckysite.util.HttpUtil;
 import com.luckysite.util.ResponseResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,12 +29,6 @@ public class PublicApiServiceImpl implements PublicApiService {
     //成功时远程服务器返回标志位
     private static final String SUCCESSED = "successed";
 
-    //成功时远程服务器返回标志位键值
-    private static final String REASON = "reason";
-
-    //返回的数据
-    private static final String RESULT = "result";
-
     @Resource
     private PublicApiConfig publicApiConfig;
 
@@ -41,13 +39,13 @@ public class PublicApiServiceImpl implements PublicApiService {
         List<DreamAnalyticalDetailsDTO> dreamAnalyticalDetails = new ArrayList<>();
 
         StringBuilder getUrlBuilder = new StringBuilder();
-        getUrlBuilder.append(publicApiConfig.getUrl());
-        getUrlBuilder.append("?");
-        getUrlBuilder.append("q=" + q);
-        getUrlBuilder.append("&");
-        getUrlBuilder.append("full=" + full);
-        getUrlBuilder.append("&");
-        getUrlBuilder.append("key=" + publicApiConfig.getKey());
+        getUrlBuilder.append(publicApiConfig.getDreamUrl());
+        getUrlBuilder.append("?q=");
+        getUrlBuilder.append(q);
+        getUrlBuilder.append("&full=");
+        getUrlBuilder.append(full);
+        getUrlBuilder.append("&key=");
+        getUrlBuilder.append(publicApiConfig.getDreamKey());
 
         String rtnMsg = HttpUtil.doGet(getUrlBuilder.toString());
         log.info("PublicApiServiceImpl-getDreamAnalytical-远程调用返回值为：" + rtnMsg);
@@ -68,5 +66,30 @@ public class PublicApiServiceImpl implements PublicApiService {
         }
 
         return responseResult.success(dreamAnalyticalDTO);
+    }
+
+    @Override
+    public ResponseResult<LaoHuangLiDTO> getLaoHuangLi(String date) {
+        ResponseResult responseResult = new ResponseResult();
+        StringBuilder getUrlBuilder = new StringBuilder();
+        getUrlBuilder.append(publicApiConfig.getLaohuangliUrl());
+        getUrlBuilder.append("?date=");
+        getUrlBuilder.append(date);
+        getUrlBuilder.append("&key=");
+        getUrlBuilder.append(publicApiConfig.getLaohuangliKey());
+
+        String rtnMsg = HttpUtil.doGet(getUrlBuilder.toString());
+        log.info("PublicApiServiceImpl-getLaoHuangLi-远程调用返回值为：" + rtnMsg);
+
+        //转换成为对象
+        LaoHuangLiModel laoHuangLiModel = new Gson().fromJson(rtnMsg, LaoHuangLiModel.class);
+
+        LaoHuangLiDTO laoHuangLiDTO = new LaoHuangLiDTO();
+        if (laoHuangLiModel.getReason().equals(SUCCESSED)) {
+            LaoHuangLiDetailsModel laoHuangLiDetailsModel = laoHuangLiModel.getResult();
+            BeanUtils.copyProperties(laoHuangLiDetailsModel, laoHuangLiDTO);
+        }
+
+        return responseResult.success(laoHuangLiDTO);
     }
 }

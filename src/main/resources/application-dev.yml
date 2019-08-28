@@ -71,8 +71,12 @@ app:
   url:
 
 publicApi:
-  url: http://v.juhe.cn/dream/query
-  key: 046d4abded5a07831e13498020bb95b4
+  # 周公解梦
+  dream_url: http://v.juhe.cn/dream/query
+  dream_key: 046d4abded5a07831e13498020bb95b4
+  # 老黄历
+  laohuangli_url: http://v.juhe.cn/laohuangli/d
+  laohuangli_key: 73267601cde9eaf4d3308d12f5f0034f
 
 #eureka:
 #  client:

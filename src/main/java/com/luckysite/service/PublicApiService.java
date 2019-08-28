@@ -1,6 +1,7 @@
 package com.luckysite.service;
 
 import com.luckysite.dto.publicApi.DreamAnalyticalDTO;
+import com.luckysite.dto.publicApi.LaoHuangLiDTO;
 import com.luckysite.util.ResponseResult;
 
 /**
@@ -15,4 +16,11 @@ public interface PublicApiService {
      * @return
      */
     ResponseResult<DreamAnalyticalDTO> getDreamAnalytical(String q, int full);
+
+    /**
+     * 老黄历
+     * @param date 日期，格式2014-09-09
+     * @return
+     */
+    ResponseResult<LaoHuangLiDTO> getLaoHuangLi(String date);
 }

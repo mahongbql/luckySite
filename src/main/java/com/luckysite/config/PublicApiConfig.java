@@ -1,22 +1,22 @@
 package com.luckysite.config;
 
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+@Data
 @Component
 public class PublicApiConfig {
 
-    @Value("${publicApi.url}")
-    private String url;
+    @Value("${publicApi.dream_url}")
+    private String dreamUrl;
 
-    @Value("${publicApi.key}")
-    private String key;
+    @Value("${publicApi.dream_key}")
+    private String dreamKey;
 
-    public String getKey() {
-        return key;
-    }
+    @Value("${publicApi.laohuangli_url}")
+    private String laohuangliUrl;
 
-    public String getUrl() {
-        return url;
-    }
+    @Value("${publicApi.laohuangli_key}")
+    private String laohuangliKey;
 }

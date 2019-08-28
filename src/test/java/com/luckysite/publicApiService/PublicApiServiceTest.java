@@ -2,6 +2,7 @@ package com.luckysite.publicApiService;
 
 import com.luckysite.LuckysiteApplicationTests;
 import com.luckysite.dto.publicApi.DreamAnalyticalDTO;
+import com.luckysite.dto.publicApi.LaoHuangLiDTO;
 import com.luckysite.service.PublicApiService;
 import com.luckysite.util.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
@@ -26,4 +27,11 @@ public class PublicApiServiceTest extends LuckysiteApplicationTests {
         ResponseResult<DreamAnalyticalDTO> responseResult = publicApiService.getDreamAnalytical("大海", 1);
         log.info(JSONObject.fromObject(responseResult).toString());
     }
+
+    @Test
+    public void testGetLaoHuangLi() {
+        ResponseResult<LaoHuangLiDTO> responseResult = publicApiService.getLaoHuangLi("2019-08-28");
+        log.info(JSONObject.fromObject(responseResult).toString());
+    }
+
 }
