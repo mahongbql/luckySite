@@ -69,7 +69,6 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object obj) {
-        String url = request.getRequestURI();
         if (obj instanceof HandlerMethod) {
             String token = getToken(request);
             String methodName = ((HandlerMethod)obj).getMethod().getName();
@@ -77,7 +76,7 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
             Object userObj = redisUtil.get(token);
             if(null == userObj){
                 log.error("AccessHandlerInterceptor-token失效");
-                return true;
+                return false;
             }
             JSONObject userJson = JSONObject.fromObject(userObj);
             User user = userService.getByUserId(Integer.parseInt(userJson.get("userId").toString()));
