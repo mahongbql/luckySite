@@ -24,7 +24,7 @@ public class PublicApiServiceTest extends LuckysiteApplicationTests {
 
     @Test
     public void testGetDreamAnalytical() {
-        ResponseResult<DreamAnalyticalDTO> responseResult = publicApiService.getDreamAnalytical("小孩子", 1);
+        ResponseResult<DreamAnalyticalDTO> responseResult = publicApiService.getDreamAnalytical("出租车", 1);
         log.info(JSONObject.fromObject(responseResult).toString());
     }
 }
