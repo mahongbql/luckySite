@@ -1,4 +1,4 @@
-package com.luckysite.dto;
+package com.luckysite.dto.publicApi;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -7,11 +7,11 @@ import java.util.List;
 
 /**
  * @author mahongbin
- * @date 2019/8/27 11:01
+ * @date 2019/8/28 14:53
  * @Description
  */
 @Data
-public class DreamAnalyticalDTO {
+public class DreamAnalyticalDetailsDTO {
 
     @ApiModelProperty(value = "标题")
     private String title;
@@ -21,4 +21,5 @@ public class DreamAnalyticalDTO {
 
     @ApiModelProperty(value = "详细信息")
     private List<String> list;
+
 }

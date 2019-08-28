@@ -1,11 +1,10 @@
 package com.luckysite.publicApiService;
 
 import com.luckysite.LuckysiteApplicationTests;
-import com.luckysite.dto.DreamAnalyticalDTO;
+import com.luckysite.dto.publicApi.DreamAnalyticalDTO;
 import com.luckysite.service.PublicApiService;
 import com.luckysite.util.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import org.junit.Test;
 
@@ -24,7 +23,7 @@ public class PublicApiServiceTest extends LuckysiteApplicationTests {
 
     @Test
     public void testGetDreamAnalytical() {
-        ResponseResult<DreamAnalyticalDTO> responseResult = publicApiService.getDreamAnalytical("出租车", 1);
+        ResponseResult<DreamAnalyticalDTO> responseResult = publicApiService.getDreamAnalytical("大海", 1);
         log.info(JSONObject.fromObject(responseResult).toString());
     }
 }

@@ -1,12 +1,14 @@
 package com.luckysite.service.impl;
 
+import com.google.gson.Gson;
 import com.luckysite.config.PublicApiConfig;
-import com.luckysite.dto.DreamAnalyticalDTO;
+import com.luckysite.dto.publicApi.DreamAnalyticalDTO;
+import com.luckysite.dto.publicApi.DreamAnalyticalDetailsDTO;
+import com.luckysite.model.publicApi.DreamAnalyticalModel;
+import com.luckysite.model.publicApi.DreamDetailsModel;
 import com.luckysite.service.PublicApiService;
 import com.luckysite.util.HttpUtil;
 import com.luckysite.util.ResponseResult;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -36,9 +38,7 @@ public class PublicApiServiceImpl implements PublicApiService {
     public ResponseResult<DreamAnalyticalDTO> getDreamAnalytical(String q, int full) {
         ResponseResult responseResult = new ResponseResult();
         DreamAnalyticalDTO dreamAnalyticalDTO = new DreamAnalyticalDTO();
-        List<String> list = new ArrayList<>();
-        String title = "无解";
-        String des = "你这梦太难了，周公解不开... ...";
+        List<DreamAnalyticalDetailsDTO> dreamAnalyticalDetails = new ArrayList<>();
 
         StringBuilder getUrlBuilder = new StringBuilder();
         getUrlBuilder.append(publicApiConfig.getUrl());
@@ -52,28 +52,21 @@ public class PublicApiServiceImpl implements PublicApiService {
         String rtnMsg = HttpUtil.doGet(getUrlBuilder.toString());
         log.info("PublicApiServiceImpl-getDreamAnalytical-远程调用返回值为：" + rtnMsg);
 
-        JSONObject objJson = JSONObject.fromObject(rtnMsg);
-        if (objJson.getString(REASON).equalsIgnoreCase(SUCCESSED)) {
-            Object o = objJson.getString(RESULT);
-            if (!o.toString().equals("null")) {
-                JSONArray jsonArray = JSONArray.fromObject(objJson.getString(RESULT));
-                for (int i = 0; i < jsonArray.size(); i++) {
-                    title = jsonArray.getJSONObject(i).getString("title");
-                    des = jsonArray.getJSONObject(i).getString("des");
-                    Object object = jsonArray.getJSONObject(i).getString("list");
-                    if (!object.toString().equals("null")) {
-                        JSONArray array = JSONArray.fromObject(object);
-                        for (int j = 0; j < array.size(); j++) {
-                            list.add(array.getString(j));
-                        }
-                    }
-                }
+        //转换成为对象
+        DreamAnalyticalModel dreamAnalyticalModel = new Gson().fromJson(rtnMsg, DreamAnalyticalModel.class);
+
+        if (dreamAnalyticalModel.getReason().equals(SUCCESSED)) {
+            List<DreamDetailsModel> dreamAnalyticalModelResult = dreamAnalyticalModel.getResult();
+            for (DreamDetailsModel dreamDetailsModel : dreamAnalyticalModelResult) {
+                DreamAnalyticalDetailsDTO dreamAnalyticalDetailsDTO = new DreamAnalyticalDetailsDTO();
+                dreamAnalyticalDetailsDTO.setTitle(dreamDetailsModel.getTitle());
+                dreamAnalyticalDetailsDTO.setDes(dreamDetailsModel.getDes());
+                dreamAnalyticalDetailsDTO.setList(dreamDetailsModel.getList());
+                dreamAnalyticalDetails.add(dreamAnalyticalDetailsDTO);
             }
+            dreamAnalyticalDTO.setDreamAnalyticalDetails(dreamAnalyticalDetails);
         }
 
-        dreamAnalyticalDTO.setDes(des);
-        dreamAnalyticalDTO.setTitle(title);
-        dreamAnalyticalDTO.setList(list);
         return responseResult.success(dreamAnalyticalDTO);
     }
 }

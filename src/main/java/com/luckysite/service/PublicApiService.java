@@ -1,6 +1,6 @@
 package com.luckysite.service;
 
-import com.luckysite.dto.DreamAnalyticalDTO;
+import com.luckysite.dto.publicApi.DreamAnalyticalDTO;
 import com.luckysite.util.ResponseResult;
 
 /**

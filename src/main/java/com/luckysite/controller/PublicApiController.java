@@ -1,6 +1,6 @@
 package com.luckysite.controller;
 
-import com.luckysite.dto.DreamAnalyticalDTO;
+import com.luckysite.dto.publicApi.DreamAnalyticalDTO;
 import com.luckysite.service.PublicApiService;
 import com.luckysite.util.ResponseResult;
 import io.swagger.annotations.Api;
