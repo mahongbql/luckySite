@@ -10,21 +10,25 @@ import com.luckysite.model.publicApi.DreamDetailsModel;
 import com.luckysite.model.publicApi.LaoHuangLiDetailsModel;
 import com.luckysite.model.publicApi.LaoHuangLiModel;
 import com.luckysite.service.PublicApiService;
-import com.luckysite.util.HttpUtil;
 import com.luckysite.util.ResponseResult;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+@Slf4j
 @Service
 public class PublicApiServiceImpl implements PublicApiService {
-
-    private Logger log = LoggerFactory.getLogger(PublicApiServiceImpl.class);
 
     //成功时远程服务器返回标志位
     private static final String SUCCESSED = "successed";
@@ -32,64 +36,65 @@ public class PublicApiServiceImpl implements PublicApiService {
     @Resource
     private PublicApiConfig publicApiConfig;
 
+    /**
+     * 进行远程访问
+     */
+    private static RestTemplate restTemplate = new RestTemplate();
+
     @Override
     public ResponseResult<DreamAnalyticalDTO> getDreamAnalytical(String q, int full) {
         ResponseResult responseResult = new ResponseResult();
         DreamAnalyticalDTO dreamAnalyticalDTO = new DreamAnalyticalDTO();
         List<DreamAnalyticalDetailsDTO> dreamAnalyticalDetails = new ArrayList<>();
 
-        StringBuilder getUrlBuilder = new StringBuilder();
-        getUrlBuilder.append(publicApiConfig.getDreamUrl());
-        getUrlBuilder.append("?q=");
-        getUrlBuilder.append(q);
-        getUrlBuilder.append("&full=");
-        getUrlBuilder.append(full);
-        getUrlBuilder.append("&key=");
-        getUrlBuilder.append(publicApiConfig.getDreamKey());
-
-        String rtnMsg = HttpUtil.doGet(getUrlBuilder.toString());
-        log.info("PublicApiServiceImpl-getDreamAnalytical-远程调用返回值为：" + rtnMsg);
-
         //转换成为对象
-        DreamAnalyticalModel dreamAnalyticalModel = new Gson().fromJson(rtnMsg, DreamAnalyticalModel.class);
+        Map<String, Object> params = new HashMap();
+        params.put("q", q);
+        params.put("full", full);
+        params.put("key", publicApiConfig.getDreamKey());
+        ResponseEntity<DreamAnalyticalModel> entity = restTemplate.getForEntity(publicApiConfig.getDreamUrl(), DreamAnalyticalModel.class, params);
 
-        if (dreamAnalyticalModel.getReason().equals(SUCCESSED)) {
-            List<DreamDetailsModel> dreamAnalyticalModelResult = dreamAnalyticalModel.getResult();
-            for (DreamDetailsModel dreamDetailsModel : dreamAnalyticalModelResult) {
-                DreamAnalyticalDetailsDTO dreamAnalyticalDetailsDTO = new DreamAnalyticalDetailsDTO();
-                dreamAnalyticalDetailsDTO.setTitle(dreamDetailsModel.getTitle());
-                dreamAnalyticalDetailsDTO.setDes(dreamDetailsModel.getDes());
-                dreamAnalyticalDetailsDTO.setList(dreamDetailsModel.getList());
-                dreamAnalyticalDetails.add(dreamAnalyticalDetailsDTO);
+        if (entity.getStatusCode().value() == HttpStatus.OK.value()) {
+            if (entity.getBody().getReason().equals(SUCCESSED)) {
+                List<DreamDetailsModel> dreamAnalyticalModelResult = entity.getBody().getResult();
+                for (DreamDetailsModel dreamDetailsModel : dreamAnalyticalModelResult) {
+                    DreamAnalyticalDetailsDTO dreamAnalyticalDetailsDTO = new DreamAnalyticalDetailsDTO();
+                    dreamAnalyticalDetailsDTO.setTitle(dreamDetailsModel.getTitle());
+                    dreamAnalyticalDetailsDTO.setDes(dreamDetailsModel.getDes());
+                    dreamAnalyticalDetailsDTO.setList(dreamDetailsModel.getList());
+                    dreamAnalyticalDetails.add(dreamAnalyticalDetailsDTO);
+                }
+                dreamAnalyticalDTO.setDreamAnalyticalDetails(dreamAnalyticalDetails);
             }
-            dreamAnalyticalDTO.setDreamAnalyticalDetails(dreamAnalyticalDetails);
-        }
 
-        return responseResult.success(dreamAnalyticalDTO);
+            return responseResult.success(dreamAnalyticalDTO);
+        } else {
+            return responseResult.fail("数据获取失败");
+        }
     }
 
     @Override
     public ResponseResult<LaoHuangLiDTO> getLaoHuangLi(String date) {
         ResponseResult responseResult = new ResponseResult();
-        StringBuilder getUrlBuilder = new StringBuilder();
-        getUrlBuilder.append(publicApiConfig.getLaohuangliUrl());
-        getUrlBuilder.append("?date=");
-        getUrlBuilder.append(date);
-        getUrlBuilder.append("&key=");
-        getUrlBuilder.append(publicApiConfig.getLaohuangliKey());
-
-        String rtnMsg = HttpUtil.doGet(getUrlBuilder.toString());
-        log.info("PublicApiServiceImpl-getLaoHuangLi-远程调用返回值为：" + rtnMsg);
 
         //转换成为对象
-        LaoHuangLiModel laoHuangLiModel = new Gson().fromJson(rtnMsg, LaoHuangLiModel.class);
+        Map<String, String> params = new HashMap();
+        params.put("date", date);
+        params.put("key", publicApiConfig.getLaohuangliKey());
+        ResponseEntity<LaoHuangLiModel> entity = restTemplate.getForEntity(publicApiConfig.getLaohuangliUrl(), LaoHuangLiModel.class, params);
+        log.info("" + entity.getStatusCodeValue());
 
-        LaoHuangLiDTO laoHuangLiDTO = new LaoHuangLiDTO();
-        if (laoHuangLiModel.getReason().equals(SUCCESSED)) {
-            LaoHuangLiDetailsModel laoHuangLiDetailsModel = laoHuangLiModel.getResult();
-            BeanUtils.copyProperties(laoHuangLiDetailsModel, laoHuangLiDTO);
+        if (entity.getStatusCode().value() == HttpStatus.OK.value()) {
+            LaoHuangLiDTO laoHuangLiDTO = new LaoHuangLiDTO();
+            if (entity.getBody().getReason().equals(SUCCESSED)) {
+                LaoHuangLiDetailsModel laoHuangLiDetailsModel = entity.getBody().getResult();
+                BeanUtils.copyProperties(laoHuangLiDetailsModel, laoHuangLiDTO);
+            }
+
+            return responseResult.success(laoHuangLiDTO);
+        } else {
+            return responseResult.fail("数据获取失败");
         }
 
-        return responseResult.success(laoHuangLiDTO);
     }
 }

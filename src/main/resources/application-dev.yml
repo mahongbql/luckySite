@@ -6,7 +6,7 @@ spring:
   application:
     name: luckySite
   datasource:
-    url: jdbc:mysql://192.168.154.138:3306/xxl_job?useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://192.168.154.139:3306/xxl_job?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: mhb19940803751X
     driver-class-name: com.mysql.jdbc.Driver
@@ -72,10 +72,10 @@ app:
 
 publicApi:
   # 周公解梦
-  dream_url: http://v.juhe.cn/dream/query
+  dream_url: http://v.juhe.cn/dream/query?q={q}&full={full}&key={key}
   dream_key: 046d4abded5a07831e13498020bb95b4
   # 老黄历
-  laohuangli_url: http://v.juhe.cn/laohuangli/d
+  laohuangli_url: http://v.juhe.cn/laohuangli/d?date={date}&key={key}
   laohuangli_key: 73267601cde9eaf4d3308d12f5f0034f
 
 #eureka:
