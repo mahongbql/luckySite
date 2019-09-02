@@ -69,6 +69,7 @@ public class PublicApiServiceImpl implements PublicApiService {
 
             return responseResult.success(dreamAnalyticalDTO);
         } else {
+            log.error("getDreamAnalytical-错误日志：" + entity.getBody());
             return responseResult.fail("数据获取失败");
         }
     }
@@ -93,6 +94,7 @@ public class PublicApiServiceImpl implements PublicApiService {
 
             return responseResult.success(laoHuangLiDTO);
         } else {
+            log.error("getLaoHuangLi-错误日志：" + entity.getBody());
             return responseResult.fail("数据获取失败");
         }
 
