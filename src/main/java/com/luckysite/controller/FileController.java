@@ -10,6 +10,7 @@ import com.luckysite.entity.PostPic;
 import com.luckysite.entity.User;
 import com.luckysite.model.Result;
 import com.luckysite.service.FileService;
+import com.luckysite.util.RedisUtil;
 import com.luckysite.util.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,12 +37,14 @@ public class FileController {
     @Autowired
     private FileService fileService;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
     @PostMapping("/upload")
     @Auth(role = AuthConfig.VIP)
     public Result fdfsUpload(@RequestParam("file") MultipartFile file,  @RequestParam("token") String token,
                              @RequestParam("des") String des, @RequestParam("uploadId") String uploadId,
-                             @RequestParam("type") Integer type,
-                             HttpSession httpSession) {
+                             @RequestParam("type") Integer type) {
         if (file.isEmpty()) {
             return ResultUtil.error(ResultCode.ERROR.getCode(), "File can not be null !", null);
         }
@@ -57,9 +60,9 @@ public class FileController {
                 throw new Exception("path is null Exception");
             }
 
-            User user = (User) httpSession.getAttribute(token);
+            HashMap<String, Object> user = (HashMap<String, Object>) redisUtil.get(token);
             log.info("user ----> " + user);
-            fileService.insertPic(fileUrl, user, des, Long.parseLong(uploadId), type);
+            fileService.insertPic(fileUrl, Long.parseLong(user.get("userId").toString()), des, Long.parseLong(uploadId), type);
 
             log.info("FileUploadController-fdfsUpload-上传文件返回地址：" + fileUrl);
 

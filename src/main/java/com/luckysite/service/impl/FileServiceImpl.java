@@ -32,17 +32,17 @@ public class FileServiceImpl implements FileService {
     private FdfsConfig fdfsConfig;
 
     @Override
-    public void insertPic(String path, User user, String des, Long uploadId, int type) {
+    public void insertPic(String path, Long userId, String des, Long uploadId, int type) {
         Pic pic = new Pic();
 
         pic.setPath(path);
-        pic.setUserId(user.getUserId());
+        pic.setUserId(userId);
         pic.setDes(des);
         pic .setUploadId(uploadId);
         pic.setType(type);
         pic.setStatus(PicStatusEnum.APPLICATION.getStatus());
 
-        fileMapper.insertPic(pic);
+//        fileMapper.insertPic(pic);
         log.info("FileServiceImpl-insertPic：图片插入完成");
     }
 

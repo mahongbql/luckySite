@@ -11,12 +11,12 @@ public interface FileService {
     /**
      * 插入图片信息
      * @param path
-     * @param user
+     * @param userId
      * @param des
      * @param uploadId
      * @param type
      */
-    void insertPic(String path, User user, String des, Long uploadId, int type);
+    void insertPic(String path, Long userId, String des, Long uploadId, int type);
 
     /**
      * 上传文件
