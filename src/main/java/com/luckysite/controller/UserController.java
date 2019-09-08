@@ -32,6 +32,9 @@ public class UserController {
 
     private Logger log = LoggerFactory.getLogger(UserController.class);
 
+    //token失效时间设定为半小时
+    private static final Integer EXPIRE_TIME = 60*30;
+
     @Autowired
     private UserService userService;
 
@@ -40,6 +43,9 @@ public class UserController {
 
     @Autowired
     private CacheService cacheService;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Autowired
     private RobotService robotService;
@@ -68,12 +74,11 @@ public class UserController {
     /**
      * 用户登录
      * @param resCode
-     * @param httpSession
      * @return
      */
     @RequestMapping("/login")
     public @ResponseBody
-    Result login(@RequestParam("resCode") String resCode, HttpSession httpSession){
+    Result login(@RequestParam("resCode") String resCode){
         log.info("user-login-用户resCode: " + resCode);
 
         String appId = appConfig.getAppId();
@@ -107,9 +112,6 @@ public class UserController {
         }
 
         log.info("user-login：用户 " + openid + " 登陆成功");
-        httpSession.setAttribute(sessionKey, user);
-
-        user.setToken(sessionKey);
         userService.updateLoginInfo(user);
 
         HashMap<String, Object> result = new HashMap<>();
@@ -117,6 +119,8 @@ public class UserController {
         result.put("userId", user.getUserId());
         result.put("role", user.getRole());
         result.put("lastLoginTime", TimeUtil.transFormDate(user.getLoginTime()));
+
+        redisUtil.set(sessionKey, result, EXPIRE_TIME);
 
         return ResultUtil.success(result);
     }

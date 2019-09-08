@@ -11,14 +11,12 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User>{
     void insertUser(User user);
 
     User getByUserName(@Param("userName") String userName);
 
     User getByUserId(@Param("userId") int userId);
-
-    User getByToken(@Param("token") String token);
 
     void updateLoginInfo(User user);
 

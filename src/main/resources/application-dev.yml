@@ -1,10 +1,12 @@
 server:
-  port: 8080
+  port: 8085
 
 # spring基础配置
 spring:
+  application:
+    name: luckySite
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/lucky_site
+    url: jdbc:mysql://127.0.0.1:3306/lucky_dog?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: mhb19940803751X
     driver-class-name: com.mysql.jdbc.Driver
@@ -13,20 +15,22 @@ spring:
       ddl-auto: update
     show-sql: true
   redis:
-    host: 169.254.197.129
+    host: 127.0.0.1
     port: 6379
-    password: 12345678
-    timeout: 1000
+    password: mhb19940803751X
+    timeout: 5000ms
     database: 0
-    pool:
-      max-active: 10
-      max-idle: 8
-      min-idle: 2
-      max-wait: 100
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 8
+        min-idle: 2
+        max-wait: -1ms
   http:
-    multipart:
-      maxFileSize: 10Mb
-      maxRequestSize: 100Mb
+    servlet:
+      multipart:
+        maxFileSize: 10Mb
+        maxRequestSize: 100Mb
   mvc:
     view:
       prefix: /
@@ -40,11 +44,11 @@ mybatis:
 fdfs:
   soTimeout: 1500 #socket连接超时时长
   connectTimeout: 600 #连接tracker服务器超时时长
-  resHost: http://169.254.197.129
+  resHost: https://luckydogma.work
   thumbImage: #缩略图生成参数，可选
     width: 150
     height: 150
-  trackerList: 169.254.197.129:22122
+  trackerList: 127.0.0.1:22122
 
 
 # 分页配置
@@ -65,10 +69,19 @@ robot:
   apikey: beb61eac21cb4cc5a9452f3cafd6f481
   url: http://openapi.tuling123.com/openapi/api/v2
 
-urlList: https://qiniu.luckydogma.work/animation_1.mp4,
-  https://qiniu.luckydogma.work/film_1.mp4,
-  https://qiniu.luckydogma.work/animation_2.mp4,
-  https://qiniu.luckydogma.work/film_2.mp4,
-  https://qiniu.luckydogma.work/animation_3.mp4,
-  https://qiniu.luckydogma.work/film_3.mp4
+urlList:
 
+publicApi:
+  # 周公解梦
+  dream_url: http://v.juhe.cn/dream/query?q={q}&full={full}&key={key}
+  dream_key: 046d4abded5a07831e13498020bb95b4
+  # 老黄历
+  laohuangli_url: http://v.juhe.cn/laohuangli/d?date={date}&key={key}
+  laohuangli_key: 73267601cde9eaf4d3308d12f5f0034f
+
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://eureka:8761/eureka/
+#    healthcheck:
+#      enabled: true

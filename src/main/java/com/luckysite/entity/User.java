@@ -17,7 +17,6 @@ public class User implements Serializable {
     private Date loginTime;
     private Date refreshTime;
     private int role;
-    private String token;
     private String nickName;    //用户昵称
     private String avatarUrl;   //用户头像
 
@@ -35,14 +34,6 @@ public class User implements Serializable {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
-    }
-
-    public String getToken() {
-        return this.token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public void setRole(int role) {

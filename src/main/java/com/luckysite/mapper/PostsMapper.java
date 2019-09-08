@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface PostsMapper {
+public interface PostsMapper extends BaseMapper<Post> {
     /**
      * 插入一篇文章
      * @param post
