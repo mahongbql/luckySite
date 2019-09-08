@@ -50,13 +50,15 @@ public class FileController {
                 ", des：" + des +
                 ", uploadId：" + uploadId);
         try {
-            String fileUrl = fileService.uploadFile(file);
+//            String fileUrl = fileService.uploadFile(file);
+            String fileUrl = "123456789";
 
             if(null == fileUrl){
                 throw new Exception("path is null Exception");
             }
 
             User user = (User) httpSession.getAttribute(token);
+            log.info("user ----> " + user);
             fileService.insertPic(fileUrl, user, des, Long.parseLong(uploadId), type);
 
             log.info("FileUploadController-fdfsUpload-上传文件返回地址：" + fileUrl);
