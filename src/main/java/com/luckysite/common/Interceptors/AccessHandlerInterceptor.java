@@ -67,6 +67,8 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
             String token = getToken(request);
             String methodName = ((HandlerMethod)obj).getMethod().getName();
 
+            log.info("获取到前端的token -> " + token);
+
             Object userObj = redisUtil.get(token);
             if(null == userObj){
                 log.error("AccessHandlerInterceptor-token失效");
