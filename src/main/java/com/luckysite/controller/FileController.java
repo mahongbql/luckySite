@@ -53,15 +53,13 @@ public class FileController {
                 ", des：" + des +
                 ", uploadId：" + uploadId);
         try {
-//            String fileUrl = fileService.uploadFile(file);
-            String fileUrl = "123456789";
+            String fileUrl = fileService.uploadFile(file);
 
             if(null == fileUrl){
                 throw new Exception("path is null Exception");
             }
 
             HashMap<String, Object> user = (HashMap<String, Object>) redisUtil.get(token);
-            log.info("user ----> " + user);
             fileService.insertPic(fileUrl, Long.parseLong(user.get("userId").toString()), des, Long.parseLong(uploadId), type);
 
             log.info("FileUploadController-fdfsUpload-上传文件返回地址：" + fileUrl);

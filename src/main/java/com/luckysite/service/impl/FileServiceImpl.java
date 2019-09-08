@@ -42,7 +42,7 @@ public class FileServiceImpl implements FileService {
         pic.setType(type);
         pic.setStatus(PicStatusEnum.APPLICATION.getStatus());
 
-//        fileMapper.insertPic(pic);
+        fileMapper.insertPic(pic);
         log.info("FileServiceImpl-insertPic：图片插入完成");
     }
 
