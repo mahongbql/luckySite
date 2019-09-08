@@ -6,7 +6,7 @@ spring:
   application:
     name: luckySite
   datasource:
-    url: jdbc:mysql://192.168.154.139:3306/xxl_job?useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://127.0.0.1:3306/lucky_dog?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: mhb19940803751X
     driver-class-name: com.mysql.jdbc.Driver
@@ -44,11 +44,11 @@ mybatis:
 fdfs:
   soTimeout: 1500 #socket连接超时时长
   connectTimeout: 600 #连接tracker服务器超时时长
+  resHost: https://luckydogma.work
   thumbImage: #缩略图生成参数，可选
     width: 150
     height: 150
   trackerList: 127.0.0.1:22122
-  resHost:
 
 
 # 分页配置
@@ -58,17 +58,18 @@ pagehelper:
   support-methods-arguments: true
   params: count=countSql
 
-urlList:
+# 小程序配置
+app:
+  appId: wx1ba1d504c0635c65
+  appSecret: f936af5ebc7f6f95c0c0d7e673fe43c1
+  url: https://api.weixin.qq.com/sns/jscode2session?grant_type=authorization_code&
 
 robot:
-  userId:
-  apikey:
-  url:
+  userId: 404363
+  apikey: beb61eac21cb4cc5a9452f3cafd6f481
+  url: http://openapi.tuling123.com/openapi/api/v2
 
-app:
-  appId:
-  appSecret:
-  url:
+urlList:
 
 publicApi:
   # 周公解梦
