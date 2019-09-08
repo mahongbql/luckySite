@@ -71,7 +71,7 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
 
             log.info("获取到前端的token -> " + token);
 
-            if(!methodName.equals("login")) {
+            if(methodName.equals("login")) {
                 return true;
             }
 
