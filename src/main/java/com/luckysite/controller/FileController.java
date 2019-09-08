@@ -23,7 +23,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 上传图片到fastdfs
@@ -57,8 +56,8 @@ public class FileController {
                 throw new Exception("path is null Exception");
             }
 
-            HashMap<String, Object> map = (HashMap) httpSession.getAttribute(token);
-            fileService.insertPic(fileUrl, Long.parseLong(map.get("userId").toString()), des, Long.parseLong(uploadId), type);
+            User user = (User) httpSession.getAttribute(token);
+            fileService.insertPic(fileUrl, user, des, Long.parseLong(uploadId), type);
 
             log.info("FileUploadController-fdfsUpload-上传文件返回地址：" + fileUrl);
 
