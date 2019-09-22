@@ -78,7 +78,7 @@ public class UserController {
      */
     @RequestMapping("/login")
     public @ResponseBody
-    Result login(@RequestParam("resCode") String resCode, HttpSession httpSession){
+    Result login(@RequestParam("resCode") String resCode){
         log.info("user-login-用户resCode: " + resCode);
 
         String appId = appConfig.getAppId();
@@ -121,7 +121,6 @@ public class UserController {
         result.put("lastLoginTime", TimeUtil.transFormDate(user.getLoginTime()));
 
         redisUtil.set(sessionKey, result, EXPIRE_TIME);
-        httpSession.setAttribute(sessionKey, user);
 
         return ResultUtil.success(result);
     }
