@@ -15,7 +15,7 @@ spring:
   redis:
     host: 169.254.197.129
     port: 6379
-    password: mhb19940803751X
+    password: 12345678
     timeout: 5000ms
     database: 0
     lettuce:
