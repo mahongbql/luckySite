@@ -43,7 +43,7 @@ public class MvcConfigurerConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         List<String> excludePathList = new ArrayList<>();
-        excludePathList.add("/login");
+        excludePathList.add("/user/login");
         excludePathList.add("/error");
         excludePathList.add("/static/**");
         excludePathList.add("/swagger/**");
