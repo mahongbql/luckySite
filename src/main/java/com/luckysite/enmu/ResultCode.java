@@ -1,6 +1,13 @@
 package com.luckysite.enmu;
 
+import lombok.Getter;
+
+@Getter
 public enum  ResultCode {
+    /**
+     * 返回状态码
+     */
+
     SUCCESS("成功", 1000),
     ERROR("失败", 1001);
 
@@ -10,13 +17,5 @@ public enum  ResultCode {
     ResultCode(String msg, int code) {
         this.msg = msg;
         this.code = code;
-    }
-
-    public String getMsg() {
-        return this.msg;
-    }
-
-    public int getCode() {
-        return this.code;
     }
 }

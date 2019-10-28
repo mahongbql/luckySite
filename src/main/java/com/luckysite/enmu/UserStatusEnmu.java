@@ -1,20 +1,22 @@
 package com.luckysite.enmu;
 
+import lombok.Getter;
+
+@Getter
 public enum UserStatusEnmu {
+    /**
+     * 冻结状态
+     */
     FREEZ(1),
+
+    /**
+     * 非冻结状态
+     */
     NOT_FREEZ(0);
 
-    private UserStatusEnmu(int status){
+    UserStatusEnmu(int status){
         this.status = status;
     }
 
     private int status;
-
-    public int getStatus() {
-        return this.status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
 }

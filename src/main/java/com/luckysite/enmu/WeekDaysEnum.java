@@ -1,5 +1,7 @@
 package com.luckysite.enmu;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +12,11 @@ import java.util.Map;
  * @date 2019/6/20 14:23
  * @Description
  */
+@Getter
 public enum WeekDaysEnum {
+    /**
+     * 日期枚举
+     */
 
     sun(1, "周日"),
     Mon(2, "周一"),
@@ -23,17 +29,9 @@ public enum WeekDaysEnum {
     private int typeId;
     private String typeName;
 
-    private WeekDaysEnum(int typeId, String typeName) {
+    WeekDaysEnum(int typeId, String typeName) {
         this.typeId = typeId;
         this.typeName = typeName;
-    }
-
-    public int getTypeId() {
-        return this.typeId;
-    }
-
-    public String getTypeName() {
-        return this.typeName;
     }
 
     public static List toList() {
