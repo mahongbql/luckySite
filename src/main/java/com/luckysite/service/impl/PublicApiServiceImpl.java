@@ -64,7 +64,7 @@ public class PublicApiServiceImpl implements PublicApiService {
 
             return responseResult.success(dreamAnalyticalDTO);
         } else {
-            log.error("getDreamAnalytical-错误日志：" + entity.getBody());
+            log.error("getDreamAnalytical-错误日志：{}", entity.getBody());
             return responseResult.fail("数据获取失败");
         }
     }
@@ -78,7 +78,7 @@ public class PublicApiServiceImpl implements PublicApiService {
         params.put("date", date);
         params.put("key", publicApiConfig.getLaohuangliKey());
         ResponseEntity<LaoHuangLiModel> entity = restTemplate.getForEntity(publicApiConfig.getLaohuangliUrl(), LaoHuangLiModel.class, params);
-        log.info("" + entity.getStatusCodeValue());
+        log.info("老黄历远程获取值为：{}", entity.getStatusCodeValue());
 
         if (entity.getStatusCode().value() == HttpStatus.OK.value()) {
             LaoHuangLiDTO laoHuangLiDTO = new LaoHuangLiDTO();
@@ -89,7 +89,7 @@ public class PublicApiServiceImpl implements PublicApiService {
 
             return responseResult.success(laoHuangLiDTO);
         } else {
-            log.error("getLaoHuangLi-错误日志：" + entity.getBody());
+            log.error("getLaoHuangLi-错误日志：{}", entity.getBody());
             return responseResult.fail("数据获取失败");
         }
 
