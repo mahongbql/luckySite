@@ -1,40 +1,26 @@
 package com.luckysite.model;
 
+import lombok.Data;
+
+@Data
 public class AdminPicModel {
-    private Integer status; //状态
-    private Integer pageNum;    //分页起始
-    private Integer pageSize;   //分页数量
-    private String picId;   //图片id
+    /**
+     * 状态
+     */
+    private Integer status;
 
-    public void setPicId(String picId) {
-        this.picId = picId;
-    }
+    /**
+     * 分页起始
+     */
+    private Integer pageNum;
 
-    public String getPicId() {
-        return this.picId;
-    }
+    /**
+     * 分页数量
+     */
+    private Integer pageSize;
 
-    public Integer getPageNum() {
-        return this.pageNum;
-    }
-
-    public Integer getStatus() {
-        return this.status;
-    }
-
-    public Integer getPageSize() {
-        return this.pageSize;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public void setPageNum(Integer pageNum) {
-        this.pageNum = pageNum;
-    }
-
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
+    /**
+     * 图片id
+     */
+    private String picId;
 }

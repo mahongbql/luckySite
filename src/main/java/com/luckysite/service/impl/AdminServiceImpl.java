@@ -1,27 +1,25 @@
 package com.luckysite.service.impl;
 
-import com.github.pagehelper.PageHelper;
 import com.luckysite.enmu.UpLevelEnmu;
 import com.luckysite.enmu.UserTypeEnmu;
 import com.luckysite.entity.Pic;
 import com.luckysite.entity.Post;
 import com.luckysite.entity.UpLevel;
-import com.luckysite.entity.User;
 import com.luckysite.mapper.AdminMapper;
 import com.luckysite.model.AdminPicModel;
 import com.luckysite.model.AdminPostsModel;
 import com.luckysite.model.AdminUserModel;
 import com.luckysite.service.AdminService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service
 public class AdminServiceImpl implements AdminService {
 
-    @Autowired
+    @Resource
     private AdminMapper adminMapper;
 
     @Override
@@ -35,7 +33,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void updateUserStatus(AdminUserModel adminUserModel) {
         UpLevel upLevel = new UpLevel();
         upLevel.setStatus(UpLevelEnmu.HAS_ADOPTED.getStatus());
