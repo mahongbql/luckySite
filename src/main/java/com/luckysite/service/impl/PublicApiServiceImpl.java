@@ -1,6 +1,5 @@
 package com.luckysite.service.impl;
 
-import com.google.gson.Gson;
 import com.luckysite.config.PublicApiConfig;
 import com.luckysite.dto.publicApi.DreamAnalyticalDTO;
 import com.luckysite.dto.publicApi.DreamAnalyticalDetailsDTO;
@@ -12,8 +11,6 @@ import com.luckysite.model.publicApi.LaoHuangLiModel;
 import com.luckysite.service.PublicApiService;
 import com.luckysite.util.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -57,6 +51,7 @@ public class PublicApiServiceImpl implements PublicApiService {
         if (entity.getStatusCode().value() == HttpStatus.OK.value()) {
             if (entity.getBody().getReason().equals(SUCCESSED)) {
                 List<DreamDetailsModel> dreamAnalyticalModelResult = entity.getBody().getResult();
+                dreamAnalyticalModelResult = Optional.ofNullable(dreamAnalyticalModelResult).orElse(new ArrayList<>());
                 for (DreamDetailsModel dreamDetailsModel : dreamAnalyticalModelResult) {
                     DreamAnalyticalDetailsDTO dreamAnalyticalDetailsDTO = new DreamAnalyticalDetailsDTO();
                     dreamAnalyticalDetailsDTO.setTitle(dreamDetailsModel.getTitle());
