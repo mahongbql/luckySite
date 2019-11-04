@@ -32,7 +32,9 @@ public class UserController {
 
     private Logger log = LoggerFactory.getLogger(UserController.class);
 
-    //token失效时间设定为半小时
+    /**
+     * token失效时间设定为半小时
+     */
     private static final Integer EXPIRE_TIME = 60*30;
 
     @Autowired
