@@ -79,8 +79,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("/login")
-    public @ResponseBody
-    Result login(@RequestParam("resCode") String resCode){
+    public @ResponseBody Result login(@RequestParam("resCode") String resCode){
         log.info("user-login-用户resCode: " + resCode);
 
         String appId = appConfig.getAppId();
