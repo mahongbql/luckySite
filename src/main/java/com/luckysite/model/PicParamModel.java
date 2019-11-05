@@ -1,14 +1,30 @@
 package com.luckysite.model;
 
+
 /**
  * Created by mahongbin on 2018/11/24.
  */
 public class PicParamModel {
-    private Integer pageNum;    //分页起始
-    private Integer pageSize;   //分页数量
-    private String picId;        //图片id
-    private Integer type;   //图片类型
-    private String userId;  //用户id
+    /**
+     * 分页起始
+     */
+    private Integer pageNum;
+    /**
+     * 分页数量
+     */
+    private Integer pageSize;
+    /**
+     * 图片id
+     */
+    private String picId;
+    /**
+     * 图片类型
+     */
+    private Integer type;
+    /**
+     * 用户id
+     */
+    private String userId;
 
     public void setUserId(String userId) {
         this.userId = userId;
