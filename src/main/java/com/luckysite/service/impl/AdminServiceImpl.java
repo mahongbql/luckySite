@@ -1,7 +1,7 @@
 package com.luckysite.service.impl;
 
-import com.luckysite.enmu.UpLevelEnmu;
-import com.luckysite.enmu.UserTypeEnmu;
+import com.luckysite.common.enums.UpLevelEnum;
+import com.luckysite.common.enums.UserTypeEnum;
 import com.luckysite.entity.Pic;
 import com.luckysite.entity.Post;
 import com.luckysite.entity.UpLevel;
@@ -36,12 +36,12 @@ public class AdminServiceImpl implements AdminService {
     @Transactional(rollbackFor = Exception.class)
     public void updateUserStatus(AdminUserModel adminUserModel) {
         UpLevel upLevel = new UpLevel();
-        upLevel.setStatus(UpLevelEnmu.HAS_ADOPTED.getStatus());
+        upLevel.setStatus(UpLevelEnum.HAS_ADOPTED.getStatus());
         upLevel.setUserId(Long.parseLong(adminUserModel.getUserId()));
         upLevel.setType(adminUserModel.getType());
 
         adminMapper.updateUpLevelStatus(upLevel);
-        adminMapper.updateUserRole(UserTypeEnmu.VIP.getRoleId(), Integer.parseInt(adminUserModel.getUserId()));
+        adminMapper.updateUserRole(UserTypeEnum.VIP.getRoleId(), Integer.parseInt(adminUserModel.getUserId()));
     }
 
     @Override

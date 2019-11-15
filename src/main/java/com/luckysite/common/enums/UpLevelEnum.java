@@ -1,9 +1,9 @@
-package com.luckysite.enmu;
+package com.luckysite.common.enums;
 
 import lombok.Getter;
 
 @Getter
-public enum  UpLevelEnmu {
+public enum UpLevelEnum {
     /**
      * 申请中
      */
@@ -14,7 +14,7 @@ public enum  UpLevelEnmu {
      */
     HAS_ADOPTED(1);
 
-    UpLevelEnmu(int status){
+    UpLevelEnum(int status){
         this.status = status;
     }
 

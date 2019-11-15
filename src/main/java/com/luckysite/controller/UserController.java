@@ -1,11 +1,14 @@
 package com.luckysite.controller;
 
 import com.luckysite.common.annotation.Auth;
+import com.luckysite.common.enums.LuckySiteErrorEnum;
 import com.luckysite.config.AppConfig;
 import com.luckysite.config.AuthConfig;
-import com.luckysite.enmu.ResultCode;
-import com.luckysite.enmu.UserStatusEnmu;
-import com.luckysite.enmu.UserTypeEnmu;
+import com.luckysite.config.ShowFunctionConfig;
+import com.luckysite.dto.login.LoginDataDTO;
+import com.luckysite.common.enums.ResultCode;
+import com.luckysite.common.enums.UserStatusEnum;
+import com.luckysite.common.enums.UserTypeEnum;
 import com.luckysite.entity.Pic;
 import com.luckysite.entity.Post;
 import com.luckysite.entity.User;
@@ -23,7 +26,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @RestController
@@ -52,14 +54,17 @@ public class UserController {
     @Autowired
     private RobotService robotService;
 
+    @Autowired
+    private ShowFunctionConfig showFunctionConfig;
+
     /**
      * 用户注册
      * @param user
      */
     public User register(User user){
         try {
-            user.setFreez(UserStatusEnmu.NOT_FREEZ.getStatus());
-            user.setRole(UserTypeEnmu.USER.getRoleId());
+            user.setFreez(UserStatusEnum.NOT_FREEZ.getStatus());
+            user.setRole(UserTypeEnum.USER.getRoleId());
             user.setLoginTime(new Date());
             user.setRefreshTime(new Date());
             user.setRegisterTime(new Date());
@@ -79,7 +84,9 @@ public class UserController {
      * @return
      */
     @RequestMapping("/login")
-    public @ResponseBody Result login(@RequestParam("resCode") String resCode){
+    public @ResponseBody ResponseResult<LoginDataDTO> login(@RequestParam("resCode") String resCode){
+        ResponseResult<LoginDataDTO> responseResult = new ResponseResult<>();
+        LoginDataDTO loginDataDTO = new LoginDataDTO();
         log.info("user-login-用户resCode: " + resCode);
 
         String appId = appConfig.getAppId();
@@ -108,22 +115,25 @@ public class UserController {
 
             if(null == user){
                 log.error("user-login-注册失败：用户 " + openid);
-                return ResultUtil.error(ResultCode.ERROR.getCode(), "用户注册异常", null);
+                return responseResult.fail(LuckySiteErrorEnum.REGISTER_ERROR.getResponseMessage());
             }
         }
 
         log.info("user-login：用户 " + openid + " 登陆成功");
         userService.updateLoginInfo(user);
 
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("token", sessionKey);
-        result.put("userId", user.getUserId());
-        result.put("role", user.getRole());
-        result.put("lastLoginTime", TimeUtil.transFormDate(user.getLoginTime()));
+        loginDataDTO.setLastLoginTime(TimeUtil.transFormDate(user.getLoginTime()));
+        loginDataDTO.setRole(user.getRole());
+        loginDataDTO.setToken(sessionKey);
+        loginDataDTO.setUserId(user.getUserId());
+        loginDataDTO.setPost(showFunctionConfig.getPost());
+        loginDataDTO.setPic(showFunctionConfig.getPic());
+        loginDataDTO.setDream(showFunctionConfig.getDream());
+        loginDataDTO.setCalender(showFunctionConfig.getCalender());
 
-        redisUtil.set(sessionKey, result, EXPIRE_TIME);
+        redisUtil.set(sessionKey, loginDataDTO, EXPIRE_TIME);
 
-        return ResultUtil.success(result);
+        return responseResult.success(loginDataDTO);
     }
 
     /**

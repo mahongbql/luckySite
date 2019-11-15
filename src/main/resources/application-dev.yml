@@ -83,6 +83,12 @@ publicApi:
   laohuangli_url: http://v.juhe.cn/laohuangli/d?date={date}&key={key}
   laohuangli_key: 73267601cde9eaf4d3308d12f5f0034f
 
+showFunction:
+  post: 1
+  pic : 1
+  dream: 1
+  calender: 1
+
 #eureka:
 #  client:
 #    serviceUrl:

@@ -2,12 +2,9 @@ package com.luckysite.controller;
 
 import com.luckysite.common.annotation.Auth;
 import com.luckysite.config.AuthConfig;
-import com.luckysite.enmu.PostPicStatusEnmu;
-import com.luckysite.enmu.PostStatusEnmu;
-import com.luckysite.enmu.ResultCode;
-import com.luckysite.entity.Post;
+import com.luckysite.common.enums.PostPicStatusEnum;
+import com.luckysite.common.enums.ResultCode;
 import com.luckysite.entity.PostPic;
-import com.luckysite.entity.User;
 import com.luckysite.model.Result;
 import com.luckysite.service.FileService;
 import com.luckysite.util.RedisUtil;
@@ -20,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 
 /**
@@ -101,7 +96,7 @@ public class FileController {
             postPic.setUploadName(upload_name);
             postPic.setUrl(fileUrl);
             postPic.setUserId(Long.parseLong(userId));
-            postPic.setStatus(PostPicStatusEnmu.USING.getStatus());
+            postPic.setStatus(PostPicStatusEnum.USING.getStatus());
             fileService.insertPostPic(postPic);
 
             HashMap<String, Object> result = new HashMap<>();

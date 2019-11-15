@@ -1,6 +1,7 @@
 package com.luckysite.common.Interceptors;
 
 import com.luckysite.common.annotation.Auth;
+import com.luckysite.dto.login.LoginDataDTO;
 import com.luckysite.entity.User;
 import com.luckysite.service.UserService;
 import com.luckysite.util.RedisUtil;
@@ -75,8 +76,8 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
                 log.error("AccessHandlerInterceptor-token失效");
                 return false;
             }
-            JSONObject userJson = JSONObject.fromObject(userObj);
-            User user = userService.getByUserId(Integer.parseInt(userJson.get("userId").toString()));
+            LoginDataDTO loginDataDTO = (LoginDataDTO)userObj;
+            User user = userService.getByUserId(loginDataDTO.getUserId().intValue());
 
             Method[] methods = ((HandlerMethod)obj).getBean().getClass().getMethods();
 

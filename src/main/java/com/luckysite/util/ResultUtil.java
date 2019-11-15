@@ -1,9 +1,8 @@
 package com.luckysite.util;
 
-import com.luckysite.enmu.ResultCode;
+import com.luckysite.common.enums.ResultCode;
 import com.luckysite.model.Result;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class ResultUtil {

@@ -1,11 +1,9 @@
 package com.luckysite.service.impl;
 
 import com.luckysite.config.FdfsConfig;
-import com.luckysite.enmu.PicStatusEnum;
+import com.luckysite.common.enums.PicStatusEnum;
 import com.luckysite.entity.Pic;
-import com.luckysite.entity.Post;
 import com.luckysite.entity.PostPic;
-import com.luckysite.entity.User;
 import com.luckysite.mapper.FileMapper;
 import com.luckysite.service.FileService;
 import com.luckysite.util.FastDFSClientWrapper;
@@ -14,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Date;
 
 @Service
 public class FileServiceImpl implements FileService {

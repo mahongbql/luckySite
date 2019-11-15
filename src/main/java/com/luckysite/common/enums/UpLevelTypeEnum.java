@@ -1,9 +1,9 @@
-package com.luckysite.enmu;
+package com.luckysite.common.enums;
 
 import lombok.Getter;
 
 @Getter
-public enum  UpLevelTypeEnmu {
+public enum UpLevelTypeEnum {
     /**
      * vip等级
      */
@@ -16,7 +16,7 @@ public enum  UpLevelTypeEnmu {
 
     private String type;
 
-    UpLevelTypeEnmu(String type){
+    UpLevelTypeEnum(String type){
         this.type = type;
     }
 }

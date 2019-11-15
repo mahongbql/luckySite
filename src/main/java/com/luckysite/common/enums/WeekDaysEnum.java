@@ -1,4 +1,4 @@
-package com.luckysite.enmu;
+package com.luckysite.common.enums;
 
 import lombok.Getter;
 

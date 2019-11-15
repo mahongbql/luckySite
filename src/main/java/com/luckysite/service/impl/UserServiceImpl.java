@@ -2,8 +2,8 @@ package com.luckysite.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.luckysite.config.AuthConfig;
-import com.luckysite.enmu.UpLevelEnmu;
-import com.luckysite.enmu.UpLevelTypeEnmu;
+import com.luckysite.common.enums.UpLevelEnum;
+import com.luckysite.common.enums.UpLevelTypeEnum;
 import com.luckysite.entity.Pic;
 import com.luckysite.entity.Post;
 import com.luckysite.entity.UpLevel;
@@ -13,7 +13,6 @@ import com.luckysite.model.UserDataModel;
 import com.luckysite.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -74,14 +73,14 @@ public class UserServiceImpl implements UserService {
         }
 
         upLevel.setUserId(userId);
-        upLevel.setStatus(UpLevelEnmu.APPLICATION.getStatus());
+        upLevel.setStatus(UpLevelEnum.APPLICATION.getStatus());
 
         switch (user.getRole()){
             case 1:
-                upLevel.setType(UpLevelTypeEnmu.UP_LEVEL_TO_VIP.getType());
+                upLevel.setType(UpLevelTypeEnum.UP_LEVEL_TO_VIP.getType());
                 break;
             case 2:
-                upLevel.setType(UpLevelTypeEnmu.UP_LEVEL_TO_AUTHOR.getType());
+                upLevel.setType(UpLevelTypeEnum.UP_LEVEL_TO_AUTHOR.getType());
                 break;
         }
 

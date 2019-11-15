@@ -1,6 +1,6 @@
 package com.luckysite.util;
 
-import com.luckysite.enmu.ResultCode;
+import com.luckysite.common.enums.ResultCode;
 
 import java.util.Objects;
 

@@ -2,7 +2,7 @@ package com.luckysite.controller;
 
 import com.luckysite.common.annotation.Auth;
 import com.luckysite.config.AuthConfig;
-import com.luckysite.enmu.PostStatusEnmu;
+import com.luckysite.common.enums.PostStatusEnum;
 import com.luckysite.entity.Post;
 import com.luckysite.model.PostsParamModel;
 import com.luckysite.model.Result;
@@ -46,7 +46,7 @@ public class PostsController {
             post = new Post();
             post.setContent(content);
             post.setPost_name(upload_name);
-            post.setStatus(PostStatusEnmu.APPLICATION.getStatus());
+            post.setStatus(PostStatusEnum.APPLICATION.getStatus());
             post.setUserId(Long.parseLong(userId));
             post.setTitle(title);
             post.setType(type);
@@ -57,7 +57,7 @@ public class PostsController {
             post.setContent(content);
             post.setTitle(title);
             post.setType(type);
-            post.setStatus(PostStatusEnmu.APPLICATION.getStatus());
+            post.setStatus(PostStatusEnum.APPLICATION.getStatus());
 
             postsService.updataPost(post);
             log.info("posts-uploadPost-文章修改：用户【" + userId + "】");
@@ -112,7 +112,7 @@ public class PostsController {
     @RequestMapping("/getPostsList")
     @ResponseBody
     public Result getPostsList(PostsParamModel postsParamModel){
-        postsParamModel.setStatus(PostStatusEnmu.PASS.getStatus());
+        postsParamModel.setStatus(PostStatusEnum.PASS.getStatus());
         List<Post> postList = postsService.getPostsList(postsParamModel);
 
         for(Post post : postList){

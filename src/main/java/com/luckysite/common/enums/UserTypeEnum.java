@@ -1,10 +1,10 @@
-package com.luckysite.enmu;
+package com.luckysite.common.enums;
 
 import com.luckysite.config.AuthConfig;
 import lombok.Getter;
 
 @Getter
-public enum  UserTypeEnmu{
+public enum UserTypeEnum {
     /**
      * 用户角色
      */
@@ -30,7 +30,7 @@ public enum  UserTypeEnmu{
     private String role;
     private int roleId;
 
-    UserTypeEnmu(String role, int roleId) {
+    UserTypeEnum(String role, int roleId) {
         this.role = role;
         this.roleId = roleId;
     }

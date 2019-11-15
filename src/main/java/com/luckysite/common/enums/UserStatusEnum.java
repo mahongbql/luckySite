@@ -1,9 +1,9 @@
-package com.luckysite.enmu;
+package com.luckysite.common.enums;
 
 import lombok.Getter;
 
 @Getter
-public enum UserStatusEnmu {
+public enum UserStatusEnum {
     /**
      * 冻结状态
      */
@@ -14,7 +14,7 @@ public enum UserStatusEnmu {
      */
     NOT_FREEZ(0);
 
-    UserStatusEnmu(int status){
+    UserStatusEnum(int status){
         this.status = status;
     }
 

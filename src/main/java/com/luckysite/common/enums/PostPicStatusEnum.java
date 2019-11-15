@@ -1,9 +1,9 @@
-package com.luckysite.enmu;
+package com.luckysite.common.enums;
 
 import lombok.Getter;
 
 @Getter
-public enum PostPicStatusEnmu {
+public enum PostPicStatusEnum {
     /**
      * 文章中图片状态
      */
@@ -14,7 +14,7 @@ public enum PostPicStatusEnmu {
     private int status;
     private String des;
 
-    PostPicStatusEnmu(int status, String des){
+    PostPicStatusEnum(int status, String des){
         this.des = des;
         this.status = status;
     }

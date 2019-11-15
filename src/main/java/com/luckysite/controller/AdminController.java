@@ -2,7 +2,7 @@ package com.luckysite.controller;
 
 import com.luckysite.common.annotation.Auth;
 import com.luckysite.config.AuthConfig;
-import com.luckysite.enmu.PostStatusEnmu;
+import com.luckysite.common.enums.PostStatusEnum;
 import com.luckysite.entity.Pic;
 import com.luckysite.entity.Post;
 import com.luckysite.entity.UpLevel;
@@ -77,7 +77,7 @@ public class AdminController {
     @RequestMapping("/getPostsList")
     @ResponseBody
     public Result getPostsList(AdminPostsModel adminPostsModel){
-        adminPostsModel.setStatus(PostStatusEnmu.APPLICATION.getStatus());
+        adminPostsModel.setStatus(PostStatusEnum.APPLICATION.getStatus());
         List<Post> postList = adminService.getPostsList(adminPostsModel);
 
         HashMap<String, Object> result = new HashMap<>();

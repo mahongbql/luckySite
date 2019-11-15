@@ -1,6 +1,6 @@
 package com.luckysite.util;
 
-import com.luckysite.enmu.WeekDaysEnum;
+import com.luckysite.common.enums.WeekDaysEnum;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.ParseException;
