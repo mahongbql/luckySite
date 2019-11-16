@@ -142,7 +142,7 @@ public class UserController {
     private void setShowFunction(LoginDataDTO loginDataDTO) {
         List<FunctionShow> functionShowList = userService.getFunctionShow();
         Map<String, Byte> showMap =
-                functionShowList.stream().collect(Collectors.toMap(FunctionShow::getFunction, FunctionShow::getShow));
+                functionShowList.stream().collect(Collectors.toMap(FunctionShow::getFunctionType, FunctionShow::getIsShow));
         loginDataDTO.setPost(showMap.get(LuckySiteConstant.POST));
         loginDataDTO.setPic(showMap.get(LuckySiteConstant.PIC));
         loginDataDTO.setDream(showMap.get(LuckySiteConstant.DREAM));

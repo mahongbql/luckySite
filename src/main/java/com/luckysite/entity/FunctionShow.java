@@ -10,7 +10,7 @@ public class FunctionShow {
     @Id
     private Integer id;
 
-    private String function;
+    private String functionType;
 
-    private Byte show;
+    private Byte isShow;
 }
