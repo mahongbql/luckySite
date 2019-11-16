@@ -1,5 +1,6 @@
 package com.luckysite.service;
 
+import com.luckysite.entity.FunctionShow;
 import com.luckysite.entity.Pic;
 import com.luckysite.entity.Post;
 import com.luckysite.entity.User;
@@ -66,4 +67,10 @@ public interface UserService {
      * @param userDataModel
      */
     void perfectUserInfo(UserDataModel userDataModel);
+
+    /**
+     * 获取功能展示情况
+     * @return
+     */
+    List<FunctionShow> getFunctionShow();
 }

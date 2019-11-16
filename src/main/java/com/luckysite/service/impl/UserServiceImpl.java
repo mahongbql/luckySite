@@ -4,10 +4,8 @@ import com.github.pagehelper.PageHelper;
 import com.luckysite.config.AuthConfig;
 import com.luckysite.common.enums.UpLevelEnum;
 import com.luckysite.common.enums.UpLevelTypeEnum;
-import com.luckysite.entity.Pic;
-import com.luckysite.entity.Post;
-import com.luckysite.entity.UpLevel;
-import com.luckysite.entity.User;
+import com.luckysite.entity.*;
+import com.luckysite.mapper.FunctionShowMapper;
 import com.luckysite.mapper.UserMapper;
 import com.luckysite.model.UserDataModel;
 import com.luckysite.service.UserService;
@@ -25,6 +23,9 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private UserMapper userMapper;
+
+    @Resource
+    private FunctionShowMapper functionShowMapper;
 
     @Override
     public void insertUser(User user) {
@@ -99,5 +100,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void perfectUserInfo(UserDataModel userDataModel) {
         userMapper.perfectUserInfo(userDataModel);
+    }
+
+    @Override
+    public List<FunctionShow> getFunctionShow() {
+        return functionShowMapper.select(new FunctionShow());
     }
 }

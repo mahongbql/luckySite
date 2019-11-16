@@ -18,11 +18,11 @@ public class LoginDataDTO {
 
     private String lastLoginTime;
 
-    private Integer post;
+    private Byte post;
 
-    private Integer pic;
+    private Byte pic;
 
-    private Integer dream;
+    private Byte dream;
 
-    private Integer calender;
+    private Byte calender;
 }

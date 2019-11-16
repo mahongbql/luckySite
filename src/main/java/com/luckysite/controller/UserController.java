@@ -1,14 +1,15 @@
 package com.luckysite.controller;
 
 import com.luckysite.common.annotation.Auth;
+import com.luckysite.common.constant.LuckySiteConstant;
 import com.luckysite.common.enums.LuckySiteErrorEnum;
 import com.luckysite.config.AppConfig;
 import com.luckysite.config.AuthConfig;
-import com.luckysite.config.ShowFunctionConfig;
 import com.luckysite.dto.login.LoginDataDTO;
 import com.luckysite.common.enums.ResultCode;
 import com.luckysite.common.enums.UserStatusEnum;
 import com.luckysite.common.enums.UserTypeEnum;
+import com.luckysite.entity.FunctionShow;
 import com.luckysite.entity.Pic;
 import com.luckysite.entity.Post;
 import com.luckysite.entity.User;
@@ -27,6 +28,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/user")
@@ -53,9 +56,6 @@ public class UserController {
 
     @Autowired
     private RobotService robotService;
-
-    @Autowired
-    private ShowFunctionConfig showFunctionConfig;
 
     /**
      * 用户注册
@@ -126,14 +126,27 @@ public class UserController {
         loginDataDTO.setRole(user.getRole());
         loginDataDTO.setToken(sessionKey);
         loginDataDTO.setUserId(user.getUserId());
-        loginDataDTO.setPost(showFunctionConfig.getPost());
-        loginDataDTO.setPic(showFunctionConfig.getPic());
-        loginDataDTO.setDream(showFunctionConfig.getDream());
-        loginDataDTO.setCalender(showFunctionConfig.getCalender());
+
+        //设置小程序端显示哪些数据
+        setShowFunction(loginDataDTO);
 
         redisUtil.set(sessionKey, loginDataDTO, EXPIRE_TIME);
 
         return responseResult.success(loginDataDTO);
+    }
+
+    /**
+     * 设置小程序端显示哪些数据
+     * @param loginDataDTO
+     */
+    private void setShowFunction(LoginDataDTO loginDataDTO) {
+        List<FunctionShow> functionShowList = userService.getFunctionShow();
+        Map<String, Byte> showMap =
+                functionShowList.stream().collect(Collectors.toMap(FunctionShow::getFunction, FunctionShow::getShow));
+        loginDataDTO.setPost(showMap.get(LuckySiteConstant.POST));
+        loginDataDTO.setPic(showMap.get(LuckySiteConstant.PIC));
+        loginDataDTO.setDream(showMap.get(LuckySiteConstant.DREAM));
+        loginDataDTO.setCalender(showMap.get(LuckySiteConstant.CALENDER));
     }
 
     /**
