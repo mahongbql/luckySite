@@ -104,6 +104,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<FunctionShow> getFunctionShow() {
-        return functionShowMapper.select(new FunctionShow());
+        return functionShowMapper.selectAll();
     }
 }
