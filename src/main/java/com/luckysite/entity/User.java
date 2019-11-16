@@ -9,7 +9,6 @@ import java.util.Date;
 @Entity
 public class User implements Serializable {
     @Id
-    @GeneratedValue
     private Long userId;
     private String userName;
     private int freez;

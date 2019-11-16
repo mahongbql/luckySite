@@ -121,8 +121,8 @@
         <!--通用Mapper-->
         <dependency>
             <groupId>tk.mybatis</groupId>
-            <artifactId>mapper</artifactId>
-            <version>3.3.9</version>
+            <artifactId>mapper-spring-boot-starter</artifactId>
+            <version>2.0.0</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
