@@ -6,6 +6,12 @@ package com.luckysite.common.constant;
  * @Description
  */
 public class LuckySiteConstant {
+
+    /**
+     * token失效时间设定为半小时
+     */
+    public static final Integer EXPIRE_TIME = 60*30;
+
     /**
      * 文章
      */

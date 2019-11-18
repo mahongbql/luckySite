@@ -10,9 +10,4 @@
     <insert id="insertPostPic" parameterType="com.luckysite.entity.PostPic">
         insert into post_pic (upload_name, url, userId) values (#{uploadName}, #{url}, #{userId})
     </insert>
-
-    <insert id="insertPost" parameterType="com.luckysite.entity.Post">
-        insert into post (post_name, status, userId, send_time, confirm_time, content) values
-        (#{post_name},#{status},#{userId},now(),now(),#{content})
-    </insert>
 </mapper>

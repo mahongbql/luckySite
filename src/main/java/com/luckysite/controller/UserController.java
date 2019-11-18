@@ -37,11 +37,6 @@ public class UserController {
 
     private Logger log = LoggerFactory.getLogger(UserController.class);
 
-    /**
-     * token失效时间设定为半小时
-     */
-    private static final Integer EXPIRE_TIME = 60*30;
-
     @Autowired
     private UserService userService;
 
@@ -130,7 +125,7 @@ public class UserController {
         //设置小程序端显示哪些数据
         setShowFunction(loginDataDTO);
 
-        redisUtil.set(sessionKey, loginDataDTO, EXPIRE_TIME);
+        redisUtil.set(sessionKey, loginDataDTO, LuckySiteConstant.EXPIRE_TIME);
 
         return responseResult.success(loginDataDTO);
     }
