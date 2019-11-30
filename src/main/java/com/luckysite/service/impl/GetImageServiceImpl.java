@@ -9,6 +9,7 @@ import com.luckysite.service.GetImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ import java.util.List;
 @Service
 public class GetImageServiceImpl implements GetImageService {
 
-    @Autowired
+    @Resource
     private GetImageMapper getImageMapper;
 
     @Override
