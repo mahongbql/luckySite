@@ -127,6 +127,7 @@ public class UserController {
 
         redisUtil.set(sessionKey, loginDataDTO, LuckySiteConstant.EXPIRE_TIME);
 
+        log.info("获取到的用户登录返回数据为 loginDataDTO：{}", loginDataDTO);
         return responseResult.success(loginDataDTO);
     }
 
@@ -142,7 +143,6 @@ public class UserController {
         loginDataDTO.setPic(showMap.get(LuckySiteConstant.PIC));
         loginDataDTO.setDream(showMap.get(LuckySiteConstant.DREAM));
         loginDataDTO.setCalender(showMap.get(LuckySiteConstant.CALENDER));
-        log.info("获取到的用户登录返回数据为 loginDataDTO：{}", loginDataDTO);
     }
 
     /**
