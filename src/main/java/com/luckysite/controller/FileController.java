@@ -4,6 +4,7 @@ import com.luckysite.common.annotation.Auth;
 import com.luckysite.config.AuthConfig;
 import com.luckysite.common.enums.PostPicStatusEnum;
 import com.luckysite.common.enums.ResultCode;
+import com.luckysite.dto.login.LoginDataDTO;
 import com.luckysite.entity.PostPic;
 import com.luckysite.model.Result;
 import com.luckysite.service.FileService;
@@ -54,8 +55,8 @@ public class FileController {
                 throw new Exception("path is null Exception");
             }
 
-            HashMap<String, Object> user = (HashMap<String, Object>) redisUtil.get(token);
-            fileService.insertPic(fileUrl, Long.parseLong(user.get("userId").toString()), des, Long.parseLong(uploadId), type);
+            LoginDataDTO loginDataDTO = (LoginDataDTO) redisUtil.get(token);
+            fileService.insertPic(fileUrl, loginDataDTO.getUserId(), des, Long.parseLong(uploadId), type);
 
             log.info("FileUploadController-fdfsUpload-上传文件返回地址：" + fileUrl);
 
