@@ -1,0 +1,20 @@
+spring:
+  profiles:
+    active: prod
+  application:
+    name: luckydog
+  output:
+    ansi:
+      enabled: always
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      config:
+        group: DEFAULT_GROUP
+        namespace: fab13b58-6bb0-4e98-9321-a03df463e1cf
+        server-addr: luckydogma.work:8848
+        file-extension: yml
+      discovery:
+        server-addr: luckydogma.work:8848
+        namespace: fab13b58-6bb0-4e98-9321-a03df463e1cf
