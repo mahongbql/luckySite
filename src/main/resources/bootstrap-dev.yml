@@ -12,9 +12,9 @@ spring:
     nacos:
       config:
         group: DEFAULT_GROUP
-        namespace: fab13b58-6bb0-4e98-9321-a03df463e1cf
+        namespace: d35f0ba0-8f5d-4957-8190-e19adbb3dcc3
         server-addr: 192.168.154.133:8848
         file-extension: yml
       discovery:
         server-addr: 192.168.154.133:8848
-        namespace: fab13b58-6bb0-4e98-9321-a03df463e1cf
+        namespace: d35f0ba0-8f5d-4957-8190-e19adbb3dcc3
