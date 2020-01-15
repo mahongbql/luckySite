@@ -2,8 +2,10 @@ package com.luckysite.entity;
 
 import com.luckysite.util.TimeUtil;
 
+import javax.persistence.Entity;
 import java.util.Date;
 
+@Entity
 public class Pic {
     private Long id;            //自增id
     private Long userId;        //上传用户id

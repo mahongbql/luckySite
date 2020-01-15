@@ -2,8 +2,10 @@ package com.luckysite.entity;
 
 import com.luckysite.util.TimeUtil;
 
+import javax.persistence.Entity;
 import java.util.Date;
 
+@Entity
 public class UpLevel {
     private Long id;
     private Long userId;
