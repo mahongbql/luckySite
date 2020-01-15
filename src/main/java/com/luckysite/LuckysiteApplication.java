@@ -12,7 +12,6 @@ import org.springframework.jmx.support.RegistrationPolicy;
 // 解决jmx重复注册bean的问题
 @EnableMBeanExport(registration = RegistrationPolicy.IGNORE_EXISTING)
 @SpringBootApplication(scanBasePackages = "com.luckysite")
-@EnableDiscoveryClient
 public class LuckysiteApplication {
 
     public static void main(String[] args) {
