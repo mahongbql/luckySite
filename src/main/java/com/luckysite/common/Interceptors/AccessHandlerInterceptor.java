@@ -77,6 +77,10 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
                 return false;
             }
             LoginDataDTO loginDataDTO = (LoginDataDTO)userObj;
+            if(null == loginDataDTO.getUserId()) {
+                log.error("AccessHandlerInterceptor: userId is null -> {}", loginDataDTO);
+                return false;
+            }
             User user = userService.getByUserId(loginDataDTO.getUserId().intValue());
 
             Method[] methods = ((HandlerMethod)obj).getBean().getClass().getMethods();
