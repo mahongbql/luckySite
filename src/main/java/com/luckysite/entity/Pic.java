@@ -4,11 +4,13 @@ import com.luckysite.util.TimeUtil;
 import lombok.Data;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Date;
 
 @Data
 @Entity
 public class Pic {
+    @Id
     private Long id;            //自增id
     private Long userId;        //上传用户id
     private Date createTime;    //创建时间
