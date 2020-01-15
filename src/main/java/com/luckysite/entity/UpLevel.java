@@ -3,10 +3,12 @@ package com.luckysite.entity;
 import com.luckysite.util.TimeUtil;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
 public class UpLevel {
+    @Id
     private Long id;
     private Long userId;
     private Date sendTime;

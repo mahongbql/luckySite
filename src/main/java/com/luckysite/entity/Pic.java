@@ -1,10 +1,12 @@
 package com.luckysite.entity;
 
 import com.luckysite.util.TimeUtil;
+import lombok.Data;
 
 import javax.persistence.Entity;
 import java.util.Date;
 
+@Data
 @Entity
 public class Pic {
     private Long id;            //自增id

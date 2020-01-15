@@ -1,12 +1,16 @@
 package com.luckysite.entity;
 
 import com.luckysite.util.TimeUtil;
+import lombok.Data;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
+@Data
 public class Post {
+    @Id
     private Long id;
     private String post_name;
     private String content;
