@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import java.util.Date;
 
 @Data
-@Entity
 public class Pic {
     @Id
     private Long id;            //自增id
