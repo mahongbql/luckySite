@@ -112,10 +112,12 @@ public class UserController {
                 log.error("user-login-注册失败：用户 " + openid);
                 return responseResult.fail(LuckySiteErrorEnum.REGISTER_ERROR.getResponseMessage());
             }
+
+            //新注册的用户没有用户id
+            user = userService.getByUserName(user.getUserName());
         }
 
         log.info("user-login：用户 " + openid + " 登陆成功");
-        user = userService.getByUserName(user.getUserName());
         userService.updateLoginInfo(user);
 
         loginDataDTO.setLastLoginTime(TimeUtil.transFormDate(user.getLoginTime()));
