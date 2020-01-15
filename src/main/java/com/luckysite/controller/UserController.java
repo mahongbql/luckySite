@@ -115,6 +115,7 @@ public class UserController {
         }
 
         log.info("user-login：用户 " + openid + " 登陆成功");
+        user = userService.getByUserName(user.getUserName());
         userService.updateLoginInfo(user);
 
         loginDataDTO.setLastLoginTime(TimeUtil.transFormDate(user.getLoginTime()));
