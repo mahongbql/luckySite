@@ -49,6 +49,10 @@ fdfs:
     width: 150
     height: 150
   trackerList: 127.0.0.1:22122
+  pool:
+    max-total: 200
+    max-total-per-key: 50
+    max-wait-millis: 5000
 
 
 # 分页配置
