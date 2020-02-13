@@ -42,7 +42,7 @@ mybatis:
 
 # 分布式文件系统FDFS配置
 fdfs:
-  soTimeout: 1500 #socket连接超时时长
+  soTimeout: 5000 #socket连接超时时长
   connectTimeout: 600 #连接tracker服务器超时时长
   resHost: https://luckydogma.work
   thumbImage: #缩略图生成参数，可选
