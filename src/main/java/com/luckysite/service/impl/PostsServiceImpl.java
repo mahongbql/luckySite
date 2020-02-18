@@ -8,7 +8,6 @@ import com.luckysite.service.PostsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,9 +18,7 @@ public class PostsServiceImpl implements PostsService {
 
     @Override
     public void insertPost(Post post) {
-        post.setSend_time(new Date());
-        post.setConfirm_time(new Date());
-        postsMapper.insert(post);
+        postsMapper.insertPost(post);
     }
 
     @Override

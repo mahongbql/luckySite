@@ -9,6 +9,11 @@ import java.util.List;
 
 @Mapper
 public interface PostsMapper extends BaseMapper<Post> {
+    /**
+     * 插入一篇文章
+     * @param post
+     */
+    void insertPost(Post post);
 
     /**
      * 通过文件名字查文章

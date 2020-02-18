@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--图片映射 指定到mapper接口 -->
 <mapper namespace="com.luckysite.mapper.PostsMapper">
+    <insert id="insertPost" parameterType="com.luckysite.entity.Post">
+        insert into post (post_name, status, userId, send_time, confirm_time, content, title, type) values
+        (#{post_name},#{status},#{userId},now(),now(),#{content}, #{title}, #{type})
+    </insert>
 
     <select id="searchPost" parameterType="java.lang.String" resultType="com.luckysite.entity.Post">
         select * from post where post_name = #{post_name}
