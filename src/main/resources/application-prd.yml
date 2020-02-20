@@ -29,8 +29,8 @@ spring:
   http:
     servlet:
       multipart:
-        maxFileSize: 100Mb
-        maxRequestSize: 1000Mb
+        maxFileSize: 10Mb
+        maxRequestSize: 100Mb
   mvc:
     view:
       prefix: /
