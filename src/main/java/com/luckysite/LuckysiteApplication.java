@@ -23,6 +23,7 @@ public class LuckysiteApplication {
         SpringApplication.run(LuckysiteApplication.class, args);
     }
 
+
     //文件上传大小设置
     @Bean
     public MultipartConfigElement multipartConfigElement() {
