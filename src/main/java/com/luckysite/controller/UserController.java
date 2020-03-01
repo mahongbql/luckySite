@@ -28,6 +28,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -81,57 +84,75 @@ public class UserController {
     @RequestMapping("/login")
     public @ResponseBody ResponseResult<LoginDataDTO> login(@RequestParam("resCode") String resCode){
         ResponseResult<LoginDataDTO> responseResult = new ResponseResult<>();
-        LoginDataDTO loginDataDTO = new LoginDataDTO();
-        log.info("user-login-用户resCode: " + resCode);
 
-        String appId = appConfig.getAppId();
-        String appSecret = appConfig.getAppSecret();
+        Callable<LoginDataDTO> callable = new Callable<LoginDataDTO>() {
+            @Override
+            public LoginDataDTO call() throws Exception {
+                LoginDataDTO loginDataDTO = new LoginDataDTO();
+                log.info("user-login-用户resCode: " + resCode);
 
-        String url = appConfig.getUrl()+"&appid=" + appId + "&secret=" + appSecret + "&js_code=" + resCode;
-        log.info("user-login-远程访问url：" + url);
+                String appId = appConfig.getAppId();
+                String appSecret = appConfig.getAppSecret();
 
-        String jsonStr = HttpUtil.doGet(url);
-        log.info("user-login-返回参数：" + jsonStr);
+                String url = appConfig.getUrl()+"&appid=" + appId + "&secret=" + appSecret + "&js_code=" + resCode;
+                log.info("user-login-远程访问url：" + url);
 
-        JSON json = JSONObject.fromObject(jsonStr);
-        String sessionKey = ((JSONObject) json).getString("session_key");
-        String openid = ((JSONObject) json).getString("openid");
+                String jsonStr = HttpUtil.doGet(url);
+                log.info("user-login-返回参数：" + jsonStr);
 
-        log.info("user-login-sessionKey：" + sessionKey);
-        log.info("user-login-openid：" + openid);
+                JSON json = JSONObject.fromObject(jsonStr);
+                String sessionKey = ((JSONObject) json).getString("session_key");
+                String openid = ((JSONObject) json).getString("openid");
 
-        User user = userService.getByUserName(openid);
+                log.info("user-login-sessionKey：" + sessionKey);
+                log.info("user-login-openid：" + openid);
 
-        if(null == user){
-            log.error("user-login-用户进行注册：用户 " + openid);
-            user = new User();
-            user.setUserName(openid);
-            user = register(user);
+                User user = userService.getByUserName(openid);
 
-            if(null == user){
-                log.error("user-login-注册失败：用户 " + openid);
-                return responseResult.fail(LuckySiteErrorEnum.REGISTER_ERROR.getResponseMessage());
+                if(null == user){
+                    log.error("user-login-用户进行注册：用户 " + openid);
+                    user = new User();
+                    user.setUserName(openid);
+                    user = register(user);
+
+                    if(null == user){
+                        log.error("user-login-注册失败：用户 " + openid);
+                        throw new RuntimeException(LuckySiteErrorEnum.REGISTER_ERROR.getResponseMessage());
+                    }
+
+                    //新注册的用户没有用户id
+                    user = userService.getByUserName(user.getUserName());
+                }
+
+                log.info("user-login：用户 " + openid + " 登陆成功");
+                userService.updateLoginInfo(user);
+
+                loginDataDTO.setLastLoginTime(TimeUtil.transFormDate(user.getLoginTime()));
+                loginDataDTO.setRole(user.getRole());
+                loginDataDTO.setToken(sessionKey);
+                loginDataDTO.setUserId(user.getUserId());
+
+                //设置小程序端显示哪些数据
+                setShowFunction(loginDataDTO);
+
+                redisUtil.set(sessionKey, loginDataDTO, LuckySiteConstant.EXPIRE_TIME);
+
+                log.info("获取到的用户登录返回数据为 loginDataDTO：{}", loginDataDTO);
+
+                return loginDataDTO;
             }
+        };
 
-            //新注册的用户没有用户id
-            user = userService.getByUserName(user.getUserName());
+        FutureTask<LoginDataDTO> userTask = new FutureTask<LoginDataDTO>(callable);
+        new Thread(userTask).start();
+
+        try {
+            responseResult.setData(userTask.get());
+        } catch (Exception e) {
+            return responseResult.fail(e.getMessage());
         }
 
-        log.info("user-login：用户 " + openid + " 登陆成功");
-        userService.updateLoginInfo(user);
-
-        loginDataDTO.setLastLoginTime(TimeUtil.transFormDate(user.getLoginTime()));
-        loginDataDTO.setRole(user.getRole());
-        loginDataDTO.setToken(sessionKey);
-        loginDataDTO.setUserId(user.getUserId());
-
-        //设置小程序端显示哪些数据
-        setShowFunction(loginDataDTO);
-
-        redisUtil.set(sessionKey, loginDataDTO, LuckySiteConstant.EXPIRE_TIME);
-
-        log.info("获取到的用户登录返回数据为 loginDataDTO：{}", loginDataDTO);
-        return responseResult.success(loginDataDTO);
+        return responseResult;
     }
 
     /**
