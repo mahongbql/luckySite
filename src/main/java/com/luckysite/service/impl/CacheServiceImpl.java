@@ -68,7 +68,7 @@ public class CacheServiceImpl implements CacheService {
         boolean status = false;
 
         List<Object> list = redisUtil.lGet(key+userId, 0, -1);
-        if(-1 != list.indexOf(id)){
+        if(list != null && -1 != list.indexOf(id)){
             status = true;
         }
 
