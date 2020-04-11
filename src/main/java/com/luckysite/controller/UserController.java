@@ -25,11 +25,13 @@ import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.FutureTask;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -54,6 +56,10 @@ public class UserController {
 
     @Autowired
     private RobotService robotService;
+
+    @Autowired
+    @Qualifier(value = "crawlExecutorPool")
+    private ExecutorService pool;
 
     /**
      * 用户注册
@@ -144,7 +150,7 @@ public class UserController {
         };
 
         FutureTask<LoginDataDTO> userTask = new FutureTask<LoginDataDTO>(callable);
-        new Thread(userTask).start();
+        pool.submit(userTask);
 
         try {
             responseResult.setData(userTask.get());
