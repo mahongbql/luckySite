@@ -81,7 +81,6 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
                 log.error("AccessHandlerInterceptor: userId is null -> {}", loginDataDTO);
                 return false;
             }
-            User user = userService.getByUserId(loginDataDTO.getUserId().intValue());
 
             Method[] methods = ((HandlerMethod)obj).getBean().getClass().getMethods();
 
@@ -90,15 +89,15 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
                 if (method.isAnnotationPresent(Auth.class)){
                     if(methodName.equals(method.getName())) {
                         Auth auth = method.getAnnotation(Auth.class);
-                        log.info("AccessHandlerInterceptor-preHandle-用户 " + user.getUserName() + " ，auth: " + auth.role());
+                        log.info("AccessHandlerInterceptor-preHandle-用户 " + loginDataDTO.getUserId() + " ，auth: " + auth.role());
 
-                        int uAuth = user.getRole();
+                        int uAuth = loginDataDTO.getRole();
                         if(uAuth >= auth.role()){
-                            log.info("AccessHandlerInterceptor-preHandle-用户 " + user.getUserName() + "权限通过");
+                            log.info("AccessHandlerInterceptor-preHandle-用户 " + loginDataDTO.getUserId() + "权限通过");
                             return true;
                         }
 
-                        log.info("AccessHandlerInterceptor-preHandle-用户 " + user.getUserName() + "无权限访问");
+                        log.info("AccessHandlerInterceptor-preHandle-用户 " + loginDataDTO.getUserId() + "无权限访问");
 
                         return false;
                     }
