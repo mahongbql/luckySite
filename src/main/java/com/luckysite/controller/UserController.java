@@ -103,8 +103,10 @@ public class UserController {
                 String url = appConfig.getUrl()+"&appid=" + appId + "&secret=" + appSecret + "&js_code=" + resCode;
                 log.info("user-login-远程访问url：" + url);
 
+                Long startTimeHttp = System.currentTimeMillis();
                 String jsonStr = HttpUtil.doGet(url);
-                log.info("user-login-返回参数：" + jsonStr);
+                Long endTimeHttp = System.currentTimeMillis();
+                log.info("user-login-返回参数：{}, 耗费时间：{} s", jsonStr, (endTimeHttp-startTimeHttp)/1000);
 
                 JSON json = JSONObject.fromObject(jsonStr);
                 String sessionKey = ((JSONObject) json).getString("session_key");
@@ -113,7 +115,10 @@ public class UserController {
                 log.info("user-login-sessionKey：" + sessionKey);
                 log.info("user-login-openid：" + openid);
 
+                Long startTimeDb = System.currentTimeMillis();
                 User user = userService.getByUserName(openid);
+                Long endTimeDb = System.currentTimeMillis();
+                log.info("用户登陆数据库查询耗费时间：{} s", (endTimeDb-startTimeDb)/1000);
 
                 if(null == user){
                     log.error("user-login-用户进行注册：用户 " + openid);
