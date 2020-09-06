@@ -77,9 +77,14 @@ public class GetImageController {
     @ResponseBody
     public Result getImageById(PicParamModel picParamModel){
         List<PicResultModel> picList = getImageService.getImageById(picParamModel);
-        Long uploadId = picList.get(0).getUploadId();
 
-        cacheService.setViewNumber(CacheKeyUtil.PIC_VIEW_NUMBER, uploadId.toString());
+        if(!picList.isEmpty()) {
+            Long uploadId = picList.get(0).getUploadId();
+
+            cacheService.setViewNumber(CacheKeyUtil.PIC_VIEW_NUMBER, uploadId.toString());
+        } else {
+            log.error("图片id为【{}】的图集获取为空", picParamModel.getPicId());
+        }
 
         Map<String, Object> result = new HashMap<>();
         result.put("data", picList);
