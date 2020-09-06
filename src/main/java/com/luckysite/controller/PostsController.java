@@ -76,9 +76,14 @@ public class PostsController {
     @ResponseBody
     public Result getPosts(@RequestParam("postName") String postName, @RequestParam("userId") String userId){
         Post post = postsService.searchPost(postName);
-        post.setCollect(cacheService.checkIsCollect(CacheKeyUtil.POST_COLLECT, post.getId().toString(), userId));
 
-        cacheService.setViewNumber(CacheKeyUtil.POST_VIEW_NUMBER, post.getId().toString());
+        if(null != post) {
+            post.setCollect(cacheService.checkIsCollect(CacheKeyUtil.POST_COLLECT, post.getId().toString(), userId));
+
+            cacheService.setViewNumber(CacheKeyUtil.POST_VIEW_NUMBER, post.getId().toString());
+        } else {
+            log.error("文章【{}】不存在", postName);
+        }
 
         Map<String, Object> result = new HashMap<>();
         result.put("data", post);
