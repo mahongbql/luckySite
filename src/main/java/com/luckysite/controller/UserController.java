@@ -115,33 +115,34 @@ public class UserController {
                 log.info("user-login-sessionKey：" + sessionKey);
                 log.info("user-login-openid：" + openid);
 
-                Long startTimeDb = System.currentTimeMillis();
-                User user = userService.getByUserName(openid);
-                Long endTimeDb = System.currentTimeMillis();
-                log.info("用户登陆数据库查询耗费时间：{} s", (endTimeDb-startTimeDb)/1000);
+//                Long startTimeDb = System.currentTimeMillis();
+//                User user = userService.getByUserName(openid);
+//                Long endTimeDb = System.currentTimeMillis();
+//                log.info("用户登陆数据库查询耗费时间：{} s", (endTimeDb-startTimeDb)/1000);
+//
+//                if(null == user){
+//                    log.error("user-login-用户进行注册：用户 " + openid);
+//                    user = new User();
+//                    user.setUserName(openid);
+//                    user = register(user);
+//
+//                    if(null == user){
+//                        log.error("user-login-注册失败：用户 " + openid);
+//                        throw new RuntimeException(LuckySiteErrorEnum.REGISTER_ERROR.getResponseMessage());
+//                    }
+//
+//                    //新注册的用户没有用户id
+//                    user = userService.getByUserName(user.getUserName());
+//                }
+//
+//                log.info("user-login：用户 " + openid + " 登陆成功");
+//                userService.updateLoginInfo(user);
 
-                if(null == user){
-                    log.error("user-login-用户进行注册：用户 " + openid);
-                    user = new User();
-                    user.setUserName(openid);
-                    user = register(user);
-
-                    if(null == user){
-                        log.error("user-login-注册失败：用户 " + openid);
-                        throw new RuntimeException(LuckySiteErrorEnum.REGISTER_ERROR.getResponseMessage());
-                    }
-
-                    //新注册的用户没有用户id
-                    user = userService.getByUserName(user.getUserName());
-                }
-
-                log.info("user-login：用户 " + openid + " 登陆成功");
-                userService.updateLoginInfo(user);
-
-                loginDataDTO.setLastLoginTime(TimeUtil.transFormDate(user.getLoginTime()));
-                loginDataDTO.setRole(user.getRole());
+                Date now = new Date();
+                loginDataDTO.setLastLoginTime(TimeUtil.transFormDate(now));
+                loginDataDTO.setRole(openid.equals("oYd_946wGPxN1TNCgUlNIoPvH4Gg")?10:1);
                 loginDataDTO.setToken(sessionKey);
-                loginDataDTO.setUserId(user.getUserId());
+                loginDataDTO.setUserId(1L);
 
                 //设置小程序端显示哪些数据
                 setShowFunction(loginDataDTO);
@@ -171,13 +172,13 @@ public class UserController {
      * @param loginDataDTO
      */
     private void setShowFunction(LoginDataDTO loginDataDTO) {
-        List<FunctionShow> functionShowList = userService.getFunctionShow();
-        Map<String, Byte> showMap =
-                functionShowList.stream().collect(Collectors.toMap(FunctionShow::getFunctionType, FunctionShow::getIsShow));
-        loginDataDTO.setPost(showMap.get(LuckySiteConstant.POST));
-        loginDataDTO.setPic(showMap.get(LuckySiteConstant.PIC));
-        loginDataDTO.setDream(showMap.get(LuckySiteConstant.DREAM));
-        loginDataDTO.setCalender(showMap.get(LuckySiteConstant.CALENDER));
+//        List<FunctionShow> functionShowList = userService.getFunctionShow();
+//        Map<String, Byte> showMap =
+//                functionShowList.stream().collect(Collectors.toMap(FunctionShow::getFunctionType, FunctionShow::getIsShow));
+        loginDataDTO.setPost((byte)1);
+        loginDataDTO.setPic((byte)1);
+        loginDataDTO.setDream((byte)1);
+        loginDataDTO.setCalender((byte)1);
     }
 
     /**
