@@ -100,7 +100,15 @@ public class UserController {
                 String appId = appConfig.getAppId();
                 String appSecret = appConfig.getAppSecret();
 
-                String url = appConfig.getUrl()+"&appid=" + appId + "&secret=" + appSecret + "&js_code=" + resCode;
+                StringBuffer sb = new StringBuffer();
+                sb.append(appConfig.getUrl());
+                sb.append("&appid=");
+                sb.append(appId);
+                sb.append("&secret=");
+                sb.append(appSecret);
+                sb.append("&js_code=");
+                sb.append(resCode);
+                String url = sb.toString();
                 log.info("user-login-远程访问url：" + url);
 
                 Long startTimeHttp = System.currentTimeMillis();
@@ -147,7 +155,11 @@ public class UserController {
                 //设置小程序端显示哪些数据
                 setShowFunction(loginDataDTO);
 
+                startTimeHttp = System.currentTimeMillis();
                 redisUtil.set(sessionKey, loginDataDTO, LuckySiteConstant.EXPIRE_TIME);
+                endTimeHttp = System.currentTimeMillis();
+                log.info("设置缓存耗费时间：{} s", (endTimeHttp-startTimeHttp)/1000);
+
 
                 log.info("获取到的用户登录返回数据为 loginDataDTO：{}", loginDataDTO);
 
