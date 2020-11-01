@@ -64,6 +64,8 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object obj) {
+        Long startTime = System.currentTimeMillis();
+        Long endTime = System.currentTimeMillis();
         if (obj instanceof HandlerMethod) {
             String token = getToken(request);
             String methodName = ((HandlerMethod)obj).getMethod().getName();
@@ -79,6 +81,8 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
             LoginDataDTO loginDataDTO = (LoginDataDTO)userObj;
             if(null == loginDataDTO.getUserId()) {
                 log.error("AccessHandlerInterceptor: userId is null -> {}", loginDataDTO);
+                endTime = System.currentTimeMillis();
+                log.info("拦截器耗费时间：{}s", (endTime - startTime)/1000);
                 return false;
             }
 
@@ -94,17 +98,21 @@ public class AccessHandlerInterceptor implements HandlerInterceptor {
                         int uAuth = loginDataDTO.getRole();
                         if(uAuth >= auth.role()){
                             log.info("AccessHandlerInterceptor-preHandle-用户 " + loginDataDTO.getUserId() + "权限通过");
+                            endTime = System.currentTimeMillis();
+                            log.info("拦截器耗费时间：{}s", (endTime - startTime)/1000);
                             return true;
                         }
 
                         log.info("AccessHandlerInterceptor-preHandle-用户 " + loginDataDTO.getUserId() + "无权限访问");
-
+                        endTime = System.currentTimeMillis();
+                        log.info("拦截器耗费时间：{}s", (endTime - startTime)/1000);
                         return false;
                     }
                 }
             }
         }
 
+        log.info("拦截器耗费时间：{}s", (endTime - startTime)/1000);
         return true;
     }
 
